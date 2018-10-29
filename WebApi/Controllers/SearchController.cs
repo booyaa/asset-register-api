@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<AssetsDictionary>> Get(string query)
         {
-            return GetWrappedAssets( await UseCase.Execute(query));
+            return GetWrappedAssets(await UseCase.Execute(query));
         }
 
         private static AssetsDictionary GetWrappedAssets(Dictionary<string, string>[] results)
