@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using asset_register_api.Controllers;
-using asset_register_api.Interface.UseCase;
+using asset_register_api.Boundary.UseCase;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;

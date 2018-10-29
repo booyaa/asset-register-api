@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using asset_register_api.Interface.UseCase;
+using asset_register_api.Boundary.UseCase;
 using Microsoft.AspNetCore.Mvc;
 
 namespace asset_register_api.Controllers
@@ -21,7 +21,7 @@ namespace asset_register_api.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<AssetsDictionary>> Get(string query)
         {
-            return GetWrappedAssets( await UseCase.Execute(query));
+            return GetWrappedAssets(await UseCase.Execute(query));
         }
 
         private static AssetsDictionary GetWrappedAssets(Dictionary<string, string>[] results)

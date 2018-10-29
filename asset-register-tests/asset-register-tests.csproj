@@ -21,4 +21,5 @@
     <ItemGroup>
       <ProjectReference Include="..\asset-register-api\asset-register-api.csproj" />
     </ItemGroup>
+  
 </Project>
