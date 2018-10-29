@@ -3,7 +3,16 @@ jobs:
   build:
     docker:
       - image: microsoft/dotnet:2.1-sdk
-
+    working_directory: asset-register-api
+    steps:
+      - checkout
+      - run: dotnet restore
+      - run: dotnet publish -c Release -o out
+  
+  test:
+    docker:
+      - image: microsoft/dotnet:2.1-sdk
+    working_directory: asset-register-tests
     steps:
       - checkout
       - run: dotnet --info
@@ -12,3 +21,6 @@ workflows:
   build:
     jobs:
       - build
+  test:
+    jobs:
+     - test
