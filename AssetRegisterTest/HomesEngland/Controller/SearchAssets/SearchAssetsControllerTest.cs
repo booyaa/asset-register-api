@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HomesEngland.Boundary.UseCase;
@@ -10,13 +11,16 @@ using WebApi.Controllers;
 
 namespace AssetRegisterTests.HomesEngland.Controller.SearchAssets
 {
+    using AssetDictionary = Dictionary<string, string>;
+    using AssetsDictionary = Dictionary<string, Dictionary<string, string>[]>;
+
     public abstract class SearchAssetsControllerTest
     {
         private Mock<ISearchAssetsUseCase> _mock;
         private SearchController _controller;
         protected abstract Asset[] SearchResults { get; }
         private string SearchQuery => "Search";
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -24,32 +28,32 @@ namespace AssetRegisterTests.HomesEngland.Controller.SearchAssets
             _mock.Setup(useCase => useCase.Execute(SearchQuery)).ReturnsAsync(() => SearchResults.ToList().Select(_=>_.ToDictionary()).ToArray());
             _controller = new SearchController(_mock.Object);
         }
-        
+
         [Test]
         public async Task SearchAssetControllerCallsUseCase()
         {
             await _controller.Get(SearchQuery);
             _mock.Verify(mock => mock.Execute(SearchQuery), Times.Once());
         }
-        
+
         [Test]
         public async Task GetAssetControllerReturnsJson()
         {
-            ActionResult<string> returnedData = await _controller.Get(SearchQuery);
-            JObject json = JObject.Parse(returnedData.Value);
-            foreach (var assetAsJson in json.GetValue("Assets"))
+            ActionResult<AssetsDictionary> returnedData = await _controller.Get(SearchQuery);
+            AssetsDictionary json = returnedData.Value;
+            foreach (AssetDictionary assetAsJson in json["Assets"])
             {
                 if(assetAsJson["Address"]!=null)
                 {
-                    Assert.True(SearchResults.Any(_=>_.Address == assetAsJson["Address"].ToString()));
+                    Assert.True(SearchResults.Any(_=>_.Address == assetAsJson["Address"]));
                 }
                 if(assetAsJson["SchemeID"]!=null)
                 {
-                    Assert.True(SearchResults.Any(_=>_.SchemeID == assetAsJson["SchemeID"].ToString()));
+                    Assert.True(SearchResults.Any(_=>_.SchemeID == assetAsJson["SchemeID"]));
                 }
                 if(assetAsJson["AccountingYear"]!=null)
                 {
-                    Assert.True(SearchResults.Any(_=>_.AccountingYear == assetAsJson["AccountingYear"].ToString()));
+                    Assert.True(SearchResults.Any(_=>_.AccountingYear == assetAsJson["AccountingYear"]));
                 }
             }
         }
