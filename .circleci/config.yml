@@ -5,25 +5,28 @@ jobs:
       - image: microsoft/dotnet:2.1-sdk
     steps:
       - checkout
-      - run: cd asset-register-api && dotnet restore && dotnet publish -c Release -o out
+      - run: scripts/build.sh
 
   test:
     docker:
       - image: microsoft/dotnet:2.1-sdk
     steps:
       - checkout
-      - run: cd asset-register-tests && dotnet test
+      - run: scripts/test.sh
 
   deploy_staging:
     docker:
       - image: microsoft/dotnet:2.1-sdk
     steps:
       - checkout
-      - run: curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
-      - run: ./cf api https://api.cloud.service.gov.uk
-      - run: ./cf auth "$CF_USER" "$CF_PASSWORD"
-      - run: ./cf target -o "$CF_ORG" -s "$CF_SPACE"
-      - run: cd asset-register-api && ../cf push
+      - run: scripts/deploy.sh staging
+
+  deploy_production:
+    docker:
+      - image: microsoft/dotnet:2.1-sdk
+    steps:
+      - checkout
+      - run: echo 'deploy_production' # scripts/deploy.sh production
 
 workflows:
   version: 2
@@ -36,3 +39,10 @@ workflows:
       - deploy_staging:
           requires:
             - test
+      - hold:
+          type: approval
+          requires:
+            - deploy_staging
+      - deploy_production:
+          requires:
+            - hold
