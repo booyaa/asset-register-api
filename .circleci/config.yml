@@ -30,3 +30,6 @@ workflows:
       - test:
           requires:
             - build
+      - deploy_staging:
+          requires:
+            - test
