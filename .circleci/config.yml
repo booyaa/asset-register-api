@@ -10,10 +10,18 @@ jobs:
   test:
     docker:
       - image: microsoft/dotnet:2.1-sdk
-    working_directory: asset-register-tests
     steps:
       - checkout
       - run: echo pending fix PR4 # cd asset-register-tests && dotnet test
+
+  deploy_staging:
+    docker:
+      - image: microsoft/dotnet:2.1-sdk
+    steps:
+      - checkout
+      - run: curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
+      - run: ./cf --version
+
 workflows:
   version: 2
   build_test_deploy:
