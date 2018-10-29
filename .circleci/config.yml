@@ -20,7 +20,10 @@ jobs:
     steps:
       - checkout
       - run: curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
-      - run: ./cf --version
+      - run: ./cf api https://api.cloud.service.gov.uk
+      - run: ./cf auth "$CF_USER" "$CF_PASSWORD"
+      - run: ./cf target -o "$CF_ORG" -s "$CF_SPACE"
+      - run: cd asset-register-api && ../cf push
 
 workflows:
   version: 2
