@@ -1,23 +1,33 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build-base
 WORKDIR /app
 
-# copy csproj and restore as distinct layers
-WORKDIR /app/asset-register-api
-COPY asset-register-api/*.csproj .
+FROM build-base AS build-homes-england
+WORKDIR /app/HomesEngland
+COPY HomesEngland/*.csproj .
 RUN dotnet restore
-
-# copy and publish app and libraries
-WORKDIR /app/asset-register-api
-COPY asset-register-api/. .
+COPY HomesEngland/. .
 RUN dotnet publish -c Release -o out
 
-# test application -- see: dotnet-docker-unit-testing.md
-FROM build AS testrunner
-WORKDIR /app/tests
-COPY asset-register-tests/. .
-ENTRYPOINT ["dotnet", "test", "--logger:trx"]
+FROM build-homes-england as build-web-api
+WORKDIR /app/WebApi
+COPY WebApi/*.csproj .
+RUN dotnet restore
+COPY WebApi/. .
+RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.1-runtime AS runtime
+FROM build-homes-england AS test-homes-england
+WORKDIR /app/HomesEnglandTest
+COPY HomesEnglandTest/. .
+CMD ["dotnet", "test", "--logger:trx"]
+
+FROM build-web-api as test-web-api
+WORKDIR /app/AssetRegisterTest
+COPY AssetRegisterTest/. .
+CMD ["dotnet", "test", "--logger:trx"]
+
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
 WORKDIR /app
-COPY --from=build /app/asset-register-api/out ./
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+COPY --from=build-web-api /app/WebApi/out ./
+#COPY --from=build-web-api /app/asset-register-api/out ./
+CMD ["dotnet", "web-api.dll"]
