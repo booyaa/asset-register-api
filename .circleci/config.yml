@@ -3,11 +3,9 @@ jobs:
   build:
     docker:
       - image: microsoft/dotnet:2.1-sdk
-    working_directory: asset-register-api
     steps:
       - checkout
-      - run: dotnet restore
-      - run: dotnet publish -c Release -o out
+      - run: cd asset-register-api && dotnet restore && dotnet publish -c Release -o out
 
   test:
     docker:
