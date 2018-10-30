@@ -1,7 +1,7 @@
 using HomesEngland.Domain;
 using NUnit.Framework;
 
-namespace AssetRegisterTests.HomesEngland.Controller.GetAssets.Examples
+namespace WebApiTest.Controller.GetAssets.Examples
 {
     [TestFixture]
     public class GetAssetsControllerTestExampleOne:GetAssetsControllerTest

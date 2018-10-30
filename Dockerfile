@@ -20,14 +20,17 @@ WORKDIR /app/HomesEnglandTest
 COPY HomesEnglandTest/. .
 CMD ["dotnet", "test", "--logger:trx"]
 
-FROM build-web-api as test-web-api
-WORKDIR /app/AssetRegisterTest
-COPY AssetRegisterTest/. .
+FROM build-web-api as test-asset-register
+WORKDIR /app/AcceptanceTest
+COPY AcceptanceTest/. .
 CMD ["dotnet", "test", "--logger:trx"]
 
+FROM build-web-api as test-web-api
+WORKDIR /app/WebApiTest
+COPY WebApiTest/. .
+CMD ["dotnet", "test", "--logger:trx"]
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
 WORKDIR /app
 COPY --from=build-web-api /app/WebApi/out ./
-#COPY --from=build-web-api /app/asset-register-api/out ./
 CMD ["dotnet", "web-api.dll"]

@@ -8,10 +8,13 @@ test-homes-england:
 	docker build -q --pull --target test-homes-england -t asset-register-api:test-homes-england .
 	docker run --rm asset-register-api:test-homes-england
 
+test-asset-register:
+	docker build -q --pull --target test-asset-register -t asset-register-api:test-asset-register .
+	docker run --rm asset-register-api:test-asset-register
+
 test-web-api:
 	docker build -q --pull --target test-web-api -t asset-register-api:test-web-api .
 	docker run --rm asset-register-api:test-web-api
-
 
 setup: build
 

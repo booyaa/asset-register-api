@@ -5,7 +5,7 @@ using Moq;
 using NUnit.Framework;
 using WebApi.Controllers;
 
-namespace AssetRegisterTests.HomesEngland.Controller.GetAsset.NoAssets
+namespace WebApiTest.Controller.GetAsset.NoAssets
 {
     [TestFixture]
     public abstract class GetAssetControllerNoAssetsTest
