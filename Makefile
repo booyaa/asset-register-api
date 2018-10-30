@@ -1,3 +1,5 @@
+WEBAPI_RUNTIME_TAG = webapi-rt
+
 .PHONY: test setup serve build docker-build docker-down shell test-homes-england test-web-api
 
 test: test-homes-england test-web-api
@@ -14,15 +16,15 @@ test-web-api:
 setup: build
 
 serve: 
-	docker run --rm  -p 5000:80 -it webapi-rt
+	docker run --rm  -p 5000:80 $(WEBAPI_RUNTIME_TAG)
 
 build: docker-build
 
 docker-build:
-	docker build -q --pull -t webapi-rt .
+	docker build -q --pull -t $(WEBAPI_RUNTIME_TAG) .
 
 docker-down:
 	# FIXME
 
 shell:
-	docker run --rm  -p 5000:80 -it webapi-rt bash
+	docker run --rm  -p 5000:80 -it $(WEBAPI_RUNTIME_TAG) bash
