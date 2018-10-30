@@ -1,5 +1,3 @@
-COMPOSE = docker-compose -f asset-register-api/docker-compose.yml
-
 .PHONY: test setup serve build docker-build docker-down shell test-homes-england test-web-api
 
 test: test-homes-england test-web-api
@@ -15,16 +13,16 @@ test-web-api:
 
 setup: build
 
-serve: docker-down docker-build
-	$(COMPOSE) up
+serve: 
+	docker run --rm  -p 5000:80 -it webapi-rt
 
 build: docker-build
 
 docker-build:
-	$(COMPOSE) build
+	docker build -q --pull -t webapi-rt .
 
 docker-down:
-	$(COMPOSE) down
+	# FIXME
 
 shell:
-	$(COMPOSE) run --rm web /bin/bash
+	docker run --rm  -p 5000:80 -it webapi-rt bash
