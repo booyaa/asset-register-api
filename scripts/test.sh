@@ -2,8 +2,5 @@
 
 set -e
 
-cd HomesEnglandTest
-dotnet test
-
-cd ../AssetRegisterTest
-dotnet test
+dotnet test HomesEnglandTest
+dotnet test AssetRegisterTest
