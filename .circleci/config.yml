@@ -1,29 +1,31 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+
+executors:
+  dotnet:
     docker:
       - image: microsoft/dotnet:2.1-sdk
+
+jobs:
+  build:
+    executor: dotnet
     steps:
       - checkout
       - run: scripts/build.sh
 
   test:
-    docker:
-      - image: microsoft/dotnet:2.1-sdk
+    executor: dotnet
     steps:
       - checkout
       - run: scripts/test.sh
 
   deploy_staging:
-    docker:
-      - image: microsoft/dotnet:2.1-sdk
+    executor: dotnet
     steps:
       - checkout
       - run: scripts/deploy.sh staging
 
   deploy_production:
-    docker:
-      - image: microsoft/dotnet:2.1-sdk
+    executor: dotnet
     steps:
       - checkout
       - run: echo 'deploy_production' # scripts/deploy.sh production
