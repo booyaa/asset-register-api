@@ -10,13 +10,19 @@ jobs:
     executor: dotnet
     steps:
       - checkout
-      - run: scripts/build.sh
+      - run: dotnet publish -c Release -o out
 
-  test:
+  test_homes_england:
     executor: dotnet
     steps:
       - checkout
-      - run: scripts/test.sh
+      - run: dotnet test HomesEnglandTest
+
+  test_web_api:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test AssetRegisterTest
 
   deploy_staging:
     executor: dotnet
@@ -35,12 +41,16 @@ workflows:
   build_test_deploy:
     jobs:
       - build
-      - test:
+      - test_homes_england:
+          requires:
+            - build
+      - test_web_api:
           requires:
             - build
       - deploy_staging:
           requires:
-            - test
+            - test_homes_england
+            - test_web_api
           filters:
             branches:
               only:
