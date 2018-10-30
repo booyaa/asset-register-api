@@ -39,6 +39,10 @@ workflows:
       - deploy_staging:
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master
       - hold:
           type: approval
           requires:
