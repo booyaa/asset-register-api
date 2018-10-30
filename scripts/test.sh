@@ -2,5 +2,8 @@
 
 set -e
 
-cd asset-register-tests
+cd HomesEnglandTest
+dotnet test
+
+cd ../AssetRegisterTest
 dotnet test
