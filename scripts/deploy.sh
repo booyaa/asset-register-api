@@ -7,4 +7,4 @@ curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=
 ./cf auth "$CF_USER" "$CF_PASSWORD"
 ./cf target -o "$CF_ORG" -s "$CF_SPACE"
 
-cd asset-register-api && ../cf push
+cd WebApi && ../cf push
