@@ -1,4 +1,4 @@
-COMPOSE = docker-compose -f asset-register-api/docker-compose.yml
+WEBAPI_RUNTIME_TAG = webapi-rt
 
 .PHONY: test setup serve build docker-build docker-down shell test-homes-england test-web-api
 
@@ -15,16 +15,16 @@ test-web-api:
 
 setup: build
 
-serve: docker-down docker-build
-	$(COMPOSE) up
+serve: 
+	docker run --rm  -p 5000:80 $(WEBAPI_RUNTIME_TAG)
 
 build: docker-build
 
 docker-build:
-	$(COMPOSE) build
+	docker build -q --pull -t $(WEBAPI_RUNTIME_TAG) .
 
 docker-down:
-	$(COMPOSE) down
+	# FIXME
 
 shell:
-	$(COMPOSE) run --rm web /bin/bash
+	docker run --rm  -p 5000:80 -it $(WEBAPI_RUNTIME_TAG) bash
