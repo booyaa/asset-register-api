@@ -5,11 +5,10 @@ using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using WebApi.Controllers;
 
-namespace AssetRegisterTests.HomesEngland.Controller.SearchAssets
+namespace WebApiTest.Controller.SearchAssets
 {
     using AssetDictionary = Dictionary<string, string>;
     using AssetsDictionary = Dictionary<string, Dictionary<string, string>[]>;

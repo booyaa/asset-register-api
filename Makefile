@@ -4,18 +4,21 @@ RUN_WEB_SERVICE = $(COMPOSE) run --rm --service-ports web
 
 
 .PHONY: \
-		test test-homes-england test-web-api \
+		test test-homes-england test-web-api test-acceptance \
 		setup serve build stop shell \
 		docker-build docker-down docker-stop \
 
 
-test: test-homes-england test-web-api
+test: test-homes-england test-web-api test-acceptance
 
 test-homes-england: build
 	$(RUN_WEB) dotnet test HomesEnglandTest
 
 test-web-api: build
-	$(RUN_WEB) dotnet test AssetRegisterTest
+	$(RUN_WEB) dotnet test WebApiTest
+
+test-acceptance: build
+	$(RUN_WEB) dotnet test AcceptanceTest
 
 
 setup: build

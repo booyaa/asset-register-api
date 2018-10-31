@@ -8,7 +8,7 @@ using Moq;
 using NUnit.Framework;
 using WebApi.Controllers;
 
-namespace AssetRegisterTests.HomesEngland.Controller.GetAssets
+namespace WebApiTest.Controller.GetAssets
 {
     using AssetDictionary = Dictionary<string, string>;
     using AssetsDictionary = Dictionary<string, Dictionary<string, string>[]>;

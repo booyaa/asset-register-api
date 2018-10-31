@@ -1,6 +1,6 @@
 using HomesEngland.Domain;
 
-namespace AssetRegisterTests.HomesEngland.Controller.SearchAssets.Examples
+namespace WebApiTest.Controller.SearchAssets.Examples
 {
     public class SearchAssetsControllerTestExampleOne:SearchAssetsControllerTest
     {

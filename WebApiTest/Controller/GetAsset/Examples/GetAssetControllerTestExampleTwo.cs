@@ -1,4 +1,4 @@
-namespace AssetRegisterTests.HomesEngland.Controller.GetAsset.Examples
+namespace WebApiTest.Controller.GetAsset.Examples
 {
     public class GetAssetControllerTestExampleTwo:GetAssetControllerTest
     {

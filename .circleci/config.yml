@@ -22,7 +22,13 @@ jobs:
     executor: dotnet
     steps:
       - checkout
-      - run: dotnet test AssetRegisterTest
+      - run: dotnet test WebApiTest
+
+  test_acceptance:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test AcceptanceTest
 
   deploy_staging:
     executor: dotnet
@@ -45,6 +51,9 @@ workflows:
           requires:
             - build
       - test_web_api:
+          requires:
+            - build
+      - test_acceptance:
           requires:
             - build
       - deploy_staging:
