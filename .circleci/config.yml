@@ -53,6 +53,9 @@ workflows:
       - test_web_api:
           requires:
             - build
+      - test_acceptance:
+          requires:
+            - build
       - deploy_staging:
           requires:
             - test_homes_england
