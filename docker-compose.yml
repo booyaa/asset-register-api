@@ -3,8 +3,15 @@ services:
   web:
     build: 
       context: .
-      target: webapi-runtime
+      target: development
     environment:
       - ASPNETCORE_URLS=http://*:5000
     ports:
-    - "5000:5000"
+      - "5000:5000"
+    volumes:
+      - '.:/app'
+      # persist the home, as cache goes in it
+      - 'home:/root'
+
+volumes:
+  home:

@@ -1,33 +1,29 @@
-FROM microsoft/dotnet:2.1-sdk AS build-base
+FROM microsoft/dotnet:2.1-sdk AS base
+
 WORKDIR /app
 
-FROM build-base AS build-homes-england
-WORKDIR /app/HomesEngland
-COPY HomesEngland/*.csproj .
-RUN dotnet restore
-COPY HomesEngland/. .
-RUN dotnet publish -c Release -o out
+FROM base as development
+# we don't need to do anything else here, since we'll be using
+# a volume
 
-FROM build-homes-england as build-web-api
-WORKDIR /app/WebApi
-COPY WebApi/*.csproj .
-RUN dotnet restore
-COPY WebApi/. .
-RUN dotnet publish -c Release -o out
-
-FROM build-homes-england AS test-homes-england
-WORKDIR /app/HomesEnglandTest
-COPY HomesEnglandTest/. .
-CMD ["dotnet", "test", "--logger:trx"]
-
-FROM build-web-api as test-web-api
-WORKDIR /app/AssetRegisterTest
-COPY AssetRegisterTest/. .
-CMD ["dotnet", "test", "--logger:trx"]
+CMD bash
 
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
-WORKDIR /app
-COPY --from=build-web-api /app/WebApi/out ./
-#COPY --from=build-web-api /app/asset-register-api/out ./
-CMD ["dotnet", "web-api.dll"]
+# TODO: we need to hook this up into the makefile for our OSX people.
+FROM development as runtime
+# OSX isn't great with volumes, so we'll also package it together for use
+
+# Add project files
+COPY HomesEngland/*.csproj ./HomesEngland/
+COPY WebApi/*.csproj ./WebApi/
+
+# As WebApi references HomesEngland, we only need to
+# restore WebApi
+RUN dotnet restore WebApi
+
+# Add the rest after we've built
+ADD . ./
+
+EXPOSE 5000
+
+CMD dotnet run --project WebApi
