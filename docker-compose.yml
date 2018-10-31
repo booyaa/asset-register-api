@@ -3,6 +3,8 @@ services:
   web:
     build: 
       context: .
-      target: webapi-rt
+      target: webapi-runtime
+    environment:
+      - ASPNETCORE_URLS=http://*:5000
     ports:
-    - "5000:80"
+    - "5000:5000"
