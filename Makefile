@@ -1,24 +1,36 @@
-COMPOSE = docker-compose -f docker-compose.yml
-WEBAPI_RUNTIME_TAG = webapi-rt
+COMPOSE = docker-compose
+RUN_WEB = $(COMPOSE) run --rm web
+RUN_WEB_SERVICE = $(COMPOSE) run --rm --service-ports web
 
-.PHONY: test setup serve build docker-build docker-down shell test-homes-england test-web-api
+
+.PHONY: \
+		test test-homes-england test-web-api \
+		setup serve build stop shell \
+		docker-build docker-down docker-stop \
+
 
 test: test-homes-england test-web-api
 
-test-homes-england:
-	docker build -q --pull --target test-homes-england -t asset-register-api:test-homes-england .
-	docker run --rm asset-register-api:test-homes-england
+test-homes-england: build
+	$(RUN_WEB) dotnet test HomesEnglandTest
 
-test-web-api:
-	docker build -q --pull --target test-web-api -t asset-register-api:test-web-api .
-	docker run --rm asset-register-api:test-web-api
+test-web-api: build
+	$(RUN_WEB) dotnet test AssetRegisterTest
+
 
 setup: build
+	# This is implicit: $(RUN_WEB) dotnet restore
 
-serve: 
-	$(COMPOSE) up -d
+serve: setup
+	$(RUN_WEB_SERVICE) dotnet run --project WebApi
 
 build: docker-build
+
+stop: docker-stop
+
+shell:
+	$(RUN_WEB) bash
+
 
 docker-build:
 	$(COMPOSE) build
@@ -26,5 +38,5 @@ docker-build:
 docker-down:
 	$(COMPOSE) down
 
-shell:
-	$(COMPOSE) run --rm web /bin/bash
+docker-stop:
+	$(COMPOSE) stop
