@@ -24,4 +24,6 @@ RUN dotnet restore WebApi
 # Add the rest after we've built
 ADD . ./
 
+EXPOSE 5000
+
 CMD dotnet run --project WebApi
