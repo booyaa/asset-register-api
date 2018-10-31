@@ -1,3 +1,9 @@
 ---
+buildpack: dotnet_core_buildpack
+stack: cflinuxfs2
+
+env:
+  SENTRY_DSN: https://1675e5a4dd3d4635bdf635d4f5ff7156@sentry.io/1312918
+
 applications:
-- name: asset-register-api-production
+  - name: asset-register-api-production-blue
