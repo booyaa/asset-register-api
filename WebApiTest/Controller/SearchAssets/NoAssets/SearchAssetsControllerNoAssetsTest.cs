@@ -15,7 +15,7 @@ namespace WebApiTest.Controller.SearchAssets.NoAssets
 
     public class SearchAssetsControllerNoAssetsTest
     {
-        private Mock<ISearchAssetsUseCase> _mock;
+        private Mock<ISearchAssets> _mock;
         private SearchController _controller;
         protected Asset[] SearchResults => new Asset[0];
         private string SearchQuery => "Search";
@@ -23,7 +23,7 @@ namespace WebApiTest.Controller.SearchAssets.NoAssets
         [SetUp]
         public void SetUp()
         {
-            _mock = new Mock<ISearchAssetsUseCase>();
+            _mock = new Mock<ISearchAssets>();
             _mock.Setup(useCase => useCase.Execute(SearchQuery)).ReturnsAsync(() => SearchResults.ToList().Select(_=>_.ToDictionary()).ToArray());
             _controller = new SearchController(_mock.Object);
         }

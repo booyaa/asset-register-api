@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HomesEngland.Boundary;
+using HomesEngland.Boundary.Port;
 using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
 using Moq;
@@ -12,7 +13,7 @@ namespace HomesEnglandTest.UseCase.SearchAssets
     public abstract class SearchAssetsTest
     {
         Mock<IAssetGateway> _mock;
-        private ISearchAssetsUseCase UseCase { get; set; }
+        private ISearchAssets UseCase { get; set; }
         protected Dictionary<string, string>[] SearchResults { get; set; }
         
         protected abstract string SearchQuery { get; }

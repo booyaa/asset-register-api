@@ -20,7 +20,7 @@ namespace WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
-            new AssetRegister().RegisterDependencies((type, provider) =>
+            new AssetRegister().ExportDependencies((type, provider) =>
                 services.AddTransient(type, _ => provider())
             );
         }

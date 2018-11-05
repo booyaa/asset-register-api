@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace HomesEngland.Boundary.UseCase
 {
-    public interface IGetAssetsUseCase
+    public interface ISearchAssets : IUseCaseTask<string, Dictionary<string, string>[]>
     {
-        Task<Dictionary<string, string>[]> Execute(int[] id);
+        
     }
 }

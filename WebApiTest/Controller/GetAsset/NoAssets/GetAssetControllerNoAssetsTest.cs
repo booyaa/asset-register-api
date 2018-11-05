@@ -11,13 +11,13 @@ namespace WebApiTest.Controller.GetAsset.NoAssets
     public abstract class GetAssetControllerNoAssetsTest
     {
         protected abstract int AssetId { get; }
-        private Mock<IGetAssetUseCase> _mock;
+        private Mock<IGetAsset> _mock;
         private AssetController _controller;
         
         [SetUp]
         public void SetUp()
         {
-            _mock = new Mock<IGetAssetUseCase>();
+            _mock = new Mock<IGetAsset>();
             _mock.Setup(useCase => useCase.Execute(AssetId)).ReturnsAsync(() =>throw new NoAssetException());
             
             _controller = new AssetController(_mock.Object);

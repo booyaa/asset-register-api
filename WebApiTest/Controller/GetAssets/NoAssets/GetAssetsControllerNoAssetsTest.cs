@@ -16,13 +16,13 @@ namespace WebApiTest.Controller.GetAssets.NoAssets
     {
 
         private int[] AssetIds = {1, 2, 3, 4};
-        private Mock<IGetAssetsUseCase> _mock;
+        private Mock<IGetAssets> _mock;
         private AssetsController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            _mock = new Mock<IGetAssetsUseCase>();
+            _mock = new Mock<IGetAssets>();
             _mock.Setup(useCase => useCase.Execute(AssetIds)).ReturnsAsync(
                 () => new Dictionary<string, string>[0]);
             _controller = new AssetsController(_mock.Object);

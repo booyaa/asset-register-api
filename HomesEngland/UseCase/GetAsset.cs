@@ -1,26 +1,27 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HomesEngland.Boundary;
+using HomesEngland.Boundary.Port;
 using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
 using HomesEngland.Exception;
 
 namespace HomesEngland.UseCase
 {
-    public class GetAsset :IGetAssetUseCase
+    public class GetAsset : IGetAsset
     {
-        private IAssetGateway Gateway { get; }
-        public GetAsset(IAssetGateway gateway)
+        private readonly IAssetRetriever _assetRetriever;
+        
+        public GetAsset(IAssetRetriever assetRetriever)
         {
-            Gateway = gateway;
+            _assetRetriever = assetRetriever;
         }
+        
         public async Task<Dictionary<string,string>> Execute(int id)
         {
-            Asset asset = await Gateway.GetAsset(id);
-            if (asset == null)
-            {
-                throw new NoAssetException();
-            }
+            Asset asset = await _assetRetriever.GetAsset(id);
+            
+            if (asset == null) throw new NoAssetException();
+            
             return asset.ToDictionary();
         }
     }

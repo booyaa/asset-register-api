@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HomesEngland.Boundary;
+using HomesEngland.Boundary.Port;
 using HomesEngland.Domain;
 using HomesEngland.Exception;
 
 #pragma warning disable 1998
 
-namespace HomesEngland.Gateway.AssetGateway
+namespace HomesEngland.Gateway
 {
-    public class InMemoryAssetGateway:IAssetGateway
+    public class InMemoryAsset:IAssetGateway
     {
         readonly List<Asset> _assets = new List<Asset>();
         public async Task<Asset> GetAsset(int id)
