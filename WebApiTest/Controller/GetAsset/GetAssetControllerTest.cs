@@ -18,13 +18,13 @@ namespace WebApiTest.Controller.GetAsset
         protected abstract string AssetAddress { get; }
         protected abstract string AssetSchemeID { get; }
         protected abstract string AssetAccountingYear { get; }
-        private Mock<IGetAssetUseCase> _mock;
+        private Mock<IGetAsset> _mock;
         private AssetController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            _mock = new Mock<IGetAssetUseCase>();
+            _mock = new Mock<IGetAsset>();
             _mock.Setup(useCase => useCase.Execute(AssetId)).ReturnsAsync(() => (new Asset()
             {
                 Address = AssetAddress,

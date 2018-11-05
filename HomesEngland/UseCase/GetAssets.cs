@@ -2,27 +2,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HomesEngland.Boundary;
+using HomesEngland.Boundary.Port;
 using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
 using HomesEngland.Exception;
 
 namespace HomesEngland.UseCase
 {
-    public class GetAssets:IGetAssetsUseCase
+    public class GetAssets:IGetAssets
     {
-        private IAssetGateway Gateway { get; }
-        public GetAssets(IAssetGateway gateway)
+        private readonly IAssetsRetriever _assetsRetriever;
+        
+        public GetAssets(IAssetsRetriever assetsRetriever)
         {
-            Gateway = gateway;
+            _assetsRetriever = assetsRetriever;
         }
 
         public async Task<Dictionary<string,string>[]> Execute(int[] id)
         {
-            Asset[] assets = await Gateway.GetAssets(id);
-            if (assets == null)
-            {
-                throw new NoAssetException();
-            }
+            Asset[] assets = await _assetsRetriever.GetAssets(id);
+
+            if (assets == null) throw new NoAssetException();
+            
             return assets.Select(_ => _.ToDictionary()).ToArray();
         }
     }

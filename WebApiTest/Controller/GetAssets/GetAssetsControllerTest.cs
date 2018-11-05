@@ -19,13 +19,13 @@ namespace WebApiTest.Controller.GetAssets
         protected abstract Asset[] Assets { get; }
         protected abstract int[] AssetIds { get; }
 
-        private Mock<IGetAssetsUseCase> _mock;
+        private Mock<IGetAssets> _mock;
         private AssetsController _controller;
 
         [SetUp]
         public void SetUp()
         {
-            _mock = new Mock<IGetAssetsUseCase>();
+            _mock = new Mock<IGetAssets>();
             _mock.Setup(useCase => useCase.Execute(AssetIds)).ReturnsAsync(
                 () => Assets.Select(_ => _.ToDictionary()).ToArray());
 

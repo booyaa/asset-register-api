@@ -11,17 +11,17 @@ namespace WebApi.Controllers
     [ApiController]
     public class AssetsController : ControllerBase
     {
-        private readonly IGetAssetsUseCase _assetsUseCase;
-        public AssetsController(IGetAssetsUseCase useCase)
+        private readonly IGetAssets _assets;
+        public AssetsController(IGetAssets useCase)
         {
-            _assetsUseCase = useCase;
+            _assets = useCase;
         }
 
         [HttpGet]
         [Produces("application/json")]
         public async Task<ActionResult<AssetsDictionary>> Get(int[] ids)
         {
-            return GetWrappedAssets( await _assetsUseCase.Execute(ids));
+            return GetWrappedAssets( await _assets.Execute(ids));
         }
 
         private static AssetsDictionary GetWrappedAssets(Dictionary<string, string>[] results)

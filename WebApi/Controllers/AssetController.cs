@@ -12,10 +12,10 @@ namespace WebApi.Controllers
     [ApiController]
     public class AssetController : ControllerBase
     {
-        private readonly IGetAssetUseCase _assetUseCase;
-        public AssetController(IGetAssetUseCase useCase)
+        private readonly IGetAsset _asset;
+        public AssetController(IGetAsset useCase)
         {
-            _assetUseCase = useCase;
+            _asset = useCase;
         }
 
         [HttpGet("{id}")]
@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                return await _assetUseCase.Execute(id);
+                return await _asset.Execute(id);
             }
             catch (NoAssetException)
             {

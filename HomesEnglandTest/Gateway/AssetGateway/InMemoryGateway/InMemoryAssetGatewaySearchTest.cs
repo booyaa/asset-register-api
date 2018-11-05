@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using HomesEngland.Boundary;
-using HomesEngland.Gateway.AssetGateway;
+using HomesEngland.Boundary.Port;
+using HomesEngland.Gateway;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.Gateway.AssetGateway.InMemoryGateway
@@ -12,7 +13,7 @@ namespace HomesEnglandTest.Gateway.AssetGateway.InMemoryGateway
         [SetUp]
         public override async Task SetUp()
         {
-            AssetGateway = new InMemoryAssetGateway();
+            AssetGateway = new InMemoryAsset();
             await base.SetUp();
         }
     }

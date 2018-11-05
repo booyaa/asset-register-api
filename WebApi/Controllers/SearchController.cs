@@ -11,8 +11,8 @@ namespace WebApi.Controllers
     [ApiController]
     public class SearchController : Controller
     {
-        private ISearchAssetsUseCase UseCase { get; }
-        public SearchController(ISearchAssetsUseCase useCase)
+        private ISearchAssets UseCase { get; }
+        public SearchController(ISearchAssets useCase)
         {
             UseCase = useCase;
         }
