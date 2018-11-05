@@ -40,7 +40,7 @@ jobs:
     executor: dotnet
     steps:
       - checkout
-      - run: echo 'deploy_production' # scripts/deploy.sh production
+      - run: scripts/deploy.sh production
 
 workflows:
   version: 2
