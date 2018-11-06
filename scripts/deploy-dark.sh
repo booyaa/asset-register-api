@@ -11,9 +11,6 @@ curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=
 ./cf api https://api.cloud.service.gov.uk
 ./cf auth ${CF_USER} ${CF_PASSWORD}
 
-# Use when we can safely deploy to the `staging` and `production` spaces
-# For now, fix to `sandbox` space
 ./cf target -o ${CF_ORG} -s ${1}
-# ./cf target -o ${CF_ORG} -s sandbox
 
-./cf push -f deploy-manifests/${1}.yml
+./cf push -f deploy-manifests/${1}-dark.yml
