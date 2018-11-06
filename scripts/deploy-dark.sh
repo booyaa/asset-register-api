@@ -14,3 +14,4 @@ curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=
 ./cf target -o ${CF_ORG} -s ${1}
 
 ./cf push -f deploy-manifests/${1}-dark.yml
+./cf set-env asset-register-api-${1}-dark circle_commit ${CIRCLE_SHA1}
