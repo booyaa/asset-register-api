@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Net;
+using Infrastructure.Api.Exceptions;
+using Infrastructure.Api.Response.Errors;
+using Infrastructure.Api.Response.Validation;
 
-namespace Infrastructure
+namespace Infrastructure.Api.Response
 {
     public class ApiResponse<T> where T : class
     {        

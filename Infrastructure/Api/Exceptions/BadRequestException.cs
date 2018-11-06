@@ -1,6 +1,7 @@
 ﻿using System.Net;
+using Infrastructure.Api.Response.Validation;
 
-namespace Infrastructure
+namespace Infrastructure.Api.Exceptions
 {
     public class BadRequestException : ApiException
     {

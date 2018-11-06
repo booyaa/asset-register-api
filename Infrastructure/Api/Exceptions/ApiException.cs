@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Infrastructure
+namespace Infrastructure.Api.Exceptions
 {
     /// <summary>
     /// Http Status Code aware exception class

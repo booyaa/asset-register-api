@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Infrastructure.Api.Response.Validation;
 
-namespace Infrastructure
+namespace Infrastructure.Api.Response.Errors
 {
     public class ApiError
     {

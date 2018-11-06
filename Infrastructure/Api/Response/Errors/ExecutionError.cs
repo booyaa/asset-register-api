@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Infrastructure
+namespace Infrastructure.Api.Response.Errors
 {
     /// <summary>
     /// Denotes an Exception that has happened in the system

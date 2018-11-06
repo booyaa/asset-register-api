@@ -1,10 +1,11 @@
 using System;
 using System.Net;
-using Infrastructure;
 using FluentAssertions;
+using Infrastructure.Api.Exceptions;
+using Infrastructure.Api.Response;
 using NUnit.Framework;
 
-namespace InfrastructureTest
+namespace InfrastructureTest.Api.Response
 {
     [TestFixture]
     public class ApiResponseTests
@@ -19,7 +20,10 @@ namespace InfrastructureTest
         {
             //arrange
             //act
-            var response = new ApiResponse<object>(new object());
+            var response = new ApiResponse<TestResponse>(new TestResponse
+            {
+                Name = "test"
+            });
             //assert
             response.StatusCode.Should().Be(200);
 

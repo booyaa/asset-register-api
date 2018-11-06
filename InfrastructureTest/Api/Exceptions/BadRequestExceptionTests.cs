@@ -1,9 +1,10 @@
 using System.Net;
 using FluentAssertions;
-using Infrastructure;
+using Infrastructure.Api.Exceptions;
+using Infrastructure.Api.Response.Validation;
 using NUnit.Framework;
 
-namespace InfrastructureTest
+namespace InfrastructureTest.Api.Exceptions
 {
     [TestFixture]
     public class BadRequestExceptionTests
