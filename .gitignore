@@ -269,3 +269,5 @@ __pycache__/
 
 # Directories created from dotnet publish
 */out
+
+asset-register-api.v3.ncrunchsolution
