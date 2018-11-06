@@ -73,9 +73,7 @@ namespace Infrastructure.Api.Middleware
 
         private void LogExceptionAndClearResponse(HttpContext context, Exception ex)
         {
-            //log exception
             _logger.LogError(ex, $"{nameof(ex)} occurred");
-            //clear response
             context.Response.Clear();
         }
     }
