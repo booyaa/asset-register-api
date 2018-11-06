@@ -13,4 +13,4 @@ curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=
 
 ./cf target -o ${CF_ORG} -s ${1}
 
-./cf push -f deploy-manifests/${1}.yml
+./cf push -f deploy-manifests/${1}-dark.yml
