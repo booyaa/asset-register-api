@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Threading.Tasks;
 using Infrastructure.Api.Exceptions;
 using Infrastructure.Api.Response;
@@ -37,56 +36,47 @@ namespace Infrastructure.Api.Middleware
         {
             try
             {
-                //Configure await is a performance optimisation that allows the
-                //asynchronous method call to resume on any available thread
+                //execute next operation in HttpRequest pipeline -> OtherMiddleware -> controller
                 await _next(context).ConfigureAwait(false);
-            }
-            catch (BadRequestException ex)
-            {
-                //log exception
-                _logger.LogError(ex, $"{nameof(ex)} occurred");
-                //clear response
-                context.Response.Clear();
-                //create API response
-                var apiResponse = new ApiResponse<object>(ex);
-                //we are currently only producing JSON so when that changes we need to change this
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int) ex.StatusCode;
-                var response = JsonConvert.SerializeObject(apiResponse);
-                //write response in event of error
-                await context.Response.WriteAsync(response, context.RequestAborted).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
-                //log exception
-                _logger.LogError(ex, $"{nameof(ex)} occurred");
-                //clear response
-                context.Response.Clear();
-                //create API response
-                var apiResponse = new ApiResponse<object>(ex);
-                //we are currently only producing JSON so when that changes we need to change this
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int) ex.StatusCode;
-                var response = JsonConvert.SerializeObject(apiResponse);
-                //write response in event of error
-                await context.Response.WriteAsync(response, context.RequestAborted).ConfigureAwait(false);
+                await HandleApiException(context, ex).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                //log exception
-                _logger.LogError(ex, $"{nameof(ex)} occurred");
-                //clear response
-                context.Response.Clear();
-                //create API response
-                var apiResponse = new ApiResponse<object>(ex);
-                //we are currently only producing JSON so when that changes we need to change this
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                var response = JsonConvert.SerializeObject(apiResponse);
-                //write response in event of error
-                await context.Response.WriteAsync(response, context.RequestAborted).ConfigureAwait(false);
+                await HandleException(context, ex).ConfigureAwait(false);
             }
+        }
 
+        private async Task HandleApiException(HttpContext context, ApiException ex)
+        {
+            LogExceptionAndClearResponse(context, ex);
+            var apiResponse = new ApiResponse<object>(ex);
+            await WriteResponseToClient(context, apiResponse).ConfigureAwait(false);
+        }
+
+        private async Task HandleException(HttpContext context, Exception ex)
+        {
+            LogExceptionAndClearResponse(context, ex);
+            var apiResponse = new ApiResponse<object>(ex);
+            await WriteResponseToClient(context, apiResponse).ConfigureAwait(false);
+        }
+
+        private static async Task WriteResponseToClient(HttpContext context, ApiResponse<object> apiResponse)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode =  apiResponse.StatusCode;
+            var response = JsonConvert.SerializeObject(apiResponse);
+            await context.Response.WriteAsync(response, context.RequestAborted).ConfigureAwait(false);
+        }
+
+        private void LogExceptionAndClearResponse(HttpContext context, Exception ex)
+        {
+            //log exception
+            _logger.LogError(ex, $"{nameof(ex)} occurred");
+            //clear response
+            context.Response.Clear();
         }
     }
 }

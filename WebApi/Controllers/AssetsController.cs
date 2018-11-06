@@ -7,7 +7,7 @@ namespace WebApi.Controllers
 {
     using AssetsDictionary = Dictionary<string, Dictionary<string, string>[]>;
 
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AssetsController : ControllerBase
     {

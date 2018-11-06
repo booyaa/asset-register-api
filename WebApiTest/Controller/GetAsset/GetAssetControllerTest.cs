@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
+using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -45,8 +46,8 @@ namespace WebApiTest.Controller.GetAsset
         [Test]
         public async Task GetAssetControllerReturnsJson()
         {
-            ActionResult<AssetDictionary> returnedData = await _controller.Get(AssetId);
-            AssetDictionary assetAsJson = returnedData.Value;
+            ActionResult<ApiResponse<AssetDictionary>> returnedData = await _controller.Get(AssetId);
+            AssetDictionary assetAsJson = returnedData.Value.Data;
 
             if(assetAsJson["Address"]!=null)
             {

@@ -2,7 +2,6 @@
 using System.Net;
 using Infrastructure.Api.Exceptions;
 using Infrastructure.Api.Response.Errors;
-using Infrastructure.Api.Response.Validation;
 
 namespace Infrastructure.Api.Response
 {
