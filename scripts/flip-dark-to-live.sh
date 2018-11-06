@@ -8,6 +8,9 @@ if [ -z "$1" ]; then
 fi
 
 APP_NAME=asset-register-api-${1}
+APP_HOSTNAME=asset-register-api-${1}
+DARK_APP_NAME=${APP_NAME}-dark
+DARK_APP_HOSTNAME=${APP_NAME}-dark
 
 curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
 ./cf api https://api.cloud.service.gov.uk
@@ -15,8 +18,11 @@ curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=
 
 ./cf target -o ${CF_ORG} -s ${1}
 
-./cf map-route ${APP_NAME}-dark ${CF_DOMAIN} -n ${APP_NAME}
-./cf unmap-route ${APP_NAME}-dark ${CF_DOMAIN} -n ${APP_NAME}-dark
+./cf map-route ${DARK_APP_NAME} ${CF_DOMAIN} -n ${APP_HOSTNAME}
+./cf unmap-route ${APP_NAME} ${CF_DOMAIN} -n ${APP_HOSTNAME}
+
+./cf map-route ${APP_NAME} ${CF_DOMAIN} -n ${DARK_APP_HOSTNAME}
+./cf unmap-route ${APP_NAME}-dark ${CF_DOMAIN} -n ${DARK_APP_HOSTNAME}
 
 ./cf rename ${APP_NAME} ${APP_NAME}-temp
 ./cf rename ${APP_NAME}-dark ${APP_NAME}
