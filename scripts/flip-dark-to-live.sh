@@ -16,7 +16,7 @@ curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=
 ./cf target -o ${CF_ORG} -s ${1}
 
 ./cf map-route ${APP_NAME}-dark ${CF_DOMAIN} -n ${APP_NAME}
-./cf unmap-route ${APP_NAME} ${CF_DOMAIN} -n ${APP_NAME}
+./cf unmap-route ${APP_NAME}-dark ${CF_DOMAIN} -n ${APP_NAME}-dark
 
 ./cf rename ${APP_NAME} ${APP_NAME}-temp
 ./cf rename ${APP_NAME}-dark ${APP_NAME}
