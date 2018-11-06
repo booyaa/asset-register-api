@@ -39,11 +39,13 @@ jobs:
   flip_staging:
     executor: dotnet
     steps:
+      - checkout
       - run: scripts/flip-dark-to-live.sh staging
 
   revert_staging:
     executor: dotnet
     steps:
+      - checkout
       - run: scripts/flip-dark-to-live.sh staging
 
   deploy_dark_production:
@@ -55,11 +57,13 @@ jobs:
   flip_production:
     executor: dotnet
     steps:
+      - checkout
       - run: scripts/flip-dark-to-live.sh production
 
   revert_production:
     executor: dotnet
     steps:
+      - checkout
       - run: scripts/flip-dark-to-live.sh production
 
 workflows:
