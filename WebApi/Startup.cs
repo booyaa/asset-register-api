@@ -1,4 +1,5 @@
 ﻿using HomesEngland.Boundary;
+using Infrastructure.Api.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,8 @@ namespace WebApi
             {
                 app.UseHsts();
             }
+
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseMvc();
