@@ -27,7 +27,7 @@ namespace Infrastructure.Documentation
                 //include the relevant controller version in the relevant versions of the documentation
                 SeperatePerApiVersion(c);
 
-                var apiVersions = GetApiVersionDescriptions(services);
+                var apiVersions = services.BuildServiceProvider().GetApiVersionDescriptions();
 
                 GenerateSwaggerVersionPerApiVersion(apiName, apiVersions, c);
 
@@ -67,25 +67,6 @@ namespace Infrastructure.Documentation
             });
         }
 
-        private static List<ApiVersionDescription> GetApiVersionDescriptions(IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            var api = serviceProvider.GetService<IApiVersionDescriptionProvider>();
-            var apiVersions = api.ApiVersionDescriptions.Select(s => s).ToList();
-            return apiVersions;
-        }
-
-        public static void ConfigureApiVersioning(this IServiceCollection services)
-        {
-            services.AddApiVersioning(o =>
-            {
-                o.DefaultApiVersion = new ApiVersion(1, 0);
-                o.AssumeDefaultVersionWhenUnspecified = true;
-                // {host}/api/v{apiVersion}/{controller}/*
-                o.ApiVersionReader = new UrlSegmentApiVersionReader(); 
-            });
-        }
-
         /// <summary>
         /// Pre-Requisite Controllers must [ApiVersion("x")] on them
         /// </summary>
@@ -115,9 +96,8 @@ namespace Infrastructure.Documentation
 
     public static class ApiVersioningConfigurationExtension
     {
-        private static List<ApiVersionDescription> GetApiVersionDescriptions(IServiceCollection services)
+        public static List<ApiVersionDescription> GetApiVersionDescriptions(this IServiceProvider serviceProvider)
         {
-            var serviceProvider = services.BuildServiceProvider();
             var api = serviceProvider.GetService<IApiVersionDescriptionProvider>();
             var apiVersions = api.ApiVersionDescriptions.Select(s => s).ToList();
             return apiVersions;
@@ -132,32 +112,6 @@ namespace Infrastructure.Documentation
                 // {host}/api/v{apiVersion}/{controller}/*
                 o.ApiVersionReader = new UrlSegmentApiVersionReader();
             });
-        }
-
-        /// <summary>
-        /// Pre-Requisite Controllers must [ApiVersion("x")] on them
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="apiName"></param>
-        /// <returns></returns>
-        public static List<ApiVersionDescription> ConfigureSwaggerUiPerApiVersion(this IApplicationBuilder app, string apiName)
-        {
-            var api = app.ApplicationServices.GetService<IApiVersionDescriptionProvider>();
-            var apiVersions = api.ApiVersionDescriptions.Select(s => s).ToList();
-            app.UseSwaggerUI(c =>
-            {
-                //Generate swagger docs per api version
-                foreach (var apiVersionDescription in apiVersions)
-                {
-                    //Create a swagger endpoint for each swagger version
-                    c.SwaggerEndpoint($"{apiVersionDescription.GetFormattedApiVersion()}/swagger.json",
-                        $"{apiName} {apiVersionDescription.GetFormattedApiVersion()}");
-                }
-            });
-
-            app.UseSwagger();
-
-            return apiVersions;
         }
     }
 }
