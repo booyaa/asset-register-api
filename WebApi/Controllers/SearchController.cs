@@ -7,6 +7,7 @@ namespace WebApi.Controllers
 {
     using AssetsDictionary = Dictionary<string, Dictionary<string, string>[]>;
 
+    [ApiVersion("1")]
     [Route("[controller]")]
     [ApiController]
     public class SearchController : Controller
@@ -19,6 +20,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(AssetsDictionary), 200)]
         public async Task<ActionResult<AssetsDictionary>> Get(string query)
         {
             return GetWrappedAssets(await UseCase.Execute(query));
