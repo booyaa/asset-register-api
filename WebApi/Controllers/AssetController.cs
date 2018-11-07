@@ -22,6 +22,7 @@ namespace WebApi.Controllers
 
         [HttpGet("{id}")]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(Asset), 200)]
         public async Task<ActionResult<Asset>> Get(int id)
         {
             try

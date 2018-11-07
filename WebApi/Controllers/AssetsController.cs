@@ -20,6 +20,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(AssetsDictionary), 200)]
         public async Task<ActionResult<AssetsDictionary>> Get(int[] ids)
         {
             return GetWrappedAssets( await _assets.Execute(ids));
