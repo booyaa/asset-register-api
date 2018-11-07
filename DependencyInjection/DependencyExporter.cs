@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Utilities
+namespace DependencyInjection
 {
     using IDependencyReceiver = Action<Type, Func<object>>;
     using ITypeDependencyReceiver = Action<Type, Type>;
