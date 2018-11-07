@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomesEnglandTest", "HomesEn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTest", "WebApiTest\WebApiTest.csproj", "{E76B2898-BAEB-40F7-BD51-FAE08D05E5EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7C335B53-3F11-4A44-A97A-4C289BEAB480}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7C335B53-3F11-4A44-A97A-4C289BEAB480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureTest", "InfrastructureTest\InfrastructureTest.csproj", "{68EEC29F-C715-48BB-BAD3-77EDA64BC754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureTest", "InfrastructureTest\InfrastructureTest.csproj", "{68EEC29F-C715-48BB-BAD3-77EDA64BC754}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection", "DependencyInjection\DependencyInjection.csproj", "{9B374537-3FDA-45F9-99B8-B0086066BF40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{68EEC29F-C715-48BB-BAD3-77EDA64BC754}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68EEC29F-C715-48BB-BAD3-77EDA64BC754}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68EEC29F-C715-48BB-BAD3-77EDA64BC754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B374537-3FDA-45F9-99B8-B0086066BF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B374537-3FDA-45F9-99B8-B0086066BF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B374537-3FDA-45F9-99B8-B0086066BF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B374537-3FDA-45F9-99B8-B0086066BF40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

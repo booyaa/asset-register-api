@@ -1,3 +1,4 @@
 ---
 applications:
 - name: asset-register-api-staging-dark
+  memory: 512M
