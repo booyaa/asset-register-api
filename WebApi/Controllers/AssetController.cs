@@ -4,10 +4,12 @@ using HomesEngland.Boundary.UseCase;
 using HomesEngland.Exception;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace WebApi.Controllers
 {
     using Asset = Dictionary<string,string>;
 
+    [ApiVersion("1")]
     [Route("[controller]")]
     [ApiController]
     public class AssetController : ControllerBase
