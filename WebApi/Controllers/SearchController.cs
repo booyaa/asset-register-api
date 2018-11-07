@@ -8,7 +8,7 @@ namespace WebApi.Controllers
     using AssetsDictionary = Dictionary<string, Dictionary<string, string>[]>;
 
     [ApiVersion("1")]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class SearchController : Controller
     {

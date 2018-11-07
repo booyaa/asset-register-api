@@ -46,8 +46,8 @@ namespace WebApiTest.Controller.GetAsset
         [Test]
         public async Task GetAssetControllerReturnsJson()
         {
-            ActionResult<AssetDictionary> returnedData = await _controller.Get(AssetId);
-            AssetDictionary assetAsJson = returnedData.Value;
+            ActionResult<ApiResponse<AssetDictionary>> returnedData = await _controller.Get(AssetId);
+            AssetDictionary assetAsJson = returnedData.Value.Data;
 
             if(assetAsJson["Address"]!=null)
             {
