@@ -9,39 +9,39 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
 
         protected override Asset[] AssetsInGateway => new[]
         {
-            new Asset()
+            new Asset
             {
                 Address = "Cat", 
-                SchemeID = "666",
-                AccountingYear = "1982"
+                SchemeId = 666,
+                AccountingYear = 1982
             },
-            new Asset()
+            new Asset
             {
                 Address = "Dog", 
-                SchemeID = "555",
-                AccountingYear = "1882"
+                SchemeId = 555,
+                AccountingYear = 1882
             },
-            new Asset()
+            new Asset
             {
                 Address = "Pig", 
-                SchemeID = "1234",
-                AccountingYear = "1982"
+                SchemeId = 1234,
+                AccountingYear = 1982
             } 
         };
         
         protected override Asset[] ExpectedGatewaySearchResults => new[]
         {
-            new Asset()
+            new Asset
             {
                 Address = "Cat", 
-                SchemeID = "666",
-                AccountingYear = "1982"
+                SchemeId = 666,
+                AccountingYear = 1982
             },
-            new Asset()
+            new Asset
             {
                 Address = "Pig", 
-                SchemeID = "1234",
-                AccountingYear = "1982"
+                SchemeId = 1234,
+                AccountingYear = 1982
             } 
         };
     }

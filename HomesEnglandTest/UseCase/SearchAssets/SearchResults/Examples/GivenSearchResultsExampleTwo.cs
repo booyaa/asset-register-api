@@ -11,25 +11,25 @@ namespace HomesEnglandTest.UseCase.SearchAssets.SearchResults.Examples
             {
                 Address = "Cow Hut",
                 AccountingYear = "2001",
-                SchemeID = "5467"
+                SchemeId = "5467"
             },
             new Asset
             {
                 Address = "Cow are ok also",
                 AccountingYear = "1981",
-                SchemeID = "888"
+                SchemeId = "888"
             }, 
             new Asset
             {
                 Address = "2 The Street",
                 AccountingYear = "2003",
-                SchemeID = "13567"
+                SchemeId = "13567"
             },
             new Asset
             {
                 Address = "Canadian Geese are full of mean",
                 AccountingYear = "001",
-                SchemeID = "0"
+                SchemeId = "0"
             }
         };
     }

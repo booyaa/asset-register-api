@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using HomesEngland.Boundary;
 using HomesEngland.Boundary.Port;
 using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
 using HomesEngland.Exception;
+using HomesEngland.UseCase.Assets.Models;
 
-namespace HomesEngland.UseCase
+namespace HomesEngland.UseCase.Assets
 {
     public class GetAssets:IGetAssets
     {
@@ -18,13 +17,14 @@ namespace HomesEngland.UseCase
             _assetsRetriever = assetsRetriever;
         }
 
-        public async Task<Dictionary<string,string>[]> Execute(int[] id)
+        public async Task<GetAssetsResponse> Execute(GetAssetsRequest request)
         {
-            Asset[] assets = await _assetsRetriever.GetAssets(id);
+            IList<Asset> assets = await _assetsRetriever.GetAssets(request?.Ids);
 
-            if (assets == null) throw new NoAssetException();
-            
-            return assets.Select(_ => _.ToDictionary()).ToArray();
+            if (assets == null)
+                throw new NoAssetException();
+
+            return assets;
         }
     }
 }

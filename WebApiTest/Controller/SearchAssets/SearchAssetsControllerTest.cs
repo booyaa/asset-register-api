@@ -48,11 +48,11 @@ namespace WebApiTest.Controller.SearchAssets
                 }
                 if(assetAsJson["SchemeID"]!=null)
                 {
-                    Assert.True(SearchResults.Any(_=>_.SchemeID == assetAsJson["SchemeID"]));
+                    Assert.True(SearchResults.Any(_=>_.SchemeId == int.Parse(assetAsJson["SchemeID"])));
                 }
                 if(assetAsJson["AccountingYear"]!=null)
                 {
-                    Assert.True(SearchResults.Any(_=>_.AccountingYear == assetAsJson["AccountingYear"]));
+                    Assert.True(SearchResults.Any(_=>_.AccountingYear == int.Parse(assetAsJson["AccountingYear"])));
                 }
             }
         }

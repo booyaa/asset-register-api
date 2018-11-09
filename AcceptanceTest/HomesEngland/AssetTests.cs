@@ -53,7 +53,7 @@ namespace AssetRegisterTests.HomesEngland
 
             Assert.AreEqual(expected.Address, actual["Address"]);
             Assert.AreEqual(expected.AccountingYear, actual["AccountingYear"]);
-            Assert.AreEqual(expected.SchemeID, actual["SchemeID"]);
+            Assert.AreEqual(expected.SchemeId, actual["SchemeID"]);
         }
 
         [Test]
@@ -62,9 +62,8 @@ namespace AssetRegisterTests.HomesEngland
             Asset asset = new Asset
             {
                 Address = "1, The Pavement, Town",
-                SchemeID = "22",
-                AccountingYear = "1999"
                 SchemeId = 22,
+                AccountingYear = 1999
 
             };
 
@@ -73,8 +72,8 @@ namespace AssetRegisterTests.HomesEngland
             Dictionary<string, string> returnedDictionary = _getAsset.Execute(id).Result;
             
             Assert.True(asset.Address == returnedDictionary["Address"]);
-            Assert.True(asset.AccountingYear == returnedDictionary["AccountingYear"]);
-            Assert.True(asset.SchemeID == returnedDictionary["SchemeID"]);
+            Assert.True(asset.AccountingYear == int.Parse(returnedDictionary["AccountingYear"]));
+            Assert.True(asset.SchemeId == int.Parse(returnedDictionary["SchemeID"]));
         }
 
         [Test]
@@ -85,38 +84,38 @@ namespace AssetRegisterTests.HomesEngland
                 new Asset
                 {
                     Address = "1, The Pavement, Town",
-                    SchemeID = "22",
-                    AccountingYear = "1999"
+                    SchemeId = 22,
+                    AccountingYear = 1999
                 },
                 new Asset
                 {
                     Address = "2, The Dog, City",
-                    SchemeID = "45",
-                    AccountingYear = "1983"
+                    SchemeId = 45,
+                    AccountingYear = 1983
                 },
                 new Asset
                 {
                     Address = "Pavement",
-                    SchemeID = "11",
-                    AccountingYear = "1634"
+                    SchemeId = 11,
+                    AccountingYear = 1634
                 },
                 new Asset
                 {
                     Address = "Dog House",
-                    SchemeID = "13",
-                    AccountingYear = "1927"
+                    SchemeId = 13,
+                    AccountingYear = 1927
                 },
                 new Asset
                 {
                     Address = "Cat House",
-                    SchemeID = "6345",
-                    AccountingYear = "2229"
+                    SchemeId = 6345,
+                    AccountingYear = 2229
                 },
                 new Asset
                 {
                     Address = "Bee Hive",
-                    SchemeID = "234",
-                    AccountingYear = "2018"
+                    SchemeId = 234,
+                    AccountingYear = 2018
                 }
             };
 
@@ -136,38 +135,38 @@ namespace AssetRegisterTests.HomesEngland
                 new Asset
                 {
                     Address = "1, The Pavement, Town",
-                    SchemeID = "22",
-                    AccountingYear = "1999"
+                    SchemeId = 22,
+                    AccountingYear = 1999
                 },
                 new Asset
                 {
                     Address = "2, The Dog, City",
-                    SchemeID = "45",
-                    AccountingYear = "1983"
+                    SchemeId = 45,
+                    AccountingYear = 1983
                 },
                 new Asset
                 {
                     Address = "Pavement",
-                    SchemeID = "11",
-                    AccountingYear = "1983"
+                    SchemeId = 11,
+                    AccountingYear = 1983
                 },
                 new Asset
                 {
                     Address = "Dog House",
-                    SchemeID = "13",
-                    AccountingYear = "1927"
+                    SchemeId = 13,
+                    AccountingYear = 1927
                 },
                 new Asset
                 {
                     Address = "Cat House",
-                    SchemeID = "6345",
-                    AccountingYear = "2229"
+                    SchemeId = 6345,
+                    AccountingYear = 2229
                 },
                 new Asset
                 {
                     Address = "Bee Hive",
-                    SchemeID = "234",
-                    AccountingYear = "2018"
+                    SchemeId = 234,
+                    AccountingYear = 2018
                 }
             };
            

@@ -10,19 +10,19 @@ namespace WebApiTest.Controller.SearchAssets.Examples
             {
                 Address = "Dog House",
                 AccountingYear = "1235",
-                SchemeID = "234"
+                SchemeId = "234"
             },
             new Asset()
             {
                 Address = "Hall",
                 AccountingYear = "1211135",
-                SchemeID = "223434"
+                SchemeId = "223434"
             },
             new Asset()
             {
                 Address = "Cat",
                 AccountingYear = "1234677777",
-                SchemeID = "1235723424"
+                SchemeId = "1235723424"
             },
         };
      

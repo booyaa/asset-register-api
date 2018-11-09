@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
+using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -42,8 +43,8 @@ namespace WebApiTest.Controller.GetAssets
         [Test]
         public async Task GetAssetControllerReturnsJson()
         {
-            ActionResult<AssetsDictionary> returnedData = await _controller.Get(AssetIds);
-            AssetsDictionary json = returnedData.Value;
+            ActionResult<ApiResponse<AssetsDictionary>> returnedData = await _controller.Get(AssetIds);
+            AssetsDictionary json = returnedData.Value.Data;
             foreach (AssetDictionary assetAsJson in json["Assets"])
             {
                 if(assetAsJson["Address"]!=null)
@@ -52,21 +53,21 @@ namespace WebApiTest.Controller.GetAssets
                 }
                 if(assetAsJson["SchemeID"]!=null)
                 {
-                    Assert.True(Assets.Any(_=>_.SchemeID == assetAsJson["SchemeID"]));
+                    Assert.True(Assets.Any(_=>_.SchemeId == int.Parse(assetAsJson["SchemeID"])));
                 }
                 if(assetAsJson["AccountingYear"]!=null)
                 {
-                    Assert.True(Assets.Any(_=>_.AccountingYear == assetAsJson["AccountingYear"]));
+                    Assert.True(Assets.Any(_=>_.AccountingYear == int.Parse(assetAsJson["AccountingYear"])));
                 }
             }
         }
 
-        protected Asset GetAsset(string address, string schemeID, string accountingYear)
+        protected Asset GetAsset(string address, int schemeId, int accountingYear)
         {
             return new Asset()
             {
                 Address = address,
-                SchemeID = schemeID,
+                SchemeId = schemeId,
                 AccountingYear = accountingYear
             };
         }

@@ -12,13 +12,13 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.PartialM
             new Asset()
             {
                 Address = "Dog", 
-                SchemeID = "999",
+                SchemeId = "999",
                 AccountingYear = "1988"
             },
             new Asset()
             {
                 Address = "Moomin", 
-                SchemeID = "1004",
+                SchemeId = "1004",
                 AccountingYear = "1998"
             } 
         };
@@ -28,7 +28,7 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.PartialM
             new Asset()
             {
                 Address = "Dog", 
-                SchemeID = "999",
+                SchemeId = "999",
                 AccountingYear = "1988"
             } 
         };

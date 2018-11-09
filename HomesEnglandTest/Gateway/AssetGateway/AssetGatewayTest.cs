@@ -44,13 +44,13 @@ namespace HomesEnglandTest.Gateway.AssetGateway
             Asset assetToAdd = new Asset()
             {
                 Address = address,
-                SchemeID = schemaID,
+                SchemeId = schemaID,
                 AccountingYear = accountingYear
             };
             int assetId = await AssetGateway.AddAsset(assetToAdd);
             Asset returnedAsset = await AssetGateway.GetAsset(assetId);
             Assert.True((string) returnedAsset.Address == address);
-            Assert.True((string) returnedAsset.SchemeID == schemaID);
+            Assert.True((string) returnedAsset.SchemeId == schemaID);
             Assert.True((string) returnedAsset.AccountingYear == accountingYear);
         }
 
@@ -67,7 +67,7 @@ namespace HomesEnglandTest.Gateway.AssetGateway
                 Asset assetToAdd = new Asset()
                 {
                     Address = address,
-                    SchemeID = schemaID,
+                    SchemeId = schemaID,
                     AccountingYear = accountingYear
                 };
                 int assetId = await AssetGateway.AddAsset(assetToAdd);
@@ -79,7 +79,7 @@ namespace HomesEnglandTest.Gateway.AssetGateway
             for (int i = 0; i < returnedAssets.Length; i++)
             {
                 Assert.True(addedAssets.Values.Any(_ => _.Address == returnedAssets[i].Address));
-                Assert.True(addedAssets.Values.Any(_ => _.SchemeID == returnedAssets[i].SchemeID));
+                Assert.True(addedAssets.Values.Any(_ => _.SchemeId == returnedAssets[i].SchemeId));
                 Assert.True(addedAssets.Values.Any(_=> _.AccountingYear == returnedAssets[i].AccountingYear));
             }
         }

@@ -23,11 +23,11 @@ namespace HomesEnglandTest.UseCase.SearchAssets.SearchResults
         {
             string address = searchResult["Address"];
             string accountingYear = searchResult["AccountingYear"];
-            string schemeID = searchResult["SchemeID"];
+            string schemeId = searchResult["SchemeID"];
 
             Assert.True(GatewaySearchResults.Any(_ => _.Address == address));
-            Assert.True(GatewaySearchResults.Any(_ => _.AccountingYear == accountingYear));
-            Assert.True(GatewaySearchResults.Any(_ => _.SchemeID == schemeID));
+            Assert.True(GatewaySearchResults.Any(_ => _.AccountingYear == int.Parse(accountingYear)));
+            Assert.True(GatewaySearchResults.Any(_ => _.SchemeId == int.Parse(schemeId)));
         }
     }
 }

@@ -9,17 +9,17 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
 
         protected override Asset[] AssetsInGateway => new[]
         {
-            new Asset()
+            new Asset
             {
                 Address = "Cow", 
-                SchemeID = "22",
-                AccountingYear = "1982"
+                SchemeId = 22,
+                AccountingYear = 1982
             },
-            new Asset()
+            new Asset
             {
                 Address = "Clanger", 
-                SchemeID = "67",
-                AccountingYear = "0"
+                SchemeId = 67,
+                AccountingYear = 0
             } 
         };
         
@@ -28,8 +28,8 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Cow", 
-                SchemeID = "22",
-                AccountingYear = "1982"
+                SchemeId = 22,
+                AccountingYear = 1982
             } 
         };
     }

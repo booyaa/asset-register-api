@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HomesEngland.Boundary.UseCase;
+using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -20,20 +21,10 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(AssetsDictionary), 200)]
-        public async Task<ActionResult<AssetsDictionary>> Get(int[] ids)
+        [ProducesResponseType(typeof(ApiResponse<AssetsDictionary>), 200)]
+        public async Task<ActionResult<ApiResponse<AssetsDictionary>>> Get(int[] ids)
         {
-            return GetWrappedAssets( await _assets.Execute(ids));
-        }
-
-        private static AssetsDictionary GetWrappedAssets(Dictionary<string, string>[] results)
-        {
-            return new AssetsDictionary
-            {
-                {
-                    "Assets", results
-                }
-            };
+            return new ApiResponse<Asset>( await _assets.Execute(ids));
         }
     }
 }

@@ -9,13 +9,13 @@ namespace HomesEnglandTest.UseCase.GetAsset
     [TestFixture]
     public abstract class GetAssetTest
     {
-        protected HomesEngland.UseCase.GetAsset UseCase { get; private set; }
+        protected HomesEngland.UseCase.Assets.GetAsset UseCase { get; private set; }
         protected abstract IAssetGateway Gateway { get; }
             
         [SetUp]
         public void SetUp()
         {
-            UseCase = new HomesEngland.UseCase.GetAsset(Gateway);
+            UseCase = new HomesEngland.UseCase.Assets.GetAsset(Gateway);
         }
         
         protected Mock<IAssetGateway> CreateMockToReturnAssetWithName(int id, string address, string schemaID, string accountingYear)
@@ -24,7 +24,7 @@ namespace HomesEnglandTest.UseCase.GetAsset
             mock.Setup(gateway => gateway.GetAsset(id)).ReturnsAsync(() => new Asset()
             {
                 Address = address,
-                SchemeID =  schemaID,
+                SchemeId =  schemaID,
                 AccountingYear = accountingYear
             });
             return mock;

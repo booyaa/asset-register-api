@@ -12,19 +12,19 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.PartialM
             new Asset()
             {
                 Address = "Cow", 
-                SchemeID = "22",
+                SchemeId = "22",
                 AccountingYear = "1982"
             },
             new Asset()
             {
                 Address = "Cow", 
-                SchemeID = "11234",
+                SchemeId = "11234",
                 AccountingYear = "11235"
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "67",
+                SchemeId = "67",
                 AccountingYear = "0"
             } 
         };
@@ -34,13 +34,13 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.PartialM
             new Asset()
             {
                 Address = "Cow", 
-                SchemeID = "22",
+                SchemeId = "22",
                 AccountingYear = "1982"
             },
             new Asset()
             {
                 Address = "Cow", 
-                SchemeID = "11234",
+                SchemeId = "11234",
                 AccountingYear = "11235"
             }, 
         };

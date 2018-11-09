@@ -29,8 +29,8 @@ namespace WebApiTest.Controller.GetAsset
             _mock.Setup(useCase => useCase.Execute(AssetId)).ReturnsAsync(() => (new Asset()
             {
                 Address = AssetAddress,
-                AccountingYear = AssetAccountingYear,
-                SchemeID = AssetSchemeID
+                AccountingYear = int.Parse(AssetAccountingYear),
+                SchemeId = int.Parse(AssetSchemeID)
             }).ToDictionary());
 
             _controller = new AssetController(_mock.Object);

@@ -7,13 +7,13 @@ namespace HomesEnglandTest.UseCase.GetAssets
     [TestFixture]
     public abstract class GetAssetsTest
     {
-        protected HomesEngland.UseCase.GetAssets UseCase { get; set; }
+        protected HomesEngland.UseCase.Assets.GetAssets UseCase { get; set; }
         protected abstract IAssetGateway Gateway { get; }
             
         [SetUp]
         public void SetUp()
         {
-            UseCase = new HomesEngland.UseCase.GetAssets(Gateway);
+            UseCase = new HomesEngland.UseCase.Assets.GetAssets(Gateway);
         }
     }
 }

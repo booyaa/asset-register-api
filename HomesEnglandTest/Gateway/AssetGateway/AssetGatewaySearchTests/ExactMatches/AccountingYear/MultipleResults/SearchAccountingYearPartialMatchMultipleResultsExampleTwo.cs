@@ -12,38 +12,38 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Sheep", 
-                SchemeID = "12354",
-                AccountingYear = "11235066"
+                SchemeId = 12354,
+                AccountingYear = 11235066
             },
             new Asset()
             {
                 Address = "Lion", 
-                SchemeID = "134",
-                AccountingYear = "11214"
+                SchemeId = 134,
+                AccountingYear = 11214
             },
             new Asset()
             {
                 Address = "House", 
-                SchemeID = "3",
-                AccountingYear = "1066"
+                SchemeId = 3,
+                AccountingYear = 1066
             },
             new Asset()
             {
                 Address = "Cat", 
-                SchemeID = "666",
-                AccountingYear = "1066"
+                SchemeId = 666,
+                AccountingYear = 1066
             },
             new Asset()
             {
                 Address = "Dog", 
-                SchemeID = "555",
-                AccountingYear = "1066"
+                SchemeId = 555,
+                AccountingYear = 1066
             },
             new Asset()
             {
                 Address = "Pig", 
-                SchemeID = "1234",
-                AccountingYear = "1066"
+                SchemeId = 1234,
+                AccountingYear = 1066
             }
         };
         
@@ -52,20 +52,20 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Cat", 
-                SchemeID = "666",
-                AccountingYear = "1066"
+                SchemeId = 666,
+                AccountingYear = 1066
             },
             new Asset()
             {
                 Address = "Dog", 
-                SchemeID = "555",
-                AccountingYear = "1066"
+                SchemeId = 555,
+                AccountingYear = 1066
             },
             new Asset()
             {
                 Address = "Pig", 
-                SchemeID = "1234",
-                AccountingYear = "1066"
+                SchemeId = 1234,
+                AccountingYear = 1066
             }
         };
     }

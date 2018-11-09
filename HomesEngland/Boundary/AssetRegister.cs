@@ -4,6 +4,7 @@ using HomesEngland.Boundary.UseCase;
 using HomesEngland.Gateway;
 using HomesEngland.UseCase;
 using DependencyInjection;
+using HomesEngland.UseCase.Assets;
 
 namespace HomesEngland.Boundary
 {    

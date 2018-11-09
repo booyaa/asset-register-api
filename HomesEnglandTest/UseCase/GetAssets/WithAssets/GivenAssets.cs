@@ -33,7 +33,7 @@ namespace HomesEnglandTest.UseCase.GetAssets.WithAssets
                 {
                     Address = Guid.NewGuid().ToString(),
                     AccountingYear = "2001",
-                    SchemeID = "55"
+                    SchemeId = "55"
                     
                 };
                 returnAssets.Add(asset);
@@ -49,7 +49,7 @@ namespace HomesEnglandTest.UseCase.GetAssets.WithAssets
             {
                 Assert.True(returnedAssets.Any(_=>_.ContainsValue(AssetsToReturn[i].Address)));
                 Assert.True(returnedAssets.Any(_=>_.ContainsValue(AssetsToReturn[i].AccountingYear)));
-                Assert.True(returnedAssets.Any(_=>_.ContainsValue(AssetsToReturn[i].SchemeID)));
+                Assert.True(returnedAssets.Any(_=>_.ContainsValue(AssetsToReturn[i].SchemeId)));
             }
         }
         

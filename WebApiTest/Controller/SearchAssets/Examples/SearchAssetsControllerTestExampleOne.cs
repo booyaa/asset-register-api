@@ -10,7 +10,7 @@ namespace WebApiTest.Controller.SearchAssets.Examples
             {
                 Address = "Cow Yard",
                 AccountingYear = "1998",
-                SchemeID = "666"
+                SchemeId = "666"
             }, 
         };
      

@@ -38,7 +38,7 @@ namespace HomesEnglandTest.Gateway.AssetGateway
             {
                 Assert.True(GatewaySearchResults.Any(_=>_.Address == ExpectedGatewaySearchResults[i].Address));
                 Assert.True(GatewaySearchResults.Any(_=>_.AccountingYear == ExpectedGatewaySearchResults[i].AccountingYear));
-                Assert.True(GatewaySearchResults.Any(_=>_.SchemeID == ExpectedGatewaySearchResults[i].SchemeID));
+                Assert.True(GatewaySearchResults.Any(_=>_.SchemeId == ExpectedGatewaySearchResults[i].SchemeId));
             }
         }
     }

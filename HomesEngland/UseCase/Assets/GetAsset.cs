@@ -5,7 +5,7 @@ using HomesEngland.Boundary.UseCase;
 using HomesEngland.Domain;
 using HomesEngland.Exception;
 
-namespace HomesEngland.UseCase
+namespace HomesEngland.UseCase.Assets
 {
     public class GetAsset : IGetAsset
     {

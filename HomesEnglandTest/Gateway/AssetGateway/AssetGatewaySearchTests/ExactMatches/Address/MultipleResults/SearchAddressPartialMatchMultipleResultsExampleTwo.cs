@@ -12,32 +12,32 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Cow", 
-                SchemeID = "22",
-                AccountingYear = "1982"
+                SchemeId = 22,
+                AccountingYear = 1982
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "12355",
-                AccountingYear = "665"
+                SchemeId = 12355,
+                AccountingYear = 665
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "67",
-                AccountingYear = "0"
+                SchemeId = 67,
+                AccountingYear = 0
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "12345",
-                AccountingYear = "61165"
+                SchemeId = 12345,
+                AccountingYear = 61165
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "2345",
-                AccountingYear = "1234"
+                SchemeId = 2345,
+                AccountingYear = 1234
             } 
         };
         
@@ -46,26 +46,26 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "12355",
-                AccountingYear = "665"
+                SchemeId = 12355,
+                AccountingYear = 665
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "67",
-                AccountingYear = "0"
+                SchemeId = 67,
+                AccountingYear = 0
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "12345",
-                AccountingYear = "61165"
+                SchemeId = 12345,
+                AccountingYear = 61165
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "2345",
-                AccountingYear = "1234"
+                SchemeId = 2345,
+                AccountingYear = 1234
             }  
         };
     }

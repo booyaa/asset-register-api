@@ -11,13 +11,13 @@ namespace HomesEnglandTest.UseCase.SearchAssets.SearchResults.Examples
             {
                 Address = "Dogs House",
                 AccountingYear = "1999",
-                SchemeID = "1334"
+                SchemeId = "1334"
             },
             new Asset
             {
                 Address = "Dogs are ok",
                 AccountingYear = "1982",
-                SchemeID = "1337"
+                SchemeId = "1337"
             }, 
         };
 

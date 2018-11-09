@@ -12,25 +12,25 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Pig", 
-                SchemeID = "999",
+                SchemeId = "999",
                 AccountingYear = "1254"
             },
             new Asset()
             {
                 Address = "Clanger", 
-                SchemeID = "912399",
+                SchemeId = "912399",
                 AccountingYear = "1234"
             },
             new Asset()
             {
                 Address = "Clown", 
-                SchemeID = "1213",
+                SchemeId = "1213",
                 AccountingYear = "9582"
             },
             new Asset()
             {
                 Address = "Horse", 
-                SchemeID = "12355",
+                SchemeId = "12355",
                 AccountingYear = "11234"
             }
         };
@@ -40,7 +40,7 @@ namespace HomesEnglandTest.Gateway.AssetGateway.AssetGatewaySearchTests.ExactMat
             new Asset()
             {
                 Address = "Pig", 
-                SchemeID = "999",
+                SchemeId = "999",
                 AccountingYear = "1254"
             }
         };
