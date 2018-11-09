@@ -63,8 +63,7 @@ namespace AssetRegisterTests.HomesEngland
             {
                 Address = "1, The Pavement, Town",
                 SchemeID = "22",
-                AccountingYear = "1999"
-                SchemeId = 22,
+                AccountingYear = "1999",
 
             };
 

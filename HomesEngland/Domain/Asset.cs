@@ -34,7 +34,7 @@ namespace HomesEngland.Domain
         {
             return new Dictionary<string, string> {
                 {"Address", Address },
-                {"SchemeID", SchemeId.ToString()},
+                {"SchemeID", SchemeID.ToString()},
                 {"AccountingYear", AccountingYear.ToString()}
             };
         }
