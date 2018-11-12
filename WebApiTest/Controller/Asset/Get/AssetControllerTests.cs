@@ -12,8 +12,8 @@ namespace WebApiTest.Controller.Asset.Get
     [TestFixture]
     public class AssetControllerTests
     {
-        public AssetController _classUnderTest;
-        public Mock<IGetAsset> _mockUseCase;
+        private readonly AssetController _classUnderTest;
+        private readonly Mock<IGetAsset> _mockUseCase;
         public AssetControllerTests()
         {
             _mockUseCase = new Mock<IGetAsset>();
