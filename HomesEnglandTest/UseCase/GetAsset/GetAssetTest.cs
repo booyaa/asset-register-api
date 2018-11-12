@@ -21,11 +21,13 @@ namespace HomesEnglandTest.UseCase.GetAsset
         protected Mock<IAssetGateway> CreateMockToReturnAssetWithName(int id, string address, string schemaID, string accountingYear)
         {
             Mock<IAssetGateway>  mock = new Mock<IAssetGateway>();
-            mock.Setup(gateway => gateway.GetAsset(id)).ReturnsAsync(() => new Asset()
+            mock.Setup(gateway => gateway.GetAsset(id)).ReturnsAsync(() =>
             {
-                Address = address,
-                SchemeID =  schemaID,
-                AccountingYear = accountingYear
+                Asset asset = TestHelper.TestData.Domain.GenerateAsset();
+                asset.SchemeID = schemaID;
+                asset.Address = address;
+                asset.AccountingYear = accountingYear;
+                return asset;
             });
             return mock;
         }

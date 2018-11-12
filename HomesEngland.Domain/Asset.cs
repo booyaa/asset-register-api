@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HomesEngland.Domain.Domain
+namespace HomesEngland.Domain
 {
     public class Asset
     {

@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HomesEngland\HomesEngland.csproj" />
+      <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
     </ItemGroup>
 
 </Project>

@@ -6,7 +6,6 @@ using HomesEngland.Exception;
 using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace WebApi.Controllers
 {
     using Asset = Dictionary<string, string>;

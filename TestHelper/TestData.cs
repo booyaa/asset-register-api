@@ -1,6 +1,6 @@
 ﻿using System;
 using Bogus;
-using HomesEngland.Domain.Domain;
+using HomesEngland.Domain;
 
 namespace TestHelper
 {
@@ -12,14 +12,14 @@ namespace TestHelper
             {
                 var random = new Random(0);
 
-                var faker = new Faker("en-gb");
+                var faker = new Faker("en");
                 var completionDateForHpiStart = faker.Date.Soon(random.Next(1, 15));
                 var imsActualCompletionDate = faker.Date.Soon(random.Next(30, 90));
                 var imsExpectedCompletionDate = faker.Date.Soon(random.Next(15, 90));
                 var hopCompletionDate = faker.Date.Soon(random.Next(15, 90));
                 var differenceFromImsExpectedCompletionToHopCompletionDate = (imsExpectedCompletionDate.Date - hopCompletionDate).Days;
 
-                var asset = new Faker<Asset>("en-gb")
+                var asset = new Faker<Asset>("en")
                     .RuleFor(property => property.AccountingYear, (fake, model) => random.Next(2018, 2020).ToString())
                     .RuleFor(property => property.Address, (fake, model) => fake.Address.FullAddress())
                     .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
