@@ -26,7 +26,7 @@ namespace TestHelper
                     .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
                     .RuleFor(property => property.DevelopingRslName, (fake, model) => fake.Company.CompanyName())
                     .RuleFor(property => property.LocationLaRegionName, (fake, model) => fake.Address.County())
-                    .RuleFor(property => property.IMSOldRegion, (fake, model) => fake.Address.County())
+                    .RuleFor(property => property.ImsOldRegion, (fake, model) => fake.Address.County())
                     .RuleFor(property => property.MonthPaid, (fake, model) => fake.Date.Month())
                     .RuleFor(property => property.SchemeID, (fake, model) => fake.IndexGlobal.ToString())
                     .RuleFor(property => property.AgencyEquityLoan,(fake, model) => fake.Finance.Amount(5000m, 100000m))
@@ -34,7 +34,7 @@ namespace TestHelper
                     .RuleFor(property => property.ImsActualCompletionDate, (fake, model) => imsActualCompletionDate)
                     .RuleFor(property => property.ImsExpectedCompletionDate, (fake, model) => imsExpectedCompletionDate)
                     .RuleFor(property => property.HopCompletionDate, (fake, model) => hopCompletionDate)
-                    .RuleFor(property => property.DifferenceFromIMSExpectedCompletionToHopCompletionDate, (fake, model) => differenceFromImsExpectedCompletionToHopCompletionDate)
+                    .RuleFor(property => property.DifferenceFromImsExpectedCompletionToHopCompletionDate, (fake, model) => differenceFromImsExpectedCompletionToHopCompletionDate)
                     .RuleFor(property => property.DeveloperEquityLoan, (fake, model) => null)
                     .RuleFor(property => property.ShareOfRestrictedEquity, (fake, model) => fake.Finance.Amount(50,100))
                     ;

@@ -4,6 +4,6 @@ namespace HomesEngland.Boundary.UseCase
 {
     public interface IUseCaseTask<in TRequest, TResponse>
     {
-        Task<TResponse> Execute(TRequest request);
+        Task<TResponse> ExecuteAsync(TRequest request);
     }
 }

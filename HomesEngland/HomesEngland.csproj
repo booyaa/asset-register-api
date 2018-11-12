@@ -7,8 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Dapper" Version="1.50.5" />
+      <PackageReference Include="Dapper.SimpleCRUD" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
       <ProjectReference Include="..\HomesEngland.Domain\HomesEngland.Domain.csproj" />
+      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

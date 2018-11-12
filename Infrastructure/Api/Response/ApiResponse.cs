@@ -5,7 +5,7 @@ using Infrastructure.Api.Response.Errors;
 
 namespace Infrastructure.Api.Response
 {
-    public class ApiResponse<T> where T : class
+    public class ApiResponse<T>
     {        
         public T Data { get; set; }
         public int StatusCode { get; set; }

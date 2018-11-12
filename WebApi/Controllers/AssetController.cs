@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using HomesEngland.Boundary.UseCase;
-using HomesEngland.Exception;
+﻿using System.Threading.Tasks;
+using HomesEngland.UseCase.GetAsset;
+using HomesEngland.UseCase.GetAsset.Models;
 using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Extensions;
 
 namespace WebApi.Controllers
 {
-    using Asset = Dictionary<string, string>;
-
     [ApiVersion("1")]
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(typeof(ApiResponse<object>), 400)]
+    [ProducesResponseType(typeof(ApiResponse<object>), 500)]
     public class AssetController : ControllerBase
     {
         private readonly IGetAsset _asset;
@@ -23,11 +22,11 @@ namespace WebApi.Controllers
 
         [HttpGet("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Asset), 200)]
-        public async Task<ActionResult<ApiResponse<Asset>>> Get(int id)
+        [ProducesResponseType(typeof(ApiResponse<GetAssetResponse>), 200)]
+        public async Task<IActionResult> Get(GetAssetRequest request)
         {
-            var result = await _asset.Execute(id).ConfigureAwait(false);
-            return new ApiResponse<Asset>(result);
+            var result = await _asset.ExecuteAsync(request).ConfigureAwait(false);
+            return this.StandardiseResponse(result);
         }
     }
 }

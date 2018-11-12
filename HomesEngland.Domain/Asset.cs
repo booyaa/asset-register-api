@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
-
+using Dapper;
 namespace HomesEngland.Domain
 {
-    public class Asset
+    [Table("Assets")]
+    public class Asset:IEntity<int>
     {
+        [Key]
+        public int Id { get; set; }
+        public DateTime ModifiedDateTime { get; set; }
         public string MonthPaid { get; set; }
         public string AccountingYear { get; set; }
         public string SchemeID { get; set; }
 
         //Identifying Information
         public string LocationLaRegionName { get; set; }
-        public string IMSOldRegion { get; set; }
+        public string ImsOldRegion { get; set; }
         public string NoOfBeds { get; set; }
         //IMS Adress
         public string Address { get; set; }
@@ -28,7 +32,7 @@ namespace HomesEngland.Domain
         public decimal? DeveloperEquityLoan { get; set; }
         public decimal? ShareOfRestrictedEquity { get; set; }
         //Calcuation
-        public int? DifferenceFromIMSExpectedCompletionToHopCompletionDate { get; set; }
+        public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
 
         public Dictionary<string, string> ToDictionary()
         {
@@ -38,5 +42,7 @@ namespace HomesEngland.Domain
                 {"AccountingYear", AccountingYear.ToString()}
             };
         }
+
+
     }
 }
