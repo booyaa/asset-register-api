@@ -48,12 +48,12 @@ namespace HomesEngland.Gateway
 
         private bool QueryFoundInProperties(string searchQuery, Asset asset)
         {
-            return GetPropertyValues(asset).Any(_ => _.ToString().Contains(searchQuery));
+            return GetPropertyValues(asset).Where(w=> w != null).Any(_ => _.ToString().Contains(searchQuery));
         }
 
         private List<object> GetPropertyValues(Asset asset)
         {
-            return asset.GetType().GetProperties().Select(prop => prop.GetValue(asset)).ToList();
+            return asset.GetType().GetProperties().Where(w=> w.PropertyType == typeof(string)).Select(prop => prop.GetValue(asset)).ToList();
         }
 
         private async Task AddAsset(int[] ids, List<Asset> returnList, int i)
