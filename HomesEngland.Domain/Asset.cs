@@ -17,18 +17,18 @@ namespace HomesEngland.Domain
         public string Address { get; set; }
         public string DevelopingRslName { get; set; }
         //Completion Dates
-        public DateTime CompletionDateForHpiStart { get; set; }
-        public DateTime ImsActualCompletionDate { get; set; }
-        public DateTime ImsExpectedCompletionDate { get; set; }
-        public DateTime ImsLegalCompletionDate { get; set; }
-        public DateTime HopCompletionDate { get; set; }
+        public DateTime? CompletionDateForHpiStart { get; set; }
+        public DateTime? ImsActualCompletionDate { get; set; }
+        public DateTime? ImsExpectedCompletionDate { get; set; }
+        public DateTime? ImsLegalCompletionDate { get; set; }
+        public DateTime? HopCompletionDate { get; set; }
         //Financial Information
-        public decimal Deposit { get; set; }
-        public decimal AgencyEquityLoan { get; set; }
-        public decimal DeveloperEquityLoan { get; set; }
-        public decimal ShareOfRestrictedEquity { get; set; }
+        public decimal? Deposit { get; set; }
+        public decimal? AgencyEquityLoan { get; set; }
+        public decimal? DeveloperEquityLoan { get; set; }
+        public decimal? ShareOfRestrictedEquity { get; set; }
         //Calcuation
-        public int DifferenceFromIMSExpectedCompletionToHopCompletionDate { get; set; }
+        public int? DifferenceFromIMSExpectedCompletionToHopCompletionDate { get; set; }
 
         public Dictionary<string, string> ToDictionary()
         {
