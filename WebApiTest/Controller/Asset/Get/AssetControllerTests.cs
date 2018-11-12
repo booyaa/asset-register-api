@@ -24,6 +24,7 @@ namespace WebApiTest.Controller.Asset.Get
         public async Task GivenValidRequest_ThenReturnsGetAssetResponse()
         {
             //arrange
+            _mockUseCase.Setup(s => s.ExecuteAsync(It.IsAny<GetAssetRequest>())).ReturnsAsync(new GetAssetResponse());
             var request = new GetAssetRequest();
             //act
             var response = await _classUnderTest.Get(request);
