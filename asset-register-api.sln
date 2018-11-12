@@ -19,11 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureTest", "Infra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection", "DependencyInjection\DependencyInjection.csproj", "{9B374537-3FDA-45F9-99B8-B0086066BF40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelper", "TestHelper\TestHelper.csproj", "{0BC59FBB-CDF4-4495-B94A-05908826FF81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHelper", "TestHelper\TestHelper.csproj", "{0BC59FBB-CDF4-4495-B94A-05908826FF81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomesEngland.Domain", "HomesEngland.Domain\HomesEngland.Domain.csproj", "{03F52826-5015-4DC6-A4E5-D4466B67D306}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B95182BD-DB3D-4090-82E8-71446974A660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomesEngland.Domain", "HomesEngland.Domain\HomesEngland.Domain.csproj", "{03F52826-5015-4DC6-A4E5-D4466B67D306}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
