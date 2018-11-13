@@ -10,10 +10,10 @@ namespace HomesEnglandTest.UseCase.GetAsset
     public class GetAssetTests
     {
         public IGetAsset _classUnderTest;
-        public Mock<IEntityReader<Asset, int>> _mockGateway;
+        public Mock<IDatabaseEntityReader<Asset, int>> _mockGateway;
         public GetAssetTests()
         {
-            _mockGateway = new Mock<IEntityReader<Asset, int>>();
+            _mockGateway = new Mock<IDatabaseEntityReader<Asset, int>>();
             _classUnderTest = new HomesEngland.UseCase.GetAsset.GetAsset(_mockGateway.Object);
         }
     }

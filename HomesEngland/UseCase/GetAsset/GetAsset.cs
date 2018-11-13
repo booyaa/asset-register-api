@@ -8,17 +8,17 @@ namespace HomesEngland.UseCase.GetAsset
 {
     public class GetAsset : IGetAsset
     {
-        private readonly IEntityReader<Asset, int> _entityGateway;
+        private readonly IDatabaseEntityReader<Asset, int> _databaseEntityGateway;
 
-        public GetAsset(IEntityReader<Asset, int> entityGateway)
+        public GetAsset(IDatabaseEntityReader<Asset, int> databaseEntityGateway)
         {
-            _entityGateway = entityGateway;
+            _databaseEntityGateway = databaseEntityGateway;
         }
         
         public async Task<GetAssetResponse> ExecuteAsync(GetAssetRequest request)
         {
             //validate   
-            var asset = await _entityGateway.ReadAsync(request.Id.Value).ConfigureAwait(false);
+            var asset = await _databaseEntityGateway.ReadAsync(request.Id.Value).ConfigureAwait(false);
             
             if (asset == null)
                 throw new NoAssetException();

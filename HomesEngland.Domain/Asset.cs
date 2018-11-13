@@ -4,7 +4,7 @@ using Dapper;
 namespace HomesEngland.Domain
 {
     [Table("Assets")]
-    public class Asset:IEntity<int>
+    public class Asset : IAsset
     {
         [Key]
         public int Id { get; set; }
@@ -42,7 +42,5 @@ namespace HomesEngland.Domain
                 {"AccountingYear", AccountingYear.ToString()}
             };
         }
-
-
     }
 }

@@ -6,7 +6,7 @@ using HomesEngland.Domain;
 
 namespace HomesEngland.Gateway
 {
-    public class SqlGateway<T, TIndex>:IGateway<T,TIndex> where T: class, IEntity<TIndex>
+    public class SqlGateway<T, TIndex>:IGateway<T,TIndex> where T: class, IDatabaseEntity<TIndex>
     {
         private readonly IDbConnection _connection;
 

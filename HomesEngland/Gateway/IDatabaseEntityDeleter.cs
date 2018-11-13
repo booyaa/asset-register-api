@@ -3,7 +3,7 @@ using HomesEngland.Domain;
 
 namespace HomesEngland.Gateway
 {
-    public interface IEntityDeleter<T, TIndex> where T : IEntity<TIndex>
+    public interface IDatabaseEntityDeleter<T, TIndex> where T : IDatabaseEntity<TIndex>
     {
         Task<bool> DeleteAsync(TIndex index);
     }

@@ -2,7 +2,7 @@ using System;
 
 namespace HomesEngland.Domain
 {
-    public interface IEntity<TIndex>
+    public interface IDatabaseEntity<TIndex>
     {
         TIndex Id { get; set; }
 

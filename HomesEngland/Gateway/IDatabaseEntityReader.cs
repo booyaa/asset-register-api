@@ -3,7 +3,7 @@ using HomesEngland.Domain;
 
 namespace HomesEngland.Gateway
 {
-    public interface IEntityReader<T, TIndex> where T : IEntity<TIndex>
+    public interface IDatabaseEntityReader<T, TIndex> where T : IDatabaseEntity<TIndex>
     {
         Task<T> ReadAsync(TIndex index);
     }

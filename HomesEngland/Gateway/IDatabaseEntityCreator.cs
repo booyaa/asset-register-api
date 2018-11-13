@@ -3,7 +3,7 @@ using HomesEngland.Domain;
 
 namespace HomesEngland.Gateway
 {
-    public interface IEntityCreator<T, TIndex> where T : IEntity<TIndex>
+    public interface IDatabaseEntityCreator<T, TIndex> where T : IDatabaseEntity<TIndex>
     {
         Task<T> CreatAsync(T entity);
     }
