@@ -34,7 +34,7 @@ namespace HomesEngland.UseCase.GetAsset.Models
 
         public AssetOutputModel(){}
 
-        public AssetOutputModel(Asset asset)
+        public AssetOutputModel(IAsset asset)
         {
             Id = asset.Id;
             ModifiedDateTime = asset.ModifiedDateTime;

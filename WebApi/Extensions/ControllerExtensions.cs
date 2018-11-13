@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Infrastructure.Api.Response;
+﻿using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Extensions
