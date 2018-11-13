@@ -17,7 +17,7 @@ namespace HomesEngland.Boundary
         protected override void RegisterAllExportedDependencies()
         {
             RegisterExportedDependency<IGetAssetUseCase,GetAssetUseCase>();
-            RegisterExportedDependency<IDatabaseEntityReader<Asset,int>,SqlGateway<Asset,int>>();
+            RegisterExportedDependency<IAssetReader, SqlGateway<Asset,int>>();
         }
     }
 }
