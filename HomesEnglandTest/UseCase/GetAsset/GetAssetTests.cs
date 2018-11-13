@@ -16,10 +16,10 @@ namespace HomesEnglandTest.UseCase.GetAsset
     public class GetAssetTests
     {
         private readonly IGetAssetUseCase _classUnderTest;
-        private readonly IDatabaseEntityReader<Asset, int> _mockGateway;
+        private readonly IAssetReader _mockGateway;
         public GetAssetTests()
         {
-            _mockGateway = Substitute.For<IDatabaseEntityReader<Asset, int>>();
+            _mockGateway = Substitute.For<IAssetReader>();
             _classUnderTest = new GetAssetUseCase(_mockGateway);
         }
 

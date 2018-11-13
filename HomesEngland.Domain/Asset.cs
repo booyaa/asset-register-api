@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Dapper;
 namespace HomesEngland.Domain
 {
@@ -33,14 +32,5 @@ namespace HomesEngland.Domain
         public decimal? ShareOfRestrictedEquity { get; set; }
         //Calcuation
         public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
-
-        public Dictionary<string, string> ToDictionary()
-        {
-            return new Dictionary<string, string> {
-                {"Address", Address },
-                {"SchemeId", SchemeId.ToString()},
-                {"AccountingYear", AccountingYear.ToString()}
-            };
-        }
     }
 }

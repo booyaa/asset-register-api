@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using HomesEngland.Domain;
 using HomesEngland.Exception;
 using HomesEngland.Gateway;
 using HomesEngland.UseCase.GetAsset.Models;
@@ -9,11 +8,11 @@ namespace HomesEngland.UseCase.GetAsset
 {
     public class GetAssetUseCase : IGetAssetUseCase
     {
-        private readonly IDatabaseEntityReader<Asset, int> _databaseEntityGateway;
+        private readonly IAssetReader _assetReader;
 
-        public GetAssetUseCase(IDatabaseEntityReader<Asset, int> databaseEntityGateway)
+        public GetAssetUseCase(IAssetReader assetReader)
         {
-            _databaseEntityGateway = databaseEntityGateway;
+            _assetReader = assetReader;
         }
         
         public async Task<GetAssetResponse> ExecuteAsync(GetAssetRequest request)
@@ -25,7 +24,7 @@ namespace HomesEngland.UseCase.GetAsset
             if(!validationResponse.IsValid)
                 throw new BadRequestException(validationResponse);
             
-            var asset = await _databaseEntityGateway.ReadAsync(request.Id.Value).ConfigureAwait(false);
+            var asset = await _assetReader.ReadAsync(request.Id.Value).ConfigureAwait(false);
             
             if (asset == null)
                 throw new AssetNotFoundException();
