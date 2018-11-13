@@ -14,10 +14,10 @@ namespace WebApi.Controllers
     [ProducesResponseType(typeof(ApiResponse<object>), 500)]
     public class AssetController : ControllerBase
     {
-        private readonly IGetAsset _asset;
-        public AssetController(IGetAsset useCase)
+        private readonly IGetAssetUseCase _assetUseCase;
+        public AssetController(IGetAssetUseCase useCase)
         {
-            _asset = useCase;
+            _assetUseCase = useCase;
         }
 
         [HttpGet("{id}")]
@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(typeof(ApiResponse<GetAssetResponse>), 200)]
         public async Task<IActionResult> Get(GetAssetRequest request)
         {
-            var result = await _asset.ExecuteAsync(request).ConfigureAwait(false);
+            var result = await _assetUseCase.ExecuteAsync(request).ConfigureAwait(false);
             return this.StandardiseResponse(result);
         }
     }

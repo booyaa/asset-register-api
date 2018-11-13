@@ -3,7 +3,7 @@ using HomesEngland.UseCase.GetAsset.Models;
 
 namespace HomesEngland.UseCase.GetAsset
 {
-    public interface IGetAsset : IUseCaseTask<GetAssetRequest, GetAssetResponse>
+    public interface IGetAssetUseCase : IUseCaseTask<GetAssetRequest, GetAssetResponse>
     {
         
     }

@@ -6,7 +6,7 @@ namespace HomesEngland.Domain
     {
         string MonthPaid { get; set; }
         string AccountingYear { get; set; }
-        string SchemeID { get; set; }
+        string SchemeId { get; set; }
         string LocationLaRegionName { get; set; }
         string ImsOldRegion { get; set; }
         string NoOfBeds { get; set; }

@@ -11,7 +11,7 @@ namespace HomesEngland.Domain
         public DateTime ModifiedDateTime { get; set; }
         public string MonthPaid { get; set; }
         public string AccountingYear { get; set; }
-        public string SchemeID { get; set; }
+        public string SchemeId { get; set; }
 
         //Identifying Information
         public string LocationLaRegionName { get; set; }
@@ -38,7 +38,7 @@ namespace HomesEngland.Domain
         {
             return new Dictionary<string, string> {
                 {"Address", Address },
-                {"SchemeID", SchemeID.ToString()},
+                {"SchemeId", SchemeId.ToString()},
                 {"AccountingYear", AccountingYear.ToString()}
             };
         }

@@ -40,11 +40,11 @@ namespace HomesEngland.UseCase.GetAsset.Models
             ModifiedDateTime = asset.ModifiedDateTime;
             MonthPaid = asset.MonthPaid;
             AccountingYear = asset.AccountingYear;
-            SchemeId = asset.SchemeID;
+            SchemeId = asset.SchemeId;
 
             //Identifying Information
             LocationLaRegionName = asset.LocationLaRegionName;
-            ImsOldRegion = asset.LocationLaRegionName;
+            ImsOldRegion = asset.ImsOldRegion;
             NoOfBeds = asset.NoOfBeds;
             //IMS Adress
             Address = asset.Address;

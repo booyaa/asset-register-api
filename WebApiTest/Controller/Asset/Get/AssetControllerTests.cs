@@ -13,10 +13,10 @@ namespace WebApiTest.Controller.Asset.Get
     public class AssetControllerTests
     {
         private readonly AssetController _classUnderTest;
-        private readonly Mock<IGetAsset> _mockUseCase;
+        private readonly Mock<IGetAssetUseCase> _mockUseCase;
         public AssetControllerTests()
         {
-            _mockUseCase = new Mock<IGetAsset>();
+            _mockUseCase = new Mock<IGetAssetUseCase>();
             _classUnderTest = new AssetController(_mockUseCase.Object);
         }
 
