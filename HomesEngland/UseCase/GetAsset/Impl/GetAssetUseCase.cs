@@ -4,7 +4,7 @@ using HomesEngland.Gateway;
 using HomesEngland.UseCase.GetAsset.Models;
 using Infrastructure.Api.Exceptions;
 
-namespace HomesEngland.UseCase.GetAsset
+namespace HomesEngland.UseCase.GetAsset.Impl
 {
     public class GetAssetUseCase : IGetAssetUseCase
     {
@@ -17,7 +17,6 @@ namespace HomesEngland.UseCase.GetAsset
         
         public async Task<GetAssetResponse> ExecuteAsync(GetAssetRequest request)
         {
-            //validate   
             if(request == null)
                 throw new BadRequestException();
             var validationResponse = request.Validate(request);
