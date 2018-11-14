@@ -27,9 +27,10 @@ namespace WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IApiVersionDescriptionProvider, DefaultApiVersionDescriptionProvider>();
 
-            new AssetRegister().ExportDependencies((type, provider) =>
-                services.AddTransient(type, _ => provider())
-            );
+            var assetRegister = new AssetRegister();
+            assetRegister.ExportDependencies((type, provider) =>services.AddTransient(type, _ => provider()));
+
+            assetRegister.ExportTypeDependencies((type, provider) =>services.AddTransient(type,provider));
 
             services.ConfigureApiVersioning();
             services.ConfigureDocumentation(_apiName);
