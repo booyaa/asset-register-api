@@ -8,6 +8,7 @@ using NUnit.Framework;
 using TestHelper;
 using FluentAssertions;
 using HomesEngland.Exception;
+using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.GetAsset.Impl;
 using Infrastructure.Api.Exceptions;
 

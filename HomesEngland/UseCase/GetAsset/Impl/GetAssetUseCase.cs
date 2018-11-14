@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using HomesEngland.Exception;
 using HomesEngland.Gateway;
+using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.GetAsset.Models;
 using Infrastructure.Api.Exceptions;
 

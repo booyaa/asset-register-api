@@ -1,8 +1,6 @@
-using HomesEngland.Boundary.UseCase;
-using HomesEngland.UseCase;
 using DependencyInjection;
-using HomesEngland.Domain;
-using HomesEngland.Gateway;
+using HomesEngland.Gateway.Assets;
+using HomesEngland.Gateway.Impl;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
 
@@ -18,7 +16,7 @@ namespace HomesEngland.Boundary
         protected override void RegisterAllExportedDependencies()
         {
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
-            RegisterExportedDependency<IAssetReader, SqlGateway<Asset,int>>();
+            RegisterExportedDependency<IAssetReader, InMemoryAssetReader>();
         }
     }
 }
