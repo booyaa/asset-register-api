@@ -98,13 +98,9 @@ workflows:
             branches:
               only:
                 - master
-      - hold_flip_staging:
-          type: approval
-          requires:
-            - deploy_dark_staging
       - flip_staging:
           requires:
-            - hold_flip_staging
+            - deploy_dark_staging
       - hold_revert_staging:
           type: approval
           requires: 
