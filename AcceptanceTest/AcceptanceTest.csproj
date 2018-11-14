@@ -18,4 +18,8 @@
     <ItemGroup>
       <ProjectReference Include="..\HomesEngland\HomesEngland.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="HomesEngland\" />
+    </ItemGroup>
 </Project>
