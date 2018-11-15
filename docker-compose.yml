@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   db:
-    image: postgres:9.5
+    image: postgres:9.5-alpine
     environment:
       - POSTGRES_PASSWORD=super-secret
       - POSTGRES_DB=asset_register_api
