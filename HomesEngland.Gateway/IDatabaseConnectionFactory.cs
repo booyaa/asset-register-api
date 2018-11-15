@@ -4,6 +4,6 @@ namespace HomesEngland.Gateway
 {
     public interface IDatabaseConnectionFactory
     {
-        IDbConnection Create(string connectionString);
+        IDbConnection Create(string databaseUrl);
     }
 }

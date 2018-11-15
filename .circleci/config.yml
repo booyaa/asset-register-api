@@ -4,7 +4,7 @@ executors:
   dotnet:
     docker:
       - image: microsoft/dotnet:2.1-sdk
-      - image: circleci/postgres:9.4.18-alpine
+      - image: circleci/postgres:9.5-alpine
         environment:
           POSTGRES_USER: circleci
           POSTGRES_PASSWORD: super-secret
@@ -13,7 +13,7 @@ executors:
     working_directory: ~/repo
 
     environment:
-      DATABASE_URL: 'postgres://circleci:super-secret@localhost/asset_register_api'
+      - DATABASE_URL: postgres://circleci:super-secret@localhost:5432/asset_register_api
 
 jobs:
   build:
@@ -39,6 +39,18 @@ jobs:
     steps:
       - checkout
       - run: dotnet test AcceptanceTest
+
+  test_gateway:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test HomesEngland.Gateway.Test
+
+  test_infrastructure:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test InfrastructureTest
 
   deploy_dark_staging:
     executor: dotnet
@@ -90,10 +102,18 @@ workflows:
       - test_acceptance:
           requires:
             - build
+      - test_gateway:
+          requires:
+            - build
+      - test_infrastructure:
+          requires:
+            - build
       - deploy_dark_staging:
           requires:
             - test_homes_england
             - test_web_api
+            - test_gateway
+            - test_infrastructure
           filters:
             branches:
               only:

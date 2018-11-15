@@ -29,9 +29,8 @@ namespace HomesEngland.Gateway.Test
             //arrange 
             var connectionString = "postgres://username:password/host/dbName";
             //act
-            var connection = _classUnderTest.Create(connectionString);
             //assert
-            Assert.Throws<System.Exception>(() => connection.Open());
+            Assert.Throws<System.UriFormatException>(() => _classUnderTest.Create(connectionString));
         }
     }
 }

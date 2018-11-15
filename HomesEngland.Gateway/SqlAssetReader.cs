@@ -7,19 +7,18 @@ using Dapper;
 
 namespace HomesEngland.Gateway.Assets
 {
-    public class SqlAssetReader:IAssetReader
+    public class InMemoryAssetReader:IAssetReader
     {
         private readonly IDbConnection _connection;
 
-        public SqlAssetReader(IDbConnection connection)
+        public InMemoryAssetReader(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public async Task<IAsset> ReadAsync(int index)
+        public Task<IAsset> ReadAsync(int index)
         {
-            var entity = await _connection.GetAsync<DapperAsset>(index).ConfigureAwait(false);
-            return entity;
+            throw new NotImplementedException();
         }
     }
 }
