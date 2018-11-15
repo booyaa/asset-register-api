@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HomesEngland.Domain\HomesEngland.Domain.csproj" />
+    <ProjectReference Include="..\HomesEngland.Gateway\HomesEngland.Gateway.csproj" />
+    <ProjectReference Include="..\HomesEngland\HomesEngland.csproj" />
   </ItemGroup>
 
 </Project>

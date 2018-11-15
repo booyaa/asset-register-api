@@ -1,13 +1,13 @@
 using System.Data;
 using System.Data.SqlClient;
 using DependencyInjection;
+using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
-using HomesEngland.Gateway.Impl;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
 using Npgsql;
 
-namespace HomesEngland.Boundary
+namespace Main
 {    
     public class AssetRegister : DependencyExporter
     {
