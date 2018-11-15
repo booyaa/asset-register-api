@@ -1,6 +1,7 @@
 ﻿using System;
 using Bogus;
 using HomesEngland.Domain;
+using HomesEngland.Gateway;
 
 namespace TestHelper
 {
@@ -8,7 +9,7 @@ namespace TestHelper
     {
         public static class Domain
         {
-            public static Asset GenerateAsset()
+            public static DapperAsset GenerateAsset()
             {
                 var random = new Random(0);
 
@@ -19,7 +20,7 @@ namespace TestHelper
                 var hopCompletionDate = faker.Date.Soon(random.Next(15, 90));
                 var differenceFromImsExpectedCompletionToHopCompletionDate = (imsExpectedCompletionDate.Date - hopCompletionDate).Days;
 
-                var asset = new Faker<Asset>("en")
+                var asset = new Faker<DapperAsset>("en")
                     .RuleFor(property => property.AccountingYear, (fake, model) => random.Next(2018, 2020).ToString())
                     .RuleFor(property => property.Address, (fake, model) => fake.Address.FullAddress())
                     .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())

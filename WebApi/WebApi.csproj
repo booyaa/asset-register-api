@@ -25,6 +25,7 @@
     <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
     <ProjectReference Include="..\HomesEngland\HomesEngland.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Main\Main.csproj" />
   </ItemGroup>
 
 </Project>
