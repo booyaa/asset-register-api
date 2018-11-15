@@ -64,7 +64,7 @@ namespace HomesEnglandTest.UseCase.GetAsset
             {
                 Id = id
             };
-            _mockGateway.ReadAsync(0).Returns((Asset)null);
+            _mockGateway.ReadAsync(0).Returns((IAsset)null);
             //act
             //assert
             Assert.ThrowsAsync<BadRequestException>(async()=>await _classUnderTest.ExecuteAsync(getAssetRequest));
@@ -80,7 +80,7 @@ namespace HomesEnglandTest.UseCase.GetAsset
             {
                 Id = id
             };
-            _mockGateway.ReadAsync(id).Returns((Asset)null);
+            _mockGateway.ReadAsync(id).Returns((IAsset)null);
             //act
             //assert
             Assert.ThrowsAsync<AssetNotFoundException>(async () => await _classUnderTest.ExecuteAsync(getAssetRequest));

@@ -1,9 +1,11 @@
 using System;
 using Dapper;
-namespace HomesEngland.Domain
+using HomesEngland.Domain;
+
+namespace HomesEngland.Gateway
 {
     [Table("Assets")]
-    public class Asset : IAsset
+    public class DapperAsset : IAsset
     {
         [Key]
         public int Id { get; set; }

@@ -1,10 +1,10 @@
 using DependencyInjection;
+using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
-using HomesEngland.Gateway.Impl;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
 
-namespace HomesEngland.Boundary
+namespace Main
 {    
     public class AssetRegister : DependencyExporter
     {

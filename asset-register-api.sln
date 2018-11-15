@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection", "Depe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHelper", "TestHelper\TestHelper.csproj", "{0BC59FBB-CDF4-4495-B94A-05908826FF81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomesEngland.Domain", "HomesEngland.Domain\HomesEngland.Domain.csproj", "{03F52826-5015-4DC6-A4E5-D4466B67D306}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomesEngland.Gateway", "HomesEngland.Gateway\HomesEngland.Gateway.csproj", "{03F52826-5015-4DC6-A4E5-D4466B67D306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{B0DA0F9B-5CD0-439C-AC1F-46B5AD189248}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{03F52826-5015-4DC6-A4E5-D4466B67D306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03F52826-5015-4DC6-A4E5-D4466B67D306}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03F52826-5015-4DC6-A4E5-D4466B67D306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0DA0F9B-5CD0-439C-AC1F-46B5AD189248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0DA0F9B-5CD0-439C-AC1F-46B5AD189248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0DA0F9B-5CD0-439C-AC1F-46B5AD189248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0DA0F9B-5CD0-439C-AC1F-46B5AD189248}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
