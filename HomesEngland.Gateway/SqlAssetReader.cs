@@ -5,7 +5,7 @@ using HomesEngland.Domain;
 using HomesEngland.Gateway.Assets;
 using Dapper;
 
-namespace HomesEngland.Gateway.Impl
+namespace HomesEngland.Gateway.Assets
 {
     public class SqlAssetReader:IAssetReader
     {
@@ -16,9 +16,9 @@ namespace HomesEngland.Gateway.Impl
             _connection = connection;
         }
 
-        public async Task<Asset> ReadAsync(int index)
+        public async Task<IAsset> ReadAsync(int index)
         {
-            var entity = await _connection.GetAsync<Asset>(index).ConfigureAwait(false);
+            var entity = await _connection.GetAsync<DapperAsset>(index).ConfigureAwait(false);
             return entity;
         }
     }

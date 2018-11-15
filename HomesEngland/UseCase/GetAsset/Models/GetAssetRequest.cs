@@ -12,7 +12,8 @@ namespace HomesEngland.UseCase.GetAsset.Models
             if(request == null)
                 return new RequestValidationResponse(false);
             var validator = new GetAssetRequestValidator();
-            var validationResult = validator.Validate(request as GetAssetRequest);
+            var getAssetRequest = (GetAssetRequest)request;
+            var validationResult = validator.Validate(getAssetRequest);
             var validationResponse = new RequestValidationResponse(validationResult);
             return validationResponse;
         }

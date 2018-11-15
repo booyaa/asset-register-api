@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+        <IsTestProject>true</IsTestProject>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <IsPackable>false</IsPackable>
     </PropertyGroup>

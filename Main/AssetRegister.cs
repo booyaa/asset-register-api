@@ -1,5 +1,4 @@
 using System.Data;
-using System.Data.SqlClient;
 using DependencyInjection;
 using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
@@ -8,7 +7,7 @@ using HomesEngland.UseCase.GetAsset.Impl;
 using Npgsql;
 
 namespace Main
-{    
+{
     public class AssetRegister : DependencyExporter
     {
         protected override void ConstructHiddenDependencies()
@@ -18,7 +17,8 @@ namespace Main
 
         protected override void RegisterAllExportedDependencies()
         {
-            RegisterExportedDependency<IDbConnection>(() => new NpgsqlConnection("Server=asset-register-db.postgres.database.azure.com;Database={your_database};Port=5432;User Id=assetregister@asset-register-db;Password={your_password};SSL=true;SslMode=Require;"));
+            RegisterExportedDependency<IDatabaseConnectionFactory, PostgresDatabaseConnectionFactory>();
+            RegisterExportedDependency<IDbConnection>(() => new PostgresDatabaseConnectionFactory().Create("postgres://postgres:super-secret@localhost:15432/asset_register_api"));
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
             RegisterExportedDependency<IAssetReader, SqlAssetReader>();
             
