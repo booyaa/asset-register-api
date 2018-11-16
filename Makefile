@@ -20,6 +20,9 @@ test-web-api: build
 test-acceptance: build
 	$(RUN_WEB) dotnet test AcceptanceTest
 
+test-all: build
+	$(RUN_WEB) dotnet test
+
 
 setup: build
 	# This is implicit: $(RUN_WEB) dotnet restore
