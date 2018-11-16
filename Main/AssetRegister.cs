@@ -21,7 +21,7 @@ namespace Main
             RegisterExportedDependency<IDatabaseConnectionFactory, PostgresDatabaseConnectionFactory>();
             RegisterExportedDependency<IDbConnection>(() => new PostgresDatabaseConnectionFactory().Create(connectionString));
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
-            RegisterExportedDependency<IAssetReader, SqlAssetReader>();
+            RegisterExportedDependency<IAssetReader, InMemoryAssetReader>();
             
         }
     }
