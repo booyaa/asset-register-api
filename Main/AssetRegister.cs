@@ -17,8 +17,9 @@ namespace Main
 
         protected override void RegisterAllExportedDependencies()
         {
+            var connectionString = System.Environment.GetEnvironmentVariable("DATABASE_URL");
             RegisterExportedDependency<IDatabaseConnectionFactory, PostgresDatabaseConnectionFactory>();
-            RegisterExportedDependency<IDbConnection>(() => new PostgresDatabaseConnectionFactory().Create("postgres://postgres:super-secret@localhost:15432/asset_register_api"));
+            RegisterExportedDependency<IDbConnection>(() => new PostgresDatabaseConnectionFactory().Create(connectionString));
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
             RegisterExportedDependency<IAssetReader, SqlAssetReader>();
             
