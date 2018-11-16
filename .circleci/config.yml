@@ -57,6 +57,12 @@ jobs:
               docker run -d postgres -e POSTGRES_USER=circleci -e POSTGRES_PASSWORD=super-secret -e POSTGRES_DB=asset_register_api
       - run: dotnet test HomesEngland.Gateway.Test
 
+  test_infrastructure:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test InfrastructureTest
+
   deploy_dark_staging:
     executor: dotnet
     steps:
@@ -110,11 +116,15 @@ workflows:
       - test_gateway:
           requires:
             - build
+      - test_infrastructure:
+          requires:
+            - build
       - deploy_dark_staging:
           requires:
             - test_homes_england
             - test_web_api
             - test_gateway
+            - test_infrastructure
           filters:
             branches:
               only:
