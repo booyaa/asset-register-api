@@ -17,12 +17,11 @@ namespace Main
 
         protected override void RegisterAllExportedDependencies()
         {
-            var connectionString = System.Environment.GetEnvironmentVariable("DATABASE_URL");
+            var databaseUrl = System.Environment.GetEnvironmentVariable("DATABASE_URL");
             RegisterExportedDependency<IDatabaseConnectionFactory, PostgresDatabaseConnectionFactory>();
-            RegisterExportedDependency<IDbConnection>(() => new PostgresDatabaseConnectionFactory().Create(connectionString));
+            RegisterExportedDependency<IDbConnection>(() => new PostgresDatabaseConnectionFactory().Create(databaseUrl));
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
             RegisterExportedDependency<IAssetReader, InMemoryAssetReader>();
-            
         }
     }
 }
