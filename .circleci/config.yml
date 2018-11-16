@@ -107,10 +107,14 @@ workflows:
       - test_acceptance:
           requires:
             - build
+      - test_gateway:
+          requires:
+            - build
       - deploy_dark_staging:
           requires:
             - test_homes_england
             - test_web_api
+            - test_gateway
           filters:
             branches:
               only:
