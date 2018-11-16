@@ -12,7 +12,7 @@ services:
       context: .
       target: development
     environment:
-      - DATABASE_URL=postgres://postgres:super-secret@localhost:15432/asset_register_api
+      - DATABASE_URL=postgres://postgres:super-secret@db:5432/asset_register_api
       - ASPNETCORE_URLS=http://*:5000
     ports:
       - "5000:5000"
