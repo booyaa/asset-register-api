@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HomesEngland.Gateway.Migrations;
 
 namespace WebApi
 {
@@ -35,6 +36,9 @@ namespace WebApi
 
             services.ConfigureApiVersioning();
             services.ConfigureDocumentation(_apiName);
+            services.AddEntityFrameworkNpgsql()
+               .AddDbContext<AssetRegisterContext>()
+               .BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

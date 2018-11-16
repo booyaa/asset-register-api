@@ -1,13 +1,16 @@
 using System;
-using Dapper;
 using HomesEngland.Domain;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomesEngland.Gateway
 {
-    [Table("Assets")]
+    [Dapper.Table("Assets")]
     public class DapperAsset : IAsset
     {
+        [Dapper.Key]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime ModifiedDateTime { get; set; }
         public string MonthPaid { get; set; }

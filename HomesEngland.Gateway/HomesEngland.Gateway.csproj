@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+  <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>HomesEngland.Gateway</RootNamespace>
   </PropertyGroup>
@@ -9,6 +10,7 @@
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Dapper.SimpleCRUD" Version="2.0.1" />
     <PackageReference Include="Npgsql" Version="4.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
