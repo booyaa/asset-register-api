@@ -31,7 +31,7 @@ namespace HomesEngland.Gateway.Test
             //act
             var connection = _classUnderTest.Create(connectionString);
             //assert
-            Assert.Throws<System.Exception>(() => connection.Open());
+            Assert.Throws<System.UriFormatException>(() => connection.Open());
         }
     }
 }
