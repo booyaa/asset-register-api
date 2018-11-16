@@ -1,231 +1,131 @@
-version: 2
-jobs:
-  revert_production:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: scripts/flip-dark-to-live.sh production
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  flip_staging:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
+version: 2.1
 
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: scripts/flip-dark-to-live.sh staging
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  deploy_dark_production:
+executors:
+  dotnet:
     docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
+      - image: microsoft/dotnet:2.1-sdk
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_PASSWORD: super-secret
+          POSTGRES_DB: asset_register_api 
+
     working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: scripts/deploy-dark.sh production
+
     environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  test_acceptance:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: dotnet test AcceptanceTest
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  revert_staging:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: scripts/flip-dark-to-live.sh staging
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  test_homes_england:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: dotnet test HomesEnglandTest
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  test_web_api:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - run:
-        command: dotnet test WebApiTest
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  test_gateway:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
-    steps:
-    - checkout
-    - setup_remote_docker:   # (2)
-        docker_layer_caching: true # (3)
-    - run:
-        name: Install Docker client
-        command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
-            docker run -d postgres -e POSTGRES_USER=circleci -e POSTGRES_PASSWORD=super-secret -e POSTGRES_DB=asset_register_api
-    - run: dotnet test HomesEngland.Gateway.Test
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:5432/asset_register_api
+      DATABASE_URL: 'postgres://circleci:super-secret@localhost/asset_register_api'
+
+jobs:
   build:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
+    executor: dotnet
     steps:
-    - checkout
-    - run:
-        command: dotnet publish -c Release -o out
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
-  flip_production:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
+      - checkout
+      - run: dotnet publish -c Release -o out
+
+  test_homes_england:
+    executor: dotnet
     steps:
-    - checkout
-    - run:
-        command: scripts/flip-dark-to-live.sh production
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
+      - checkout
+      - run: dotnet test HomesEnglandTest
+
+  test_web_api:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test WebApiTest
+
+  test_acceptance:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: dotnet test AcceptanceTest
+
   deploy_dark_staging:
-    docker:
-    - image: microsoft/dotnet:2.1-sdk
-    - image: circleci/postgres:9.5-alpine
-      environment:
-        POSTGRES_USER: circleci
-        POSTGRES_PASSWORD: super-secret
-        POSTGRES_DB: asset_register_api
-    working_directory: ~/repo
+    executor: dotnet
     steps:
-    - checkout
-    - run:
-        command: scripts/deploy-dark.sh staging
-    environment:
-    - DATABASE_URL: postgres://circleci:super-secret@localhost:15432/asset_register_api
+      - checkout
+      - run: scripts/deploy-dark.sh staging
+
+  flip_staging:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: scripts/flip-dark-to-live.sh staging
+
+  revert_staging:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: scripts/flip-dark-to-live.sh staging
+
+  deploy_dark_production:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: scripts/deploy-dark.sh production
+
+  flip_production:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: scripts/flip-dark-to-live.sh production
+
+  revert_production:
+    executor: dotnet
+    steps:
+      - checkout
+      - run: scripts/flip-dark-to-live.sh production
+
 workflows:
   version: 2
   build_test_deploy:
     jobs:
-    - build
-    - test_homes_england:
-        requires:
-        - build
-    - test_web_api:
-        requires:
-        - build
-    - test_acceptance:
-        requires:
-        - build
-    - deploy_dark_staging:
-        filters:
-          branches:
-            only:
-            - master
-        requires:
-        - test_homes_england
-        - test_web_api
-    - flip_staging:
-        requires:
-        - deploy_dark_staging
-    - hold_revert_staging:
-        type: approval
-        requires:
-        - flip_staging
-    - revert_staging:
-        requires:
-        - hold_revert_staging
-    - hold_production_deploy:
-        type: approval
-        requires:
-        - flip_staging
-    - deploy_dark_production:
-        requires:
-        - hold_production_deploy
-    - hold_flip_production:
-        type: approval
-        requires:
-        - deploy_dark_production
-    - flip_production:
-        requires:
-        - hold_flip_production
-    - hold_revert_production:
-        type: approval
-        requires:
-        - flip_production
-    - revert_production:
-        requires:
-        - hold_revert_production
+      - build
+      - test_homes_england:
+          requires:
+            - build
+      - test_web_api:
+          requires:
+            - build
+      - test_acceptance:
+          requires:
+            - build
+      - deploy_dark_staging:
+          requires:
+            - test_homes_england
+            - test_web_api
+          filters:
+            branches:
+              only:
+                - master
+      - flip_staging:
+          requires:
+            - deploy_dark_staging
+      - hold_revert_staging:
+          type: approval
+          requires: 
+            - flip_staging
+      - revert_staging:
+          requires: 
+            - hold_revert_staging
+      - hold_production_deploy:
+          type: approval
+          requires:
+            - flip_staging
+      - deploy_dark_production:
+          requires:
+            - hold_production_deploy
+      - hold_flip_production:
+          type: approval
+          requires:
+            - deploy_dark_production
+      - flip_production:
+          requires:
+            - hold_flip_production
+      - hold_revert_production:
+          type: approval
+          requires:
+            - flip_production
+      - revert_production:
+          requires: 
+            - hold_revert_production
