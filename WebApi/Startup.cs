@@ -25,13 +25,14 @@ namespace WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IApiVersionDescriptionProvider, DefaultApiVersionDescriptionProvider>();
 
             var assetRegister = new AssetRegister();
-            assetRegister.ExportDependencies((type, provider) =>services.AddTransient(type, _ => provider()));
+            assetRegister.ExportDependencies((type, provider) => services.AddTransient(type, _ => provider()));
 
-            assetRegister.ExportTypeDependencies((type, provider) =>services.AddTransient(type,provider));
+            assetRegister.ExportTypeDependencies((type, provider) => services.AddTransient(type, provider));
 
             services.ConfigureApiVersioning();
             services.ConfigureDocumentation(_apiName);
@@ -45,6 +46,7 @@ namespace WebApi
                 app.UseHsts();
 
             app.ConfigureSwaggerUiPerApiVersion(_apiName);
+            app.UseCors(builder => builder.WithOrigins("*"));
 
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 

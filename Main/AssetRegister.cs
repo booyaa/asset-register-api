@@ -4,7 +4,7 @@ using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
-using Npgsql;
+using InMemoryAssetReader = HomesEngland.Gateway.InMemoryAssetReader;
 
 namespace Main
 {
@@ -12,7 +12,6 @@ namespace Main
     {
         protected override void ConstructHiddenDependencies()
         {
-            
         }
 
         protected override void RegisterAllExportedDependencies()
