@@ -5,6 +5,6 @@ namespace HomesEngland.Gateway
 {
     public interface IDatabaseEntityCreator<T, TIndex> where T : IDatabaseEntity<TIndex>
     {
-        Task<T> CreatAsync(T entity);
+        Task<T> CreateAsync(T entity);
     }
 }

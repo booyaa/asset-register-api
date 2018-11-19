@@ -1,24 +1,24 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Threading.Tasks;
+using Dapper;
 using HomesEngland.Domain;
 using HomesEngland.Gateway.Assets;
-using Dapper;
 
-namespace HomesEngland.Gateway.Assets
+namespace HomesEngland.Gateway
 {
-    public class InMemoryAssetReader:IAssetReader
+    public class SqlAssetReader:IAssetReader
     {
         private readonly IDbConnection _connection;
 
-        public InMemoryAssetReader(IDbConnection connection)
+        public SqlAssetReader(IDbConnection connection)
         {
             _connection = connection;
         }
 
-        public Task<IAsset> ReadAsync(int index)
+        public async Task<IAsset> ReadAsync(int index)
         {
-            throw new NotImplementedException();
+            var entity = await _connection.GetAsync<DapperAsset>(index).ConfigureAwait(false);
+            return entity;
         }
     }
 }

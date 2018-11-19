@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using HomesEngland.Domain;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomesEngland.Gateway
 {
+    [Table("Assets")]
     [Dapper.Table("Assets")]
     public class DapperAsset : IAsset
     {
