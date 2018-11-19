@@ -7,6 +7,7 @@ using HomesEngland.Gateway.Exceptions;
 using PeregrineDb;
 using PeregrineDb.Databases;
 using PeregrineDb.Dialects.Postgres;
+using PeregrineDb.Schema;
 
 namespace HomesEngland.Gateway
 {
@@ -19,11 +20,20 @@ namespace HomesEngland.Gateway
             _connection = connection;
         }
 
+        public class PascalCaseColumnNameFactory : IColumnNameFactory
+        {
+            public string GetColumnName(PropertySchema property)
+            {
+                return property.Name;
+            }
+        }
+
         public async Task<T> CreateAsync(T entity)
         {
             entity.ModifiedDateTime = DateTime.UtcNow;
             _connection.Open();
-            IDatabaseConnection connection = new DefaultDatabase(_connection, PeregrineConfig.Postgres);
+            var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
+            IDatabaseConnection connection = new DefaultDatabase(_connection, config);
             await connection.InsertAsync(entity).ConfigureAwait(false);
 
             //await _connection.(entity).ConfigureAwait(false);
