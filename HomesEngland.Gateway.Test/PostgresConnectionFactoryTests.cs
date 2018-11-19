@@ -9,7 +9,7 @@ namespace HomesEngland.Gateway.Test
         private IDatabaseConnectionFactory _classUnderTest = null;
         public PostgresConnectionFactoryTests()
         {
-            _classUnderTest = new PostgresDatabaseConnectionFactory();
+            _classUnderTest = new PostgresDatabaseConnectionFactory(new PostgresDatabaseConnectionStringFormatter());
         }
 
         [Test]
