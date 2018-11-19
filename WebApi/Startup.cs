@@ -1,4 +1,5 @@
-﻿using HomesEngland.Boundary;
+﻿using System;
+using HomesEngland.Boundary;
 using Infrastructure.Api.Middleware;
 using Infrastructure.Documentation;
 using Main;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using HomesEngland.Gateway.Migrations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi
 {
@@ -36,9 +39,13 @@ namespace WebApi
 
             services.ConfigureApiVersioning();
             services.ConfigureDocumentation(_apiName);
-            services.AddEntityFrameworkNpgsql()
-               .AddDbContext<AssetRegisterContext>()
-               .BuildServiceProvider();
+            services
+                .AddEntityFrameworkNpgsql()
+                .AddDbContext<AssetRegisterContext>();
+            
+            var serviceProvider = services.BuildServiceProvider();
+            var assetRegisterContext = serviceProvider.GetService<AssetRegisterContext>();
+            assetRegisterContext.Database.Migrate();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

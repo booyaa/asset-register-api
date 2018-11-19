@@ -1,16 +1,17 @@
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using HomesEngland.Domain;
 
 namespace HomesEngland.Gateway.Migrations
 {
     public class AssetRegisterContext:DbContext
     {
-        private string _databaseUrl;
+        private readonly string _databaseUrl;
         public AssetRegisterContext(string databaseUrl)
         {
             _databaseUrl = databaseUrl;
         }
+        /// <summary>
+        /// Must be self contained for Entity Framework Command line tool to work
+        /// </summary>
         public AssetRegisterContext()
         {
             _databaseUrl = "postgres://postgres:super-secret@db:5432/asset_register_api";
@@ -19,6 +20,6 @@ namespace HomesEngland.Gateway.Migrations
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(_databaseUrl);
+            => optionsBuilder.UseNpgsql(new PostgresDatabaseConnectionStringFormatter().BuildConnectionStringFromUrl(_databaseUrl));
     }  
 }
