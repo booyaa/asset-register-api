@@ -15,7 +15,7 @@ namespace HomesEngland.Gateway.Migrations
         /// </summary>
         public AssetRegisterContext()
         {
-            _databaseUrl = "postgres://postgres:super-secret@localhost:5432/asset_register_api";
+            _databaseUrl = System.Environment.GetEnvironmentVariable("DATABASE_URL");
         }
 
         public DbSet<DapperAsset> Assets { get; set; }
