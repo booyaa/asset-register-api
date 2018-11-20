@@ -1,7 +1,7 @@
-using System.Data;
+﻿using System.Data;
 using Npgsql;
 
-namespace HomesEngland.Gateway
+namespace HomesEngland.Gateway.Sql.Postgres
 {
     public class PostgresDatabaseConnectionFactory : IDatabaseConnectionFactory
     {

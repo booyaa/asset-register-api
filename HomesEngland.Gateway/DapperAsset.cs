@@ -12,6 +12,7 @@ namespace HomesEngland.Gateway
         [Dapper.Key]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
         public int Id { get; set; }
         [Column("modifieddatetime")]
         public DateTime ModifiedDateTime { get; set; }
