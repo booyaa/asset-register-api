@@ -22,7 +22,8 @@ namespace HomesEngland.Gateway.Migrations
             modelBuilder.Entity("HomesEngland.Gateway.DapperAsset", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
                     b.Property<string>("AccountingYear")
                         .HasColumnName("accountingyear");

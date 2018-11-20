@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomesEngland.Gateway.Migrations
 {
     [DbContext(typeof(AssetRegisterContext))]
-    [Migration("20181120080016_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20181120105449_initial-migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,8 @@ namespace HomesEngland.Gateway.Migrations
             modelBuilder.Entity("HomesEngland.Gateway.DapperAsset", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
                     b.Property<string>("AccountingYear")
                         .HasColumnName("accountingyear");

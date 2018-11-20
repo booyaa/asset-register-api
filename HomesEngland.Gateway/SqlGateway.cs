@@ -35,7 +35,8 @@ namespace HomesEngland.Gateway
                 _connection.Open();
             var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
             IDatabaseConnection connection = new DefaultDatabase(_connection, config);
-            await connection.InsertAsync(entity).ConfigureAwait(false);
+            var index = await connection.InsertAsync<TIndex>(entity).ConfigureAwait(false);
+            entity.Id = index;
 
             //await _connection.(entity).ConfigureAwait(false);
             _connection.Close();
@@ -48,7 +49,11 @@ namespace HomesEngland.Gateway
                 _connection.Open();
             var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
             IDatabaseConnection connection = new DefaultDatabase(_connection, config);
+            Console.WriteLine(index);
+            Console.WriteLine("MEOWMEOW");
+            Console.WriteLine(typeof(T));
             var entity = await connection.GetAsync<T>(index).ConfigureAwait(false);
+            Console.WriteLine("WOOFWOOF");
             _connection.Close();
             return entity;
         }

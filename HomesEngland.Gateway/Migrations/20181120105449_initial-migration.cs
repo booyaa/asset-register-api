@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HomesEngland.Gateway.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace HomesEngland.Gateway.Migrations
                 name: "assets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     modifieddatetime = table.Column<DateTime>(nullable: false),
                     monthpaid = table.Column<string>(nullable: true),
@@ -36,7 +36,7 @@ namespace HomesEngland.Gateway.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_assets", x => x.Id);
+                    table.PrimaryKey("PK_assets", x => x.id);
                 });
         }
 
