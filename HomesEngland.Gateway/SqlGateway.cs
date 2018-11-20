@@ -31,7 +31,8 @@ namespace HomesEngland.Gateway
         public async Task<T> CreateAsync(T entity)
         {
             entity.ModifiedDateTime = DateTime.UtcNow;
-            _connection.Open();
+            if (_connection.State != ConnectionState.Open)
+                _connection.Open();
             var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
             IDatabaseConnection connection = new DefaultDatabase(_connection, config);
             await connection.InsertAsync(entity).ConfigureAwait(false);
@@ -43,9 +44,13 @@ namespace HomesEngland.Gateway
 
         public async Task<T> ReadAsync(TIndex index)
         {
-            throw new NotImplementedException();
-            //var entity = await _connection.GetAsync<T>(index).ConfigureAwait(false);
-            //return entity;
+            if(_connection.State != ConnectionState.Open)
+                _connection.Open();
+            var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
+            IDatabaseConnection connection = new DefaultDatabase(_connection, config);
+            var entity = await connection.GetAsync<T>(index).ConfigureAwait(false);
+            _connection.Close();
+            return entity;
         }
 
         public async Task<T> UpdateAsync(T entity)
