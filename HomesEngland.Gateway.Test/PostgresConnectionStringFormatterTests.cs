@@ -22,7 +22,7 @@ namespace HomesEngland.Gateway.Test
             //act
             var connection = _classUnderTest.BuildConnectionStringFromUrl(databaseUrl);
             //assert
-            connection.Should().BeEquivalentTo($"Server={server};Port={port};User Id={userId};Password={password};Database={database};");
+            connection.Should().BeEquivalentTo($"Server={server};Port={port};User Id={userId};Password={password};Database={database};SSL Mode=Prefer;");
         }
     }
 }
