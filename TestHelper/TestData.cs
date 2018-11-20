@@ -21,7 +21,7 @@ namespace TestHelper
                 var differenceFromImsExpectedCompletionToHopCompletionDate = (imsExpectedCompletionDate.Date - hopCompletionDate).Days;
 
                 var asset = new Faker<DapperAsset>("en")
-                    .RuleFor(property => property.Id, (fake, model) => fake.IndexGlobal)
+                    //.RuleFor(property => property.Id, (fake, model) => fake.IndexGlobal)
                     .RuleFor(property => property.AccountingYear, (fake, model) => random.Next(2018, 2020).ToString())
                     .RuleFor(property => property.Address, (fake, model) => fake.Address.FullAddress())
                     .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())

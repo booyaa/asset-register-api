@@ -32,6 +32,7 @@ namespace HomesEngland.Gateway.Test
             var readAsset = await _classUnderTest.ReadAsync(createdAsset.Id).ConfigureAwait(false);
             
             //assert
+            readAsset.Id.Should().Be(createdAsset.Id);
             readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
             readAsset.Address.Should().BeEquivalentTo(entity.Address);
             readAsset.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);
