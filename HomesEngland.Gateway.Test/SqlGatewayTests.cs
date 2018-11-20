@@ -4,7 +4,9 @@ using System.Transactions;
 using FluentAssertions;
 using HomesEngland.Domain;
 using HomesEngland.Gateway.Assets;
+using HomesEngland.Gateway.Migrations;
 using HomesEngland.Gateway.Sql.Postgres;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using TestHelper;
 
@@ -21,6 +23,8 @@ namespace HomesEngland.Gateway.Test
             var databaseUrl = System.Environment.GetEnvironmentVariable("DATABASE_URL");
             var connection = _databaseConnectionFactory.Create(databaseUrl);
             _classUnderTest = new SqlAssetGateway(connection);
+            AssetRegisterContext assetRegisterContext = new AssetRegisterContext(databaseUrl);
+            assetRegisterContext.Database.Migrate();
         }
 
         [Test]
