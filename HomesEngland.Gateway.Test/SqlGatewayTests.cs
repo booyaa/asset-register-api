@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Transactions;
 using FluentAssertions;
 using HomesEngland.Domain;
-using HomesEngland.Gateway.Assets;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.Gateway.Sql.Postgres;
 using Microsoft.EntityFrameworkCore;
