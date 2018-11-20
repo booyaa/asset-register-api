@@ -1,4 +1,5 @@
-using FluentAssertions;
+﻿using FluentAssertions;
+using HomesEngland.Gateway.Sql.Postgres;
 using NUnit.Framework;
 
 namespace HomesEngland.Gateway.Test

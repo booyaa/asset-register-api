@@ -34,6 +34,7 @@ namespace TestHelper
                     .RuleFor(property => property.CompletionDateForHpiStart, (fake, model) => completionDateForHpiStart)
                     .RuleFor(property => property.ImsActualCompletionDate, (fake, model) => imsActualCompletionDate)
                     .RuleFor(property => property.ImsExpectedCompletionDate, (fake, model) => imsExpectedCompletionDate)
+                    .RuleFor(property => property.ImsLegalCompletionDate, (fake, model) => fake.Date.Soon(random.Next(15,90)))
                     .RuleFor(property => property.HopCompletionDate, (fake, model) => hopCompletionDate)
                     .RuleFor(property => property.DifferenceFromImsExpectedCompletionToHopCompletionDate, (fake, model) => differenceFromImsExpectedCompletionToHopCompletionDate)
                     .RuleFor(property => property.DeveloperEquityLoan, (fake, model) => null)

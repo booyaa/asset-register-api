@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace HomesEngland.Gateway
+namespace HomesEngland.Gateway.Sql.Postgres
 {
     public class PostgresDatabaseConnectionStringFormatter: IDatabaseConnectionStringFormatter
     {
