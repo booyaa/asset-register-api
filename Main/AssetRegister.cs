@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using DependencyInjection;
 using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
@@ -23,7 +23,7 @@ namespace Main
             RegisterExportedDependency<IDatabaseConnectionFactory, PostgresDatabaseConnectionFactory>();
             RegisterExportedDependency<IDbConnection>(()=> new PostgresDatabaseConnectionFactory(new PostgresDatabaseConnectionStringFormatter()).Create(databaseUrl));
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
-            RegisterExportedDependency<IAssetReader, InMemoryAssetReader>();
+            RegisterExportedDependency<IAssetReader, SqlAssetGateway>();
             RegisterExportedDependency<AssetRegisterContext>(()=> new AssetRegisterContext(databaseUrl));
         }
     }
