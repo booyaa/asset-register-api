@@ -1,12 +1,16 @@
 ﻿using System.Data;
 using DependencyInjection;
+using HomesEngland.Domain;
 using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.Gateway.Migrations;
+using HomesEngland.Gateway.Sql;
 using HomesEngland.Gateway.Sql.Postgres;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
-using InMemoryAssetReader = HomesEngland.Gateway.InMemoryAssetReader;
+using HomesEngland.UseCase.SearchAsset;
+using HomesEngland.UseCase.SearchAsset.Impl;
+using InMemoryAssetReader = HomesEngland.Gateway.InMemory.InMemoryAssetReader;
 
 namespace Main
 {
@@ -25,6 +29,10 @@ namespace Main
             RegisterExportedDependency<IGetAssetUseCase, GetAssetUseCase>();
             RegisterExportedDependency<IAssetReader, SqlAssetGateway>();
             RegisterExportedDependency<AssetRegisterContext>(()=> new AssetRegisterContext(databaseUrl));
+            RegisterExportedDependency<ISearchAssetUseCase, SearchAssetUseCase>();
+            RegisterExportedDependency<IAssetSearcher, SqlAssetGateway>();
+            RegisterExportedDependency<IAssetCreator, SqlAssetGateway>();
+            RegisterExportedDependency<IGateway<IAsset, int>, SqlAssetGateway>();
         }
     }
 }

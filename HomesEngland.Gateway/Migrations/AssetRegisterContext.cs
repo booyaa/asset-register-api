@@ -10,6 +10,7 @@ namespace HomesEngland.Gateway.Migrations
         {
             _databaseUrl = databaseUrl;
         }
+
         /// <summary>
         /// Must be self contained for Entity Framework Command line tool to work
         /// </summary>
@@ -19,7 +20,6 @@ namespace HomesEngland.Gateway.Migrations
         }
 
         public DbSet<DapperAsset> Assets { get; set; }
-        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(new PostgresDatabaseConnectionStringFormatter().BuildConnectionStringFromUrl(_databaseUrl));

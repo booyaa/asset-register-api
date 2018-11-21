@@ -21,7 +21,7 @@ namespace HomesEngland.Gateway
         [Column("accountingyear")]
         public string AccountingYear { get; set; }
         [Column("schemeid")]
-        public string SchemeId { get; set; }
+        public int? SchemeId { get; set; }
 
         //Identifying Information
         [Column("locationlaregionname")]

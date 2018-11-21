@@ -1,6 +1,5 @@
 ﻿using System;
 using Bogus;
-using HomesEngland.Domain;
 using HomesEngland.Gateway;
 
 namespace TestHelper
@@ -29,7 +28,7 @@ namespace TestHelper
                     .RuleFor(property => property.LocationLaRegionName, (fake, model) => fake.Address.County())
                     .RuleFor(property => property.ImsOldRegion, (fake, model) => fake.Address.County())
                     .RuleFor(property => property.MonthPaid, (fake, model) => fake.Date.Month())
-                    .RuleFor(property => property.SchemeId, (fake, model) => fake.IndexGlobal.ToString())
+                    .RuleFor(property => property.SchemeId, (fake, model) => fake.IndexGlobal)
                     .RuleFor(property => property.AgencyEquityLoan,(fake, model) => fake.Finance.Amount(5000m, 100000m))
                     .RuleFor(property => property.CompletionDateForHpiStart, (fake, model) => completionDateForHpiStart)
                     .RuleFor(property => property.ImsActualCompletionDate, (fake, model) => imsActualCompletionDate)

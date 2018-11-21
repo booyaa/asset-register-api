@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.Domain;
 using HomesEngland.Gateway.Assets;
+using HomesEngland.Gateway.Sql.Postgres;
 using PeregrineDb;
 using PeregrineDb.Databases;
 
-namespace HomesEngland.Gateway
+namespace HomesEngland.Gateway.Sql
 {
-    public class SqlAssetGateway:IGateway<IAsset, int>, IAssetReader, IAssetCreator
+    public class SqlAssetGateway:IGateway<IAsset, int>, IAssetReader, IAssetCreator, IAssetSearcher
     {
         private readonly IDbConnection _connection;
 
@@ -41,14 +45,16 @@ namespace HomesEngland.Gateway
             return entity;
         }
 
-        public Task<IAsset> UpdateAsync(IAsset entity)
+        public Task<IList<IAsset>> Search(IAssetSearchQuery searchQueryRequest, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(int index)
-        {
-            throw new NotImplementedException();
+            if (_connection.State != ConnectionState.Open)
+                _connection.Open();
+            var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
+            IDatabaseConnection connection = new DefaultDatabase(_connection, config);
+            var sql = @"SELECT * FROM assets a Where a.schemeid = @schemeId";
+            IEnumerable<IAsset> results = connection.Query<DapperAsset>(sql, new { schemeid = searchQueryRequest.SchemeId });
+            _connection.Close();
+            return Task.FromResult((IList<IAsset>)results?.ToList());
         }
     }
 }

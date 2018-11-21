@@ -1,6 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <RootNamespace>AssetRegisterTests</RootNamespace>
 
@@ -8,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="5.5.3" />
         <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.1.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
         <PackageReference Include="Moq" Version="4.10.0" />
@@ -16,10 +18,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
+      <ProjectReference Include="..\HomesEngland.Gateway\HomesEngland.Gateway.csproj" />
       <ProjectReference Include="..\HomesEngland\HomesEngland.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="HomesEngland\" />
+      <ProjectReference Include="..\Main\Main.csproj" />
+      <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
+      <ProjectReference Include="..\WebApi\WebApi.csproj" />
     </ItemGroup>
 </Project>
