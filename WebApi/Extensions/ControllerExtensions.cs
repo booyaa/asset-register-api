@@ -1,4 +1,5 @@
-﻿using Infrastructure.Api.Response;
+﻿using System.Threading;
+using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Extensions
@@ -9,6 +10,13 @@ namespace WebApi.Extensions
         {
             var apiResponse = new ApiResponse<T>(useCaseResult);
             return controller.StatusCode(apiResponse.StatusCode, apiResponse);
+        }
+
+        public static CancellationToken GetCancellationToken(this ControllerBase controller)
+        {
+            if(controller?.HttpContext == null)
+                return new CancellationToken();
+            return controller.HttpContext.RequestAborted;
         }
     }
 }

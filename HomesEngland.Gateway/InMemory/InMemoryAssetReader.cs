@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using HomesEngland.Domain;
 using HomesEngland.Gateway.Assets;
 
-namespace HomesEngland.Gateway
+namespace HomesEngland.Gateway.InMemory
 {
     public class InMemoryAssetReader : IAssetReader
     {
@@ -13,7 +13,7 @@ namespace HomesEngland.Gateway
             public DateTime ModifiedDateTime { get; set; }
             public string MonthPaid { get; set; }
             public string AccountingYear { get; set; }
-            public string SchemeId { get; set; }
+            public int? SchemeId { get; set; }
             public string LocationLaRegionName { get; set; }
             public string ImsOldRegion { get; set; }
             public string NoOfBeds { get; set; }
@@ -38,7 +38,7 @@ namespace HomesEngland.Gateway
             asset.ModifiedDateTime = DateTime.Now;
             asset.MonthPaid = "Jan";
             asset.AccountingYear = "2018";
-            asset.SchemeId = "10101";
+            asset.SchemeId = 10101;
             asset.LocationLaRegionName = "Yorkshire";
             asset.ImsOldRegion = "Cat";
             asset.NoOfBeds = "1";

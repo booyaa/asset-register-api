@@ -9,7 +9,7 @@ namespace HomesEngland.UseCase.GetAsset.Models
         public DateTime ModifiedDateTime { get; set; }
         public string MonthPaid { get; set; }
         public string AccountingYear { get; set; }
-        public string SchemeId { get; set; }
+        public int? SchemeId { get; set; }
 
         //Identifying Information
         public string LocationLaRegionName { get; set; }

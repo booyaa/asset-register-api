@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace HomesEngland.Domain
 {
@@ -6,7 +6,7 @@ namespace HomesEngland.Domain
     {
         string MonthPaid { get; set; }
         string AccountingYear { get; set; }
-        string SchemeId { get; set; }
+        int? SchemeId { get; set; }
         string LocationLaRegionName { get; set; }
         string ImsOldRegion { get; set; }
         string NoOfBeds { get; set; }

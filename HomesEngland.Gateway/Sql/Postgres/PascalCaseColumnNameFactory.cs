@@ -1,15 +1,6 @@
-﻿using System;
-using System.Data;
-using System.Threading.Tasks;
+﻿using PeregrineDb.Schema;
 
-using HomesEngland.Domain;
-using HomesEngland.Gateway.Exceptions;
-using PeregrineDb;
-using PeregrineDb.Databases;
-using PeregrineDb.Dialects.Postgres;
-using PeregrineDb.Schema;
-
-namespace HomesEngland.Gateway
+namespace HomesEngland.Gateway.Sql.Postgres
 {
     public class PascalCaseColumnNameFactory : IColumnNameFactory
     {
