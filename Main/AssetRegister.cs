@@ -6,6 +6,8 @@ using HomesEngland.Gateway.Assets;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.Gateway.Sql;
 using HomesEngland.Gateway.Sql.Postgres;
+using HomesEngland.UseCase.CreateAsset;
+using HomesEngland.UseCase.CreateAsset.Impl;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
 using HomesEngland.UseCase.SearchAsset;
@@ -33,6 +35,7 @@ namespace Main
             RegisterExportedDependency<IAssetSearcher, SqlAssetGateway>();
             RegisterExportedDependency<IAssetCreator, SqlAssetGateway>();
             RegisterExportedDependency<IGateway<IAsset, int>, SqlAssetGateway>();
+            RegisterExportedDependency<ICreateAssetUseCase, CreateAssetUseCase>();
         }
     }
 }

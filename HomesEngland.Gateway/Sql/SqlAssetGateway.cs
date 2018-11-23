@@ -34,6 +34,9 @@ namespace HomesEngland.Gateway.Sql
 
         public async Task<IAsset> CreateAsync(IAsset entity)
         {
+            if (entity == null)
+                return null;
+            entity = new DapperAsset(entity);
             entity.ModifiedDateTime = DateTime.UtcNow;
             if (_connection.State != ConnectionState.Open)
                 _connection.Open();

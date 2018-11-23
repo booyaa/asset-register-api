@@ -1,11 +1,12 @@
-using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HomesEngland.Domain;
+using HomesEngland.Exception;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Impl;
+using Moq;
 using NUnit.Framework;
 using TestHelper;
 
@@ -13,26 +14,15 @@ namespace HomesEnglandTest.UseCase.CreateAsset
 {
     public class CreateAssetTests
     {
-        private class AssetCreatorSpy : IAssetCreator
-        {
-            public IAsset CalledWith;
-            public int CreatedId;
-
-            public async Task<IAsset> CreateAsync(IAsset entity)
-            {
-                CalledWith = entity;
-                entity.Id = CreatedId;
-                return entity;
-            }
-        }
 
         private readonly ICreateAssetUseCase _classUnderTest;
-        private readonly AssetCreatorSpy _gateway;
+        private readonly Mock<IAssetCreator> _gateway;
 
         public CreateAssetTests()
         {
-            _gateway = new AssetCreatorSpy();
-            _classUnderTest = new CreateAssetUseCase(_gateway);
+            _gateway = new Mock<IAssetCreator>();
+            
+            _classUnderTest = new CreateAssetUseCase(_gateway.Object);
         }
 
         [TestCase(1, 2)]
@@ -40,39 +30,48 @@ namespace HomesEnglandTest.UseCase.CreateAsset
         [TestCase(3, 4)]
         public async Task GivenValidRequest_UseCaseCallsGatewayWithCorrectDomainObject(int schemeId, int createdAssetId)
         {
-            _gateway.CreatedId = createdAssetId;
-
+            //arrange
             var request = TestData.UseCase.GenerateCreateAssetRequest();
             request.SchemeId = schemeId;
+            _gateway.Setup(s => s.CreateAsync(It.IsAny<IAsset>())).ReturnsAsync(new Asset(request));
+            //act
+            var useCaseResponse = await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
+            //assert
+            _gateway.Verify(s=> s.CreateAsync(It.Is<IAsset>(i=> i.AssetIsEqual(request))));
+            useCaseResponse.Should().NotBeNull();
+            useCaseResponse.Asset.Should().NotBeNull();
+            useCaseResponse.Asset.AssetOutputModelIsEqual(request);
+        }
 
-            await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
+        [TestCase(1, 2)]
+        [TestCase(2, 3)]
+        [TestCase(3, 4)]
+        public async Task GivenValidRequest_UseCaseReturnsAssetOutputModel(int schemeId, int createdAssetId)
+        {
+            //arrange
+            var request = TestData.UseCase.GenerateCreateAssetRequest();
+            request.SchemeId = schemeId;
+            _gateway.Setup(s => s.CreateAsync(It.IsAny<IAsset>())).ReturnsAsync(new Asset(request));
+            //act
+            var useCaseResponse = await _classUnderTest.ExecuteAsync(request, CancellationToken.None);
+            //assert
+            useCaseResponse.Should().NotBeNull();
+            useCaseResponse.Asset.Should().NotBeNull();
+            useCaseResponse.Asset.AssetOutputModelIsEqual(request);
+        }
 
-            var asset = _gateway.CalledWith;
-
-            asset.AccountingYear.Should().BeEquivalentTo(request.AccountingYear);
-            asset.Address.Should().BeEquivalentTo(request.Address);
-            asset.AgencyEquityLoan.Should().Be(request.AgencyEquityLoan);
-            asset.CompletionDateForHpiStart.Should()
-                .BeCloseTo(request.CompletionDateForHpiStart.Value, TimeSpan.FromMilliseconds(1.0));
-            asset.Deposit.Should().Be(request.Deposit);
-            asset.DeveloperEquityLoan.Should().Be(request.DeveloperEquityLoan);
-            asset.DevelopingRslName.Should().Be(request.DevelopingRslName);
-            asset.DifferenceFromImsExpectedCompletionToHopCompletionDate.Should()
-                .Be(request.DifferenceFromImsExpectedCompletionToHopCompletionDate);
-            asset.HopCompletionDate.Should().BeCloseTo(request.HopCompletionDate.Value,
-                TimeSpan.FromMilliseconds(1.0));
-            asset.ImsActualCompletionDate.Should().BeCloseTo(request.ImsActualCompletionDate.Value,
-                TimeSpan.FromMilliseconds(1.0));
-            asset.ImsExpectedCompletionDate.Should()
-                .BeCloseTo(request.ImsExpectedCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
-            asset.ImsLegalCompletionDate.Should().BeCloseTo(request.ImsLegalCompletionDate.Value,
-                TimeSpan.FromMilliseconds(1.0));
-            asset.ImsOldRegion.Should().BeEquivalentTo(request.ImsOldRegion);
-            asset.LocationLaRegionName.Should().BeEquivalentTo(request.LocationLaRegionName);
-            asset.MonthPaid.Should().BeEquivalentTo(request.MonthPaid);
-            asset.NoOfBeds.Should().BeEquivalentTo(request.NoOfBeds);
-            asset.SchemeId.Should().Be(request.SchemeId);
-            asset.ShareOfRestrictedEquity.Should().Be(request.ShareOfRestrictedEquity);
+        [TestCase(1, 2)]
+        [TestCase(2, 3)]
+        [TestCase(3, 4)]
+        public void GivenValidRequest_WhenGatewayReturnsNull_ThenUseCaseThrowsAssetNotCreatedException(int schemeId, int createdAssetId)
+        {
+            //arrange
+            var request = TestData.UseCase.GenerateCreateAssetRequest();
+            request.SchemeId = schemeId;
+            _gateway.Setup(s => s.CreateAsync(It.IsAny<IAsset>())).ReturnsAsync((IAsset)null);
+            //act
+            //assert
+            Assert.ThrowsAsync<CreateAssetException>(async ()=> await _classUnderTest.ExecuteAsync(request, CancellationToken.None));
         }
     }
 }

@@ -82,7 +82,7 @@ namespace AssetRegisterTests.HomesEngland
         {
             foundAsset.Should().NotBeNull();
             foundAsset.Assets.Should().NotBeNullOrEmpty();
-            foundAsset.Assets.ElementAt(0).Should().BeEquivalentTo(createdAsset.Asset);
+            foundAsset.Assets.ElementAt(0).AssetOutputModelIsEqual(createdAsset.Asset);
         }
 
         [TestCase(7777, 7778, 7779)]
@@ -107,7 +107,7 @@ namespace AssetRegisterTests.HomesEngland
                     .ConfigureAwait(false);
                 //assert
                 useCaseResponse.Assets.Count.Should().Be(1);
-                useCaseResponse.Assets.ElementAtOrDefault(0).Should().BeEquivalentTo(createdAsset2);
+                useCaseResponse.Assets.ElementAtOrDefault(0).AssetOutputModelIsEqual(createdAsset2.Asset);
                 trans.Dispose();
             }
         }

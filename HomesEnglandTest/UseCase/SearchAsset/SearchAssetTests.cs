@@ -33,11 +33,16 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         [TestCase(3)]
         public async Task GivenValidSchemeId_UseCaseCallsGatewayWithCorrectId(int id)
         {
+            //arrange
+            var asset = TestData.Domain.GenerateAsset();
+            asset.SchemeId = id;
+            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None).Returns(new List<IAsset> { asset });
+            //act
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
             {
                 SchemeId = id
             }, CancellationToken.None);
-
+            //assert
             await _mockGateway.Received()
                 .Search(Arg.Is<AssetSearchQuery>(req => req.SchemeId == id), Arg.Any<CancellationToken>());
         }

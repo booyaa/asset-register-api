@@ -1,15 +1,15 @@
 ﻿using System;
 using FluentAssertions;
 using HomesEngland.Domain;
+using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.GetAsset.Models;
 
 namespace TestHelper
 {
     public static class AssetOutputModelTestHelper
     {
-        public static void AssetOutputModelIsEqual(this AssetOutputModel assetOutputModel, IAsset entity)
+        public static void AssetOutputModelIsEqual(this CreateAssetRequest assetOutputModel, AssetOutputModel entity)
         {
-            assetOutputModel.Id.Should().Be(entity.Id);
             assetOutputModel.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
             assetOutputModel.Address.Should().BeEquivalentTo(entity.Address);
             assetOutputModel.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);

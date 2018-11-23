@@ -1,7 +1,10 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using HomesEngland.Domain;
+using HomesEngland.Exception;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.CreateAsset.Models;
+using HomesEngland.UseCase.GetAsset.Models;
 
 namespace HomesEngland.UseCase.CreateAsset.Impl
 {
@@ -14,34 +17,20 @@ namespace HomesEngland.UseCase.CreateAsset.Impl
             _assetCreator = assetCreator;
         }
 
-        public async Task<CreateAssetResponse> ExecuteAsync(CreateAssetRequest request,
-            CancellationToken cancellationToken)
+        public async Task<CreateAssetResponse> ExecuteAsync(CreateAssetRequest request, CancellationToken cancellationToken)
         {
-            var asset = new DapperAsset
-            {
-                AccountingYear = request.AccountingYear,
-                Address = request.Address,
-                AgencyEquityLoan = request.AgencyEquityLoan,
-                CompletionDateForHpiStart = request.CompletionDateForHpiStart,
-                Deposit = request.Deposit,
-                DeveloperEquityLoan = request.DeveloperEquityLoan,
-                DevelopingRslName = request.DevelopingRslName,
-                DifferenceFromImsExpectedCompletionToHopCompletionDate =
-                    request.DifferenceFromImsExpectedCompletionToHopCompletionDate,
-                HopCompletionDate = request.HopCompletionDate,
-                ImsActualCompletionDate = request.ImsActualCompletionDate,
-                ImsExpectedCompletionDate = request.ImsExpectedCompletionDate,
-                ImsLegalCompletionDate = request.ImsLegalCompletionDate,
-                ImsOldRegion = request.ImsOldRegion,
-                LocationLaRegionName = request.LocationLaRegionName,
-                MonthPaid = request.MonthPaid,
-                NoOfBeds = request.NoOfBeds,
-                SchemeId = request.SchemeId,
-                ShareOfRestrictedEquity = request.ShareOfRestrictedEquity
-            };
-            await _assetCreator.CreateAsync(asset);
+            IAsset asset = new Asset(request);
 
-            return null;
+            var createdAsset = await _assetCreator.CreateAsync(asset);
+            if(createdAsset == null)
+                throw new CreateAssetException();
+            
+            var assetOutputModel = new AssetOutputModel(createdAsset);
+            var createdAssetResponse = new CreateAssetResponse
+            {
+                Asset = assetOutputModel
+            };
+            return createdAssetResponse;
         }
     }
 }
