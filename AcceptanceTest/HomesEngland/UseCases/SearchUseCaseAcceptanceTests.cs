@@ -19,7 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using TestHelper;
 
-namespace AssetRegisterTests.HomesEngland
+namespace AssetRegisterTests.HomesEngland.UseCases
 {
     [TestFixture]
     public class SearchUseCaseAcceptanceTests

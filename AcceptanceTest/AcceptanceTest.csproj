@@ -14,11 +14,12 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
         <PackageReference Include="Moq" Version="4.10.0" />
         <PackageReference Include="NUnit" Version="3.11.0" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.11.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DependencyInjection\DependencyInjection.csproj" />
+      <ProjectReference Include="..\HomesEngland.Gateway.DataGenerator\HomesEngland.Gateway.DataGenerator.csproj" />
       <ProjectReference Include="..\HomesEngland.Gateway\HomesEngland.Gateway.csproj" />
       <ProjectReference Include="..\HomesEngland\HomesEngland.csproj" />
       <ProjectReference Include="..\Main\Main.csproj" />
