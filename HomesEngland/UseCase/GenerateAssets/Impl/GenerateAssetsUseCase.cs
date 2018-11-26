@@ -40,7 +40,7 @@ namespace HomesEngland.UseCase.GenerateAssets.Impl
             return generateAssetsResponse;
         }
 
-        public CreateAssetRequest GenerateCreateAssetRequest()
+        private CreateAssetRequest GenerateCreateAssetRequest()
         {
             var random = new Random(0);
             var faker = new Faker("en");
@@ -59,7 +59,7 @@ namespace HomesEngland.UseCase.GenerateAssets.Impl
                 .RuleFor(property => property.LocationLaRegionName, (fake, model) => fake.Address.County())
                 .RuleFor(property => property.ImsOldRegion, (fake, model) => fake.Address.County())
                 .RuleFor(property => property.MonthPaid, (fake, model) => fake.Date.Month())
-                .RuleFor(property => property.SchemeId, (fake, model) => fake.IndexGlobal)
+                .RuleFor(property => property.SchemeId, (fake, model) => random.Next(1000, 2147483647))
                 .RuleFor(property => property.AgencyEquityLoan,
                     (fake, model) => fake.Finance.Amount(5000m, 100000m))
                 .RuleFor(property => property.CompletionDateForHpiStart, (fake, model) => completionDateForHpiStart)
@@ -72,7 +72,9 @@ namespace HomesEngland.UseCase.GenerateAssets.Impl
                     (fake, model) => differenceFromImsExpectedCompletionToHopCompletionDate)
                 .RuleFor(property => property.DeveloperEquityLoan, (fake, model) => null)
                 .RuleFor(property => property.ShareOfRestrictedEquity,
-                    (fake, model) => fake.Finance.Amount(50, 100));
+                    (fake, model) => fake.Finance.Amount(50, 100))
+                .RuleFor(property => property.Deposit,
+                (fake, model) => fake.Finance.Amount(5000, 100000));
 
             return request;
         }

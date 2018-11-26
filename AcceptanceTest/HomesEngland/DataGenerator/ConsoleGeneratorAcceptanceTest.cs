@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
-using HomesEngland.Gateway.DataGenerator;
+using HomesEngland.Gateway.Migrations;
 using HomesEngland.UseCase.GenerateAssets;
 using Main;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 namespace AssetRegisterTests.HomesEngland.DataGenerator
@@ -14,6 +15,8 @@ namespace AssetRegisterTests.HomesEngland.DataGenerator
         public ConsoleGeneratorAcceptanceTests()
         {
             var assetRegister = new AssetRegister();
+            var context = assetRegister.Get<AssetRegisterContext>();
+            context.Database.Migrate();
             _classUnderTest = assetRegister.Get<IConsoleGenerator>();
         }
 
@@ -27,7 +30,7 @@ namespace AssetRegisterTests.HomesEngland.DataGenerator
             //act
             await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
             //assert
-
+            Assert.Fail();
         }
 
         [TestCase("--records", "1")]
@@ -40,6 +43,7 @@ namespace AssetRegisterTests.HomesEngland.DataGenerator
             //act
             await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
             //assert
+            Assert.Fail();
         }
     }
 }
