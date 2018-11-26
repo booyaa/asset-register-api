@@ -14,7 +14,7 @@ namespace HomesEngland.Gateway.Sql.Postgres
             var userId = splitUserInfo.ElementAtOrDefault(0);
             var password = splitUserInfo.ElementAtOrDefault(1);
             var database = uri.LocalPath.Substring(1);
-            string ngpsqlConnectionString = $"Server={server};Port={port};User Id={userId};Password={password};Database={database};SSL Mode=Prefer;";
+            string ngpsqlConnectionString = $"Server={server};Port={port};User Id={userId};Password={password};Database={database};SSL Mode=Prefer;Trust Server Certificate=true;";
             return ngpsqlConnectionString;
         }
     }
