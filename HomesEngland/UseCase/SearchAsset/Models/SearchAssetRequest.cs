@@ -7,6 +7,7 @@ namespace HomesEngland.UseCase.SearchAsset.Models
     public class SearchAssetRequest : IRequest
     {
         public int? SchemeId { get; set; }
+        public string Address { get; set; }
 
         public RequestValidationResponse Validate(IRequest request)
         {

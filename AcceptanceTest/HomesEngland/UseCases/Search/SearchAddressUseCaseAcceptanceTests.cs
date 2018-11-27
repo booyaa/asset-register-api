@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -10,8 +9,6 @@ using HomesEngland.Gateway;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Models;
-using HomesEngland.UseCase.GetAsset;
-using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Exceptions;
@@ -21,17 +18,17 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using TestHelper;
 
-namespace AssetRegisterTests.HomesEngland.UseCases
+namespace AssetRegisterTests.HomesEngland.UseCases.Search
 {
     [TestFixture]
-    public class SearchUseCaseAcceptanceTests
+    public class SearchAddressUseCaseAcceptanceTests
     {
         private readonly ICreateAssetUseCase _createAssetUseCase;
         private readonly ISearchAssetUseCase _classUnderTest;
         private readonly IGateway<IAsset, int> _gateway;
         private readonly IDatabaseConnectionFactory _databaseConnectionFactory;
 
-        public SearchUseCaseAcceptanceTests()
+        public SearchAddressUseCaseAcceptanceTests()
         {
             IServiceCollection services = new ServiceCollection();
             var assetRegister = new AssetRegister();
@@ -49,18 +46,17 @@ namespace AssetRegisterTests.HomesEngland.UseCases
             _classUnderTest = serviceProvider.GetService<ISearchAssetUseCase>();
         }
 
-        [TestCase(1111)]
-        [TestCase(2222)]
-        [TestCase(3333)]
-        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasBeenSet_ThenWeCanFindTheSameAsset(
-            int schemeId)
+        [TestCase("192 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        [TestCase("193 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        [TestCase("194 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaAddressThatHasBeenSet_ThenWeCanFindTheSameAsset(string address)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAssetWithSchemeId(schemeId);
+                var createdAsset = await CreateAssetWithAddress(address);
                 //act
-                var foundAsset = await SearchForAssetViaSchemeId(schemeId);
+                var foundAsset = await SearchForAssetViaSchemeId(address);
                 //assert
                 ExpectFoundAssetIsEqual(foundAsset, createdAsset);
 
@@ -68,15 +64,14 @@ namespace AssetRegisterTests.HomesEngland.UseCases
             }
         }
 
-        private async Task<SearchAssetResponse> SearchForAssetViaSchemeId(int schemeId)
+        private async Task<SearchAssetResponse> SearchForAssetViaSchemeId(string address)
         {
             var searchForAssetViaSchemeId = new SearchAssetRequest
             {
-                SchemeId = schemeId
+                Address = address
             };
 
-            var useCaseResponse = await _classUnderTest.ExecuteAsync(searchForAssetViaSchemeId, CancellationToken.None)
-                .ConfigureAwait(false);
+            var useCaseResponse = await _classUnderTest.ExecuteAsync(searchForAssetViaSchemeId, CancellationToken.None).ConfigureAwait(false);
             return useCaseResponse;
         }
 
@@ -87,26 +82,23 @@ namespace AssetRegisterTests.HomesEngland.UseCases
             foundAsset.Assets.ElementAt(0).AssetOutputModelIsEqual(createdAsset.Asset);
         }
 
-        [TestCase(7777, 7778, 7779)]
-        [TestCase(2222, 2224, 2225)]
-        [TestCase(3333, 3334, 3335)]
-        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasBeenSet_ThenWeCanFindTheSameAssetAnd(
-            int schemeId, int schemeId2, int schemeId3)
+        [TestCase("195 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY", "201 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        [TestCase("196 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY", "202 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        [TestCase("197 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY", "203 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasBeenSet_ThenWeCanFindTheSameAssetAnd(string address, string address2)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAssetWithSchemeId(schemeId);
-                var createdAsset2 = await CreateAssetWithSchemeId(schemeId2);
-                var createdAsset3 = await CreateAssetWithSchemeId(schemeId3);
+                var createdAsset = await CreateAssetWithAddress(address);
+                var createdAsset2 = await CreateAssetWithAddress(address2);
 
                 var assetSearch = new SearchAssetRequest
                 {
-                    SchemeId = schemeId2
+                    Address = address2
                 };
                 //act
-                var useCaseResponse = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None)
-                    .ConfigureAwait(false);
+                var useCaseResponse = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
                 useCaseResponse.Assets.Count.Should().Be(1);
                 useCaseResponse.Assets.ElementAtOrDefault(0).AssetOutputModelIsEqual(createdAsset2.Asset);
@@ -114,11 +106,10 @@ namespace AssetRegisterTests.HomesEngland.UseCases
             }
         }
 
-        [TestCase(4444)]
-        [TestCase(5555)]
-        [TestCase(6666)]
-        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasntBeenSet_ThenWeThrowAnException(
-            int schemeId)
+        [TestCase("192 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        [TestCase("193 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        [TestCase("194 Evergreen Terrace, Sunny Place, Egham, Surrey, TW20 8TY")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasntBeenSet_ThenWeThrowAnException(string address)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -128,47 +119,34 @@ namespace AssetRegisterTests.HomesEngland.UseCases
                 var createdAsset = await _gateway.CreateAsync(entity).ConfigureAwait(false);
                 var assetSearch = new SearchAssetRequest
                 {
-                    SchemeId = schemeId
+                    Address = address
                 };
                 //act 
                 //assert
-                Assert.ThrowsAsync<AssetNotFoundException>(async () =>
-                    await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
+                Assert.ThrowsAsync<AssetNotFoundException>(async () => await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
                 trans.Dispose();
             }
         }
 
-        [Test]
-        public void GivenAnInvalidRequest_ThenWeThrowBadRequestException()
-        {
-            //arrange 
-            SearchAssetRequest assetSearch = null;
-            //act 
-            //assert
-            Assert.ThrowsAsync<BadRequestException>(async () =>
-                await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
-        }
-
-        [TestCase(0)]
-        [TestCase(-1)]
+        [TestCase("")]
+        [TestCase(" ")]
         [TestCase(null)]
-        public void GivenAnInvalidRequest_ThenWeThrowBadRequestException(int schemeId)
+        public void GivenAnInvalidRequest_ThenWeThrowBadRequestException(string address)
         {
             //arrange 
             SearchAssetRequest assetSearch = new SearchAssetRequest
             {
-                SchemeId = schemeId
+                Address = address
             };
             //act 
             //assert
-            Assert.ThrowsAsync<BadRequestException>(async () =>
-                await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
+            Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
         }
 
-        private async Task<CreateAssetResponse> CreateAssetWithSchemeId(int schemeId)
+        private async Task<CreateAssetResponse> CreateAssetWithAddress(string address)
         {
             var createAssetRequest = TestData.UseCase.GenerateCreateAssetRequest();
-            createAssetRequest.SchemeId = schemeId;
+            createAssetRequest.Address = address;
             var response = await _createAssetUseCase.ExecuteAsync(createAssetRequest, CancellationToken.None);
             return response;
         }

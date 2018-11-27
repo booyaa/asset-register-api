@@ -21,8 +21,7 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
             _assetSearcher = assetSearcher;
         }
 
-        public async Task<SearchAssetResponse> ExecuteAsync(SearchAssetRequest request,
-            CancellationToken cancellationToken)
+        public async Task<SearchAssetResponse> ExecuteAsync(SearchAssetRequest request, CancellationToken cancellationToken)
         {
             ValidateRequest(request);
 
@@ -40,9 +39,10 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
         {
             var assetSearch = new AssetSearchQuery
             {
-                SchemeId = request.SchemeId
+                SchemeId = request.SchemeId,
+                Address = request.Address
             };
-            var foundAssets = await _assetSearcher.Search(assetSearch, cancellationToken);
+            var foundAssets = await _assetSearcher.Search(assetSearch, cancellationToken).ConfigureAwait(false);
 
             if (foundAssets == null || !foundAssets.Any())
                 throw new AssetNotFoundException();
