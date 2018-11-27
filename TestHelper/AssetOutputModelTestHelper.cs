@@ -8,6 +8,12 @@ namespace TestHelper
 {
     public static class AssetOutputModelTestHelper
     {
+        /// <summary>
+        /// Some database store Datetime Seconds fields to 6 decimal places instead of 7
+        /// this helps compare the 2 entities in that case
+        /// </summary>
+        /// <param name="assetOutputModel"></param>
+        /// <param name="entity"></param>
         public static void AssetOutputModelIsEqual(this CreateAssetRequest assetOutputModel, AssetOutputModel entity)
         {
             assetOutputModel.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);

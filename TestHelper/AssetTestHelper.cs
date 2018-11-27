@@ -6,8 +6,15 @@ using HomesEngland.UseCase.GetAsset.Models;
 
 namespace TestHelper
 {
+
     public static class AssetTestHelper
     {
+        /// <summary>
+        /// Some database store Datetime Seconds fields to 6 decimal places instead of 7
+        /// this helps compare the 2 entities in that case
+        /// </summary>
+        /// <param name="readAsset"></param>
+        /// <param name="entity"></param>
         public static void AssetIsEqual(this IAsset readAsset, IAsset entity)
         {
             readAsset.Id.Should().Be(entity.Id);
@@ -31,6 +38,12 @@ namespace TestHelper
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }
 
+        /// <summary>
+        /// Some database store Datetime Seconds fields to 6 decimal places instead of 7
+        /// this helps compare the 2 entities in that case
+        /// </summary>
+        /// <param name="readAsset"></param>
+        /// <param name="entity"></param>
         public static bool AssetIsEqual(this IAsset readAsset, CreateAssetRequest entity)
         {
             return
@@ -54,6 +67,12 @@ namespace TestHelper
                 readAsset.ShareOfRestrictedEquity.Equals(entity.ShareOfRestrictedEquity);
         }
 
+        /// <summary>
+        /// Some database store Datetime Seconds fields to 6 decimal places instead of 7
+        /// this helps compare the 2 entities in that case
+        /// </summary>
+        /// <param name="readAsset"></param>
+        /// <param name="entity"></param>
         public static void AssetOutputModelIsEqual(this AssetOutputModel readAsset, CreateAssetRequest entity)
         {
             readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
@@ -76,6 +95,12 @@ namespace TestHelper
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }
 
+        /// <summary>
+        /// Some database store Datetime Seconds fields to 6 decimal places instead of 7
+        /// this helps compare the 2 entities in that case
+        /// </summary>
+        /// <param name="readAsset"></param>
+        /// <param name="entity"></param>
         public static void AssetOutputModelIsEqual(this AssetOutputModel readAsset, AssetOutputModel entity)
         {
             readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);

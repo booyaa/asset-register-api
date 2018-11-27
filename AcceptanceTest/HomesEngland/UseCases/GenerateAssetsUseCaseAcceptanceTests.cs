@@ -65,22 +65,24 @@ namespace AssetRegisterTests.HomesEngland.UseCases
                 //assert
                 for (int i = 0; i < response.RecordsGenerated.Count; i++)
                 {
-                    await FindAndCheckTheAssetWasGenerated(response, i);
+                    var generatedAsset = response.RecordsGenerated.ElementAtOrDefault(i);
+
+                    var record = await FindAsset(generatedAsset, i);
+
+                    record.Should().NotBeNull();
+                    record.AssetOutputModelIsEqual(generatedAsset);
                 }
                 trans.Dispose();
             }
         }
 
-        private async Task FindAndCheckTheAssetWasGenerated(GenerateAssetsResponse response, int i)
+        private async Task<AssetOutputModel> FindAsset(AssetOutputModel generatedAsset, int i)
         {
-            var generatedAsset = response.RecordsGenerated.ElementAtOrDefault(i);
             var record = await _searchAssetUseCase.ExecuteAsync(new SearchAssetRequest
             {
                 SchemeId = generatedAsset?.SchemeId
             }, CancellationToken.None).ConfigureAwait(false);
-            record.Should().NotBeNull();
-
-            record.Assets.ElementAtOrDefault(i).AssetOutputModelIsEqual(generatedAsset);
+            return record.Assets.ElementAtOrDefault(0);
         }
 
         [TestCase(0)]

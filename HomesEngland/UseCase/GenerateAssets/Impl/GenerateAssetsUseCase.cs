@@ -26,7 +26,7 @@ namespace HomesEngland.UseCase.GenerateAssets.Impl
 
             IList<AssetOutputModel> createdList = new List<AssetOutputModel>();
 
-            for (int i = 0; i < request.Records; i++)
+            for (int index = 0; index < request.Records; index++)
             {
                 var createAssetRequest = GenerateCreateAssetRequest();
                 var response = await _createAssetUseCase.ExecuteAsync(createAssetRequest, cancellationToken).ConfigureAwait(false);
@@ -42,7 +42,7 @@ namespace HomesEngland.UseCase.GenerateAssets.Impl
 
         private CreateAssetRequest GenerateCreateAssetRequest()
         {
-            var random = new Random(0);
+            var random = new Random();
             var faker = new Faker("en");
             var completionDateForHpiStart = faker.Date.Soon(random.Next(1, 15));
             var imsActualCompletionDate = faker.Date.Soon(random.Next(30, 90));
