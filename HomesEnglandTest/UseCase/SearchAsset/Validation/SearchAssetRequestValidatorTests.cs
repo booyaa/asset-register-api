@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.GetAsset.Models.Validation;
+using HomesEngland.UseCase.SearchAsset.Models;
+using HomesEngland.UseCase.SearchAsset.Models.Validation;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.UseCase.SearchAsset.Validation

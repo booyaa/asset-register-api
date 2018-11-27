@@ -3,7 +3,6 @@ using DependencyInjection;
 using HomesEngland.Domain;
 using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
-using HomesEngland.Gateway.DataGenerator;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.Gateway.Sql;
 using HomesEngland.Gateway.Sql.Postgres;
@@ -13,10 +12,10 @@ using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Impl;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
+using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console.Internal;
 
 namespace Main
 {

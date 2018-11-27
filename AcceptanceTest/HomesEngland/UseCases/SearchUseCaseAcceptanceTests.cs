@@ -12,6 +12,8 @@ using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Models;
+using HomesEngland.UseCase.SearchAsset;
+using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Exceptions;
 using Main;
 using Microsoft.EntityFrameworkCore;

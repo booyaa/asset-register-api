@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using HomesEngland.UseCase.GenerateAssets.Models;
 
-namespace HomesEngland.Gateway.DataGenerator
+namespace HomesEngland.UseCase.GenerateAssets.Models.Validation
 {
     public class GenerateAssetsRequestValidator : AbstractValidator<GenerateAssetsRequest>
     {

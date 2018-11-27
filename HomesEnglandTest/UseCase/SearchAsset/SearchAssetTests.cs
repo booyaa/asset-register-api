@@ -7,6 +7,7 @@ using HomesEngland.Exception;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Models;
+using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Exceptions;

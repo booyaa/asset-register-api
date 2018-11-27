@@ -1,4 +1,4 @@
-﻿using HomesEngland.Gateway.DataGenerator;
+﻿using HomesEngland.UseCase.GenerateAssets.Models.Validation;
 using HomesEngland.UseCase.Models;
 using Infrastructure.Api.Response.Validation;
 

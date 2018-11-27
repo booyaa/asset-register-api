@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using HomesEngland.Gateway.DataGenerator;
 using HomesEngland.UseCase.GenerateAssets.Models;
+using HomesEngland.UseCase.GenerateAssets.Models.Validation;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.UseCase.GenerateAssets.Validation

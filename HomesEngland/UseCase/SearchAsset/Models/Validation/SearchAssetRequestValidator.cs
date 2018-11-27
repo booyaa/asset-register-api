@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace HomesEngland.UseCase.GetAsset.Models.Validation
+namespace HomesEngland.UseCase.SearchAsset.Models.Validation
 {
     public class SearchAssetRequestValidator : AbstractValidator<SearchAssetRequest>
     {

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Models;
+using HomesEngland.UseCase.SearchAsset;
+using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Exceptions;
 using Moq;
 using NUnit.Framework;
