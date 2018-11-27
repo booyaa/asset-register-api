@@ -15,6 +15,7 @@ using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console.Internal;
 
 namespace Main
@@ -51,8 +52,14 @@ namespace Main
             RegisterExportedDependency<IGateway<IAsset, int>, SqlAssetGateway>();
             RegisterExportedDependency<ICreateAssetUseCase, CreateAssetUseCase>();
             RegisterExportedDependency<IGenerateAssetsUseCase, GenerateAssetsUseCase>();
-            RegisterExportedDependency<IConsoleGenerator, ConsoleGenerator>();
+            RegisterExportedDependency<IConsoleGenerator, ConsoleAssetGenerator>();
             RegisterExportedDependency<IInputParser, InputParser>();
+
+            ILoggerFactory loggerFactory = new LoggerFactory()
+                .AddConsole()
+                .AddDebug();
+
+            RegisterExportedDependency<ILogger<ConsoleAssetGenerator>>(() => new Logger<ConsoleAssetGenerator>(loggerFactory));
         }
 
         public override T Get<T>()

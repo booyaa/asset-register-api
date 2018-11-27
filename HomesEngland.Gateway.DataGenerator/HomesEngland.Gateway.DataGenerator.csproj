@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.0.101" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

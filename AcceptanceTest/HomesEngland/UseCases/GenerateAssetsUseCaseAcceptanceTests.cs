@@ -17,8 +17,8 @@ namespace AssetRegisterTests.HomesEngland.UseCases
     [TestFixture]
     public class GenerateAssetsUseCaseTest
     {
-        private IGenerateAssetsUseCase _classUnderTest;
-        private ISearchAssetUseCase _searchAssetUseCase;
+        private readonly IGenerateAssetsUseCase _classUnderTest;
+        private readonly ISearchAssetUseCase _searchAssetUseCase;
         public GenerateAssetsUseCaseTest()
         {
             var assetRegister = new AssetRegister();
@@ -61,8 +61,7 @@ namespace AssetRegisterTests.HomesEngland.UseCases
             //act
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None)
-                    .ConfigureAwait(false);
+                var response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
                 //assert
                 for (int i = 0; i < response.RecordsGenerated.Count; i++)
                 {
