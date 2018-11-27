@@ -51,14 +51,14 @@ namespace Infrastructure.Api.Middleware
 
         private async Task HandleApiException(HttpContext context, ApiException ex)
         {
-            LogExceptionAndClearResponse(context, ex);
+            LogException(ex);
             var apiResponse = new ApiResponse<object>(ex);
             await WriteResponseToClient(context, apiResponse).ConfigureAwait(false);
         }
 
         private async Task HandleException(HttpContext context, Exception ex)
         {
-            LogExceptionAndClearResponse(context, ex);
+            LogException(ex);
             var apiResponse = new ApiResponse<object>(ex);
             await WriteResponseToClient(context, apiResponse).ConfigureAwait(false);
         }
@@ -71,10 +71,9 @@ namespace Infrastructure.Api.Middleware
             await context.Response.WriteAsync(response, context.RequestAborted).ConfigureAwait(false);
         }
 
-        private void LogExceptionAndClearResponse(HttpContext context, Exception ex)
+        private void LogException( Exception ex)
         {
             _logger.LogError(ex, $"{nameof(ex)} occurred");
-            context.Response.Clear();
         }
     }
 }
