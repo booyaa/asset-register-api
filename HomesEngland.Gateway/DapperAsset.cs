@@ -58,5 +58,28 @@ namespace HomesEngland.Gateway
         //Calcuation
         [Column("differencefromimsexpectedcompletiontohopcompletiondate")]
         public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
+
+        public DapperAsset() { }
+        public DapperAsset(IAsset asset)
+        {
+            AccountingYear = asset.AccountingYear;
+            Address = asset.Address;
+            AgencyEquityLoan = asset.AgencyEquityLoan;
+            CompletionDateForHpiStart = asset.CompletionDateForHpiStart;
+            Deposit = asset.Deposit;
+            DeveloperEquityLoan = asset.DeveloperEquityLoan;
+            DevelopingRslName = asset.DevelopingRslName;
+            DifferenceFromImsExpectedCompletionToHopCompletionDate = asset.DifferenceFromImsExpectedCompletionToHopCompletionDate;
+            HopCompletionDate = asset.HopCompletionDate;
+            ImsActualCompletionDate = asset.ImsActualCompletionDate;
+            ImsExpectedCompletionDate = asset.ImsExpectedCompletionDate;
+            ImsLegalCompletionDate = asset.ImsLegalCompletionDate;
+            ImsOldRegion = asset.ImsOldRegion;
+            LocationLaRegionName = asset.LocationLaRegionName;
+            MonthPaid = asset.MonthPaid;
+            NoOfBeds = asset.NoOfBeds;
+            SchemeId = asset.SchemeId;
+            ShareOfRestrictedEquity = asset.ShareOfRestrictedEquity;
+        }
     }
 }

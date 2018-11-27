@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,7 +20,7 @@ namespace DependencyInjection
             ConstructHiddenDependencies();
         }
         
-        public T Get<T>() where T : class
+        public virtual T Get<T>() where T : class
         {
             return _dependencies[typeof(T)]() as T;
         }
