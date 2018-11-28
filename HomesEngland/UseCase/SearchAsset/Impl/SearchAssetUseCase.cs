@@ -29,7 +29,7 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
 
             var response = new SearchAssetResponse
             {
-                Assets = foundAssets.Select(s => new AssetOutputModel(s)).ToList()
+                Assets = foundAssets?.Select(s => new AssetOutputModel(s)).ToList()
             };
 
             return response;
@@ -44,8 +44,8 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
             };
             var foundAssets = await _assetSearcher.Search(assetSearch, cancellationToken).ConfigureAwait(false);
 
-            if (foundAssets == null || !foundAssets.Any())
-                throw new AssetNotFoundException();
+            if (foundAssets == null)
+                foundAssets = new List<IAsset>();
 
             return foundAssets;
         }

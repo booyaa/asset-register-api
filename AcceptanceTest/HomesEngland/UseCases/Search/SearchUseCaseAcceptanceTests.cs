@@ -127,37 +127,14 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
                 };
                 //act 
                 //assert
-                Assert.ThrowsAsync<AssetNotFoundException>(async () =>
-                    await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
+                var response = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                response.Should().NotBeNull();
+                response.Assets.Should().BeNullOrEmpty();
                 trans.Dispose();
             }
         }
 
-        [Test]
-        public void GivenAnInvalidRequest_ThenWeThrowBadRequestException()
-        {
-            //arrange 
-            SearchAssetRequest assetSearch = null;
-            //act 
-            //assert
-            Assert.ThrowsAsync<BadRequestException>(async () =>
-                await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
-        }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        [TestCase(null)]
-        public void GivenAnInvalidRequest_ThenWeThrowBadRequestException(int schemeId)
-        {
-            //arrange 
-            SearchAssetRequest assetSearch = new SearchAssetRequest
-            {
-                SchemeId = schemeId
-            };
-            //act 
-            //assert
-            Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
-        }
 
         private async Task<CreateAssetResponse> CreateAssetWithSchemeId(int schemeId)
         {

@@ -35,11 +35,12 @@ namespace HomesEnglandTest.UseCase.SearchAsset.Validation
             response.IsValid.Should().BeTrue();
         }
 
-        [TestCase(null, null, "'Scheme Id' must not be empty.")]
-        [TestCase(0,    null, "SchemeId must not be null and must be greater than 0.")]
-        [TestCase(-1,   null, "SchemeId must not be null and must be greater than 0.")]
-        [TestCase(null, " ", "Address must not be null or empty.")]
-        public void GivenInValidRequest_ThenIsValidIsFalse(int? id, string address, string message)
+        [TestCase(null, null)]
+        [TestCase(0,    null)]
+        [TestCase(-1,   null)]
+        [TestCase(null, "")]
+        [TestCase(null, " ")]
+        public void GivenInValidRequest_ThenIsValidIsFalse(int? id, string address)
         {
             //arrange
             var request = new SearchAssetRequest
@@ -53,7 +54,6 @@ namespace HomesEnglandTest.UseCase.SearchAsset.Validation
             response.Should().NotBeNull();
             response.IsValid.Should().BeFalse();
             response.Errors.Should().NotBeNullOrEmpty();
-            response.Errors[0].ErrorMessage.Should().BeEquivalentTo(message);
         }
     }
 }
