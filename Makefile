@@ -52,3 +52,6 @@ docker-down:
 
 docker-stop:
 	$(COMPOSE) stop
+
+seeds:
+	$(RUN_WEB_SERVICE) dotnet run --project HomesEngland.Gateway.DataGenerator --records 100
