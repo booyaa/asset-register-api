@@ -41,7 +41,7 @@ namespace HomesEngland.Gateway.Test
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAssetWithSchemeId(schemeId, _gateway);
+                var createdAsset = await CreateAsset(schemeId, null, _gateway);
                 var assetSearch = new AssetSearchQuery
                 {
                     SchemeId = schemeId
@@ -54,6 +54,7 @@ namespace HomesEngland.Gateway.Test
             }
         }
 
+
         [TestCase(7007, 7008, 7009)]
         [TestCase(2002, 2004, 2005)]
         [TestCase(3003,3004,3005)]
@@ -62,9 +63,9 @@ namespace HomesEngland.Gateway.Test
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAssetWithSchemeId(schemeId, _gateway);
-                var createdAsset2 = await CreateAssetWithSchemeId(schemeId2, _gateway);
-                var createdAsset3 = await CreateAssetWithSchemeId(schemeId3, _gateway);
+                var createdAsset = await CreateAsset(schemeId, null, _gateway);
+                var createdAsset2 = await CreateAsset(schemeId2, null, _gateway);
+                var createdAsset3 = await CreateAsset(schemeId3, null, _gateway);
 
                 var assetSearch = new AssetSearchQuery
                 {
@@ -89,7 +90,7 @@ namespace HomesEngland.Gateway.Test
             {
                 var entity = TestData.Domain.GenerateAsset();
                 
-                var createdAsset = await _gateway.CreateAsync(entity).ConfigureAwait(false);
+                await _gateway.CreateAsync(entity).ConfigureAwait(false);
                 var assetSearch = new AssetSearchQuery
                 {
                     SchemeId = schemeId
@@ -102,12 +103,121 @@ namespace HomesEngland.Gateway.Test
             }
         }
 
-        private async Task<IAsset> CreateAssetWithSchemeId(int schemeId, IGateway<IAsset,int> gateway)
+        private async Task<IAsset> CreateAsset(int? schemeId, string address, IGateway<IAsset,int> gateway)
         {
             var entity = TestData.Domain.GenerateAsset();
-            entity.SchemeId = schemeId;
+            if(schemeId.HasValue)
+                entity.SchemeId = schemeId;
+            if (string.IsNullOrEmpty(address))
+                entity.Address = address;
             IAsset createdAsset = await gateway.CreateAsync(entity).ConfigureAwait(false);
             return createdAsset;
+        }
+
+        [TestCase("Address 1")]
+        [TestCase("Address 2")]
+        [TestCase("Address 3")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaExactAddress_ThenWeCanFindTheSameAsset(string address)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var createdAsset = await CreateAsset(null, address, _gateway);
+                var assetSearch = new AssetSearchQuery
+                {
+                    Address = address
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                trans.Dispose();
+            }
+        }
+
+        [TestCase("Address 1", "Addr")]
+        [TestCase("Address 2", "Addr")]
+        [TestCase("Address 3", "Addr")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaStartsWith_ThenWeCanFindTheSameAsset(string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var createdAsset = await CreateAsset(null, address, _gateway);
+                var assetSearch = new AssetSearchQuery
+                {
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                trans.Dispose();
+            }
+        }
+
+        [TestCase("Address 1", "ss 1")]
+        [TestCase("Address 2", "ress 2")]
+        [TestCase("Address 3", "3")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaEndWith_ThenWeCanFindTheSameAsset(string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var createdAsset = await CreateAsset(null, address, _gateway);
+                var assetSearch = new AssetSearchQuery
+                {
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                trans.Dispose();
+            }
+        }
+
+        [TestCase("Address 1", "address 1")]
+        [TestCase("Address 2", "addres")]
+        [TestCase("Address 3", "Add")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaLowerCase_ThenWeCanFindTheSameAsset(string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var createdAsset = await CreateAsset(null, address, _gateway);
+                var assetSearch = new AssetSearchQuery
+                {
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                trans.Dispose();
+            }
+        }
+
+
+        [TestCase(null, "address 1")]
+        [TestCase(null, "addres")]
+        [TestCase(null, "Add")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaForAnAddressThatDoesntExist_ThenWeReturnNullOrEmptyList(string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await CreateAsset(null, address, _gateway);
+                var assetSearch = new AssetSearchQuery
+                {
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.Should().BeNullOrEmpty();
+                trans.Dispose();
+            }
         }
     }
 }
