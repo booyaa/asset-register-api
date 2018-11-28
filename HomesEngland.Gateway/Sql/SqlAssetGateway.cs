@@ -57,8 +57,12 @@ namespace HomesEngland.Gateway.Sql
             IDatabaseConnection connection = new DefaultDatabase(_connection, config);
 
             var searchSql = GenerateConditionalSearchSql(searchQueryRequest);
-
-            IEnumerable<IAsset> results = connection.Query<DapperAsset>(searchSql, new { schemeid = searchQueryRequest.SchemeId, address = $"_{searchQueryRequest.Address}_"});
+            var searchObject = new
+            {
+                schemeid = searchQueryRequest.SchemeId,
+                address = $"%{searchQueryRequest?.Address}%"
+            };
+            IEnumerable<IAsset> results = connection.Query<DapperAsset>(searchSql, searchObject);
             _connection.Close();
             return Task.FromResult((IList<IAsset>)results?.ToList());
         }
@@ -70,7 +74,7 @@ namespace HomesEngland.Gateway.Sql
             if (searchQueryRequest.SchemeId.HasValue)
                 filteringClauses.Add("a.schemeid = @schemeId");
             if (!string.IsNullOrEmpty(searchQueryRequest.Address) && !string.IsNullOrWhiteSpace(searchQueryRequest.Address))
-                filteringClauses.Add("a.address LIKE @address;");
+                filteringClauses.Add("lower(a.address) LIKE lower(@address)");
 
             var sb = new StringBuilder();
             sb.Append(sql);

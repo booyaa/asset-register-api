@@ -46,9 +46,9 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
             _classUnderTest = serviceProvider.GetService<ISearchAssetUseCase>();
         }
 
-        [TestCase(1111, null)]
-        [TestCase(2222, null)]
-        [TestCase(3333, null)]
+        [TestCase(1111, null, null)]
+        [TestCase(2222, null, null)]
+        [TestCase(3333, null, null)]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
@@ -61,7 +61,7 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAssetWithSchemeId(schemeId, address);
+                var createdAsset = await CreateAsset(schemeId, address);
                 //act
                 var foundAsset = await SearchForAsset(schemeId, searchAddress);
                 //assert
@@ -73,13 +73,13 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
 
         private async Task<SearchAssetResponse> SearchForAsset(int? schemeId, string address)
         {
-            var searchForAssetViaSchemeId = new SearchAssetRequest
+            var searchForAsset = new SearchAssetRequest
             {
                 SchemeId = schemeId,
                 Address = address
             };
 
-            var useCaseResponse = await _classUnderTest.ExecuteAsync(searchForAssetViaSchemeId, CancellationToken.None).ConfigureAwait(false);
+            var useCaseResponse = await _classUnderTest.ExecuteAsync(searchForAsset, CancellationToken.None).ConfigureAwait(false);
             return useCaseResponse;
         }
 
@@ -98,9 +98,9 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAssetWithSchemeId(schemeId, address);
-                var createdAsset2 = await CreateAssetWithSchemeId(schemeId2, address);
-                var createdAsset3 = await CreateAssetWithSchemeId(schemeId3, address);
+                var createdAsset = await CreateAsset(schemeId, address);
+                var createdAsset2 = await CreateAsset(schemeId2, address);
+                var createdAsset3 = await CreateAsset(schemeId3, address);
 
                 var assetSearch = new SearchAssetRequest
                 {
@@ -142,12 +142,12 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
 
 
 
-        private async Task<CreateAssetResponse> CreateAssetWithSchemeId(int? schemeId, string address)
+        private async Task<CreateAssetResponse> CreateAsset(int? schemeId, string address)
         {
             var createAssetRequest = TestData.UseCase.GenerateCreateAssetRequest();
             if(schemeId.HasValue)
                 createAssetRequest.SchemeId = schemeId;
-            if (string.IsNullOrEmpty(address))
+            if (!string.IsNullOrEmpty(address))
                 createAssetRequest.Address = address;
             var response = await _createAssetUseCase.ExecuteAsync(createAssetRequest, CancellationToken.None);
             return response;

@@ -108,7 +108,7 @@ namespace HomesEngland.Gateway.Test
             var entity = TestData.Domain.GenerateAsset();
             if(schemeId.HasValue)
                 entity.SchemeId = schemeId;
-            if (string.IsNullOrEmpty(address))
+            if (!string.IsNullOrEmpty(address))
                 entity.Address = address;
             IAsset createdAsset = await gateway.CreateAsync(entity).ConfigureAwait(false);
             return createdAsset;
