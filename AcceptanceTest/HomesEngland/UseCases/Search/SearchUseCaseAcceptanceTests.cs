@@ -4,14 +4,12 @@ using System.Threading.Tasks;
 using System.Transactions;
 using FluentAssertions;
 using HomesEngland.Domain;
-using HomesEngland.Exception;
 using HomesEngland.Gateway;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Models;
-using Infrastructure.Api.Exceptions;
 using Main;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -104,7 +102,7 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
 
                 var assetSearch = new SearchAssetRequest
                 {
-                    SchemeId = schemeId2
+                    SchemeId = schemeId2,
                 };
                 //act
                 var useCaseResponse = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None)

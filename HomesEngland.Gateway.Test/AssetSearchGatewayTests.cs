@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -216,6 +217,138 @@ namespace HomesEngland.Gateway.Test
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
                 assets.Should().BeNullOrEmpty();
+                trans.Dispose();
+            }
+        }
+
+        [TestCase(1111,null)]
+        [TestCase(2222,null)]
+        [TestCase(3333,null)]
+        [TestCase(null,"add")]
+        [TestCase(null,"Address 1")]
+        [TestCase(null,"somewh")]
+        [TestCase(null,"where")]
+        [TestCase(null,"PO")]
+        [TestCase(null,"Tow")]
+        [TestCase(null,"C03")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaFieldsThatHaventBeenSet_ThenWeGetNullOrEmptyArray(int? schemeId, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await CreateAsset(null, null,_gateway);
+                //act
+                var assetSearch = new AssetSearchQuery
+                {
+                    SchemeId = schemeId,
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.Should().BeNullOrEmpty();
+
+                trans.Dispose();
+            }
+        }
+
+        [TestCase(1111, null, null)]
+        [TestCase(2222, null, null)]
+        [TestCase(3333, null, null)]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        public async Task GivenAnAssetHasBeenCreated_WhenWeSearch_ThenWeCanFindTheSameAsset(int? schemeId, string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var createdAsset = await CreateAsset(schemeId, address, _gateway);
+                //act
+                var assetSearch = new AssetSearchQuery
+                {
+                    SchemeId = schemeId,
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+
+                trans.Dispose();
+            }
+        }
+
+        [TestCase(1111, null, null)]
+        [TestCase(2222, null, null)]
+        [TestCase(3333, null, null)]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        public async Task GivenMultiplesAssetsHaveBeenCreatedWithASimilarAddress_WhenWeSearch_ThenWeCanFindMultipleAssets(int? schemeId, string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var createdAsset = await CreateAsset(schemeId, address, _gateway);
+                var createdAsset2 = await CreateAsset(schemeId, address, _gateway);
+                //act
+                var assetSearch = new AssetSearchQuery
+                {
+                    SchemeId = schemeId,
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.Count.Should().Be(2);
+
+                trans.Dispose();
+            }
+        }
+
+
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        public async Task GivenMultiplesAssetsHaveBeenCreatedWithASimilarAddress_WhenWeSearch_ThenTheAssetsAreOrderedBySchemeIdDesc( string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var random = new Random();
+                var randomInt = random.Next();
+                await CreateAsset(randomInt, address, _gateway);
+                await CreateAsset(randomInt+1, address, _gateway);
+                //act
+                var assetSearch = new AssetSearchQuery
+                {
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                Assert.Greater(assets.ElementAt(0).SchemeId, assets.ElementAt(1).SchemeId);
+
                 trans.Dispose();
             }
         }

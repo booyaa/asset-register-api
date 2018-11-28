@@ -72,9 +72,9 @@ namespace HomesEngland.Gateway.Sql
             var sql = @"SELECT * FROM assets a ";
             IList<string> filteringClauses = new List<string>();
             if (searchQueryRequest.SchemeId.HasValue)
-                filteringClauses.Add("a.schemeid = @schemeId");
+                filteringClauses.Add("a.schemeid = @schemeId ");
             if (!string.IsNullOrEmpty(searchQueryRequest.Address) && !string.IsNullOrWhiteSpace(searchQueryRequest.Address))
-                filteringClauses.Add("lower(a.address) LIKE lower(@address)");
+                filteringClauses.Add("lower(a.address) LIKE lower(@address) ");
 
             var sb = new StringBuilder();
             sb.Append(sql);
@@ -85,7 +85,7 @@ namespace HomesEngland.Gateway.Sql
                 sb.Append(filteringClauses.ElementAtOrDefault(i));
             }
 
-            sb.Append(";");
+            sb.Append(" ORDER BY a.schemeid DESC;");
             return sb.ToString();
         }
     }
