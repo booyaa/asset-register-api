@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Models;
+using HomesEngland.UseCase.SearchAsset;
+using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Response;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Extensions;

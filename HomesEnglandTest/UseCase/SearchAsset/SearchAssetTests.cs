@@ -3,10 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HomesEngland.Domain;
-using HomesEngland.Exception;
 using HomesEngland.Gateway.Assets;
-using HomesEngland.UseCase.GetAsset;
-using HomesEngland.UseCase.GetAsset.Models;
+using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Exceptions;
@@ -47,19 +45,26 @@ namespace HomesEnglandTest.UseCase.SearchAsset
                 .Search(Arg.Is<AssetSearchQuery>(req => req.SchemeId == id), Arg.Any<CancellationToken>());
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        public async Task GivenValidRequestId_UseCaseReturnsCorrectlyMappedAsset(int id)
+        [TestCase(1, null)]
+        [TestCase(2, null)]
+        [TestCase(3, null)]
+        [TestCase(null, "d")]
+        [TestCase(null, "e")]
+        [TestCase(null, "t")]
+        public async Task GivenValidRequestId_UseCaseReturnsCorrectlyMappedAsset(int? id, string address)
         {
             //arrange
             var asset = TestData.Domain.GenerateAsset();
-            asset.SchemeId = id;
+            if(id.HasValue)
+                asset.SchemeId = id;
+            if (!string.IsNullOrEmpty(address))
+                asset.Address = address;
             _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None).Returns(new List<IAsset> {asset});
             //act
             var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest
             {
-                SchemeId = id
+                SchemeId = id,
+                Address = address
             }, CancellationToken.None);
             //assert
             response.Should().NotBeNull();
@@ -70,8 +75,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         [TestCase(1, 2)]
         [TestCase(3, 4)]
         [TestCase(5, 6)]
-        public async Task GivenValidRequestIdAndMultipleAssetsReturned_UseCaseReturnsCorrectlyMappedAssets(int idOne,
-            int idTwo)
+        public async Task GivenValidRequestIdAndMultipleAssetsReturned_UseCaseReturnsCorrectlyMappedAssets(int idOne, int idTwo)
         {
             var assetOne = TestData.Domain.GenerateAsset();
             assetOne.SchemeId = idOne;
@@ -93,60 +97,75 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             response.Assets[1].Should().BeEquivalentTo(assetTwo);
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        public void GivenNoAssetsFoundForSchemeId_UseCaseThrowsAssetNotFoundException(int id)
+        [TestCase(1, null)]
+        [TestCase(2, "")]
+        [TestCase(3, " ")]
+        [TestCase(null, "a")]
+        [TestCase(null, "b")]
+        [TestCase(null, "c")]
+        public async Task GivenValidInput_WhenNoAssetsFoundForSchemeId_ThenUseCaseThrowsAssetReturnsNull(int? id, string address)
         {
+            //arrange
             _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None).Returns(new List<IAsset>());
-
-            Assert.ThrowsAsync<AssetNotFoundException>(async () => await
-                _classUnderTest.ExecuteAsync(new SearchAssetRequest {SchemeId = id}, CancellationToken.None));
+            //act
+            var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest {SchemeId = id, Address = address}, CancellationToken.None);
+            //assert
+            response.Should().NotBeNull();
+            response.Assets.Should().BeNullOrEmpty();
         }
 
-        [TestCase(4)]
-        [TestCase(5)]
-        [TestCase(6)]
-        public void GivenValidRequest_WhenSearchResultsAreNull_ThenUseCaseThrowsAssetNotFoundException(int id)
+        [TestCase(1, null)]
+        [TestCase(2, null)]
+        [TestCase(3, null)]
+        [TestCase(null, "d")]
+        [TestCase(null, "e")]
+        [TestCase(null, "t")]
+        public async Task GivenValidRequest_WhenSearchResultsAreNull_ThenUseCaseThrowsAssetNotFoundException(int id, string address)
         {
             //arrange
             _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None).Returns((IList<IAsset>) null);
             var searchAssetRequest = new SearchAssetRequest
             {
-                SchemeId = id
+                SchemeId = id,
+                Address = address
             };
             //act
+            //act
+            var response = await _classUnderTest.ExecuteAsync(searchAssetRequest, CancellationToken.None);
             //assert
-            Assert.ThrowsAsync<AssetNotFoundException>(async () =>
-                await _classUnderTest.ExecuteAsync(searchAssetRequest, CancellationToken.None));
+            response.Should().NotBeNull();
+            response.Assets.Should().BeNullOrEmpty();
         }
 
-        [TestCase(0)]
-        [TestCase(-1)]
-        [TestCase(null)]
-        public void GivenInValidRequest_ThenUseCaseThrowsBadRequestException(int? id)
+        [TestCase(null, null)]
+        [TestCase(0, null)]
+        [TestCase(-1, null)]
+        [TestCase(null, "")]
+        [TestCase(null, " ")]
+        public void GivenInValidRequest_ThenUseCaseThrowsBadRequestException(int? id, string address)
         {
             //arrange
             IAssetSearchQuery searchQueryAssetRequest = new AssetSearchQuery
             {
-                SchemeId = id
+                SchemeId = id,
+                Address = address
             };
             var assetRequest = new SearchAssetRequest {SchemeId = id};
             _mockGateway.Search(searchQueryAssetRequest, CancellationToken.None).Returns((IList<IAsset>) null);
             //act
             //assert
-            Assert.ThrowsAsync<BadRequestException>(async () =>
-                await _classUnderTest.ExecuteAsync(assetRequest, CancellationToken.None));
+            Assert.ThrowsAsync<BadRequestException>(async () => await _classUnderTest.ExecuteAsync(assetRequest, CancellationToken.None));
         }
 
         [Test]
-        public void GivenNullRequest_UseCaseReturnsCorrectlyMappedAsset()
+        public void GivenAnInvalidRequest_ThenWeThrowBadRequestException()
         {
-            //arrange
-            //act
+            //arrange 
+            SearchAssetRequest assetSearch = null;
+            //act 
             //assert
             Assert.ThrowsAsync<BadRequestException>(async () =>
-                await _classUnderTest.ExecuteAsync(null, CancellationToken.None));
+                await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false));
         }
     }
 }

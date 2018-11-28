@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.Domain;
@@ -54,10 +55,38 @@ namespace HomesEngland.Gateway.Sql
                 _connection.Open();
             var config = PeregrineConfig.Postgres.WithColumnNameFactory(new PascalCaseColumnNameFactory());
             IDatabaseConnection connection = new DefaultDatabase(_connection, config);
-            var sql = @"SELECT * FROM assets a Where a.schemeid = @schemeId";
-            IEnumerable<IAsset> results = connection.Query<DapperAsset>(sql, new { schemeid = searchQueryRequest.SchemeId });
+
+            var searchSql = GenerateConditionalSearchSql(searchQueryRequest);
+            var searchObject = new
+            {
+                schemeid = searchQueryRequest.SchemeId,
+                address = $"%{searchQueryRequest?.Address}%"
+            };
+            IEnumerable<IAsset> results = connection.Query<DapperAsset>(searchSql, searchObject);
             _connection.Close();
             return Task.FromResult((IList<IAsset>)results?.ToList());
+        }
+
+        private static string GenerateConditionalSearchSql(IAssetSearchQuery searchQueryRequest)
+        {
+            var sql = @"SELECT * FROM assets a ";
+            IList<string> filteringClauses = new List<string>();
+            if (searchQueryRequest.SchemeId.HasValue)
+                filteringClauses.Add("a.schemeid = @schemeId ");
+            if (!string.IsNullOrEmpty(searchQueryRequest.Address) && !string.IsNullOrWhiteSpace(searchQueryRequest.Address))
+                filteringClauses.Add("lower(a.address) LIKE lower(@address) ");
+
+            var sb = new StringBuilder();
+            sb.Append(sql);
+            for (int i = 0; i < filteringClauses.Count; i++)
+            {
+                sb.Append(i == 0 ? "WHERE " : "AND ");
+
+                sb.Append(filteringClauses.ElementAtOrDefault(i));
+            }
+
+            sb.Append(" ORDER BY a.schemeid DESC;");
+            return sb.ToString();
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using HomesEngland.UseCase.GetAsset.Models.Validation;
-using HomesEngland.UseCase.Models;
+﻿using HomesEngland.UseCase.Models;
+using HomesEngland.UseCase.SearchAsset.Models.Validation;
 using Infrastructure.Api.Response.Validation;
 
-namespace HomesEngland.UseCase.GetAsset.Models
+namespace HomesEngland.UseCase.SearchAsset.Models
 {
     public class SearchAssetRequest : IRequest
     {
         public int? SchemeId { get; set; }
+        public string Address { get; set; }
 
         public RequestValidationResponse Validate(IRequest request)
         {

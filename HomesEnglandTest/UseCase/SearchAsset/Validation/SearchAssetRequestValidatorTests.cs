@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using HomesEngland.UseCase.GetAsset.Models;
-using HomesEngland.UseCase.GetAsset.Models.Validation;
+using HomesEngland.UseCase.SearchAsset.Models;
+using HomesEngland.UseCase.SearchAsset.Models.Validation;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.UseCase.SearchAsset.Validation
@@ -14,15 +14,19 @@ namespace HomesEnglandTest.UseCase.SearchAsset.Validation
             _classUnderTest = new SearchAssetRequestValidator();
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        public void GivenValidInput_ThenIsValidIsTrue(int? id)
+        [TestCase(1, null)]
+        [TestCase(2, null)]
+        [TestCase(3, null)]
+        [TestCase(null, "d")]
+        [TestCase(null, "e")]
+        [TestCase(null, "t")]
+        public void GivenValidInput_ThenIsValidIsTrue(int? id, string address)
         {
             //arrange
             var request = new SearchAssetRequest
             {
-                SchemeId = id
+                SchemeId = id,
+                Address = address
             };
             //act
             var response = _classUnderTest.Validate(request);
@@ -31,15 +35,18 @@ namespace HomesEnglandTest.UseCase.SearchAsset.Validation
             response.IsValid.Should().BeTrue();
         }
 
-        [TestCase(0,  "SchemeId must not be null and must be greater than 0.")]
-        [TestCase(-1, "SchemeId must not be null and must be greater than 0.")]
-        [TestCase(null, "'Scheme Id' must not be empty.")]
-        public void GivenInValidRequest_ThenIsValidIsFalse(int? id, string message)
+        [TestCase(null, null)]
+        [TestCase(0,    null)]
+        [TestCase(-1,   null)]
+        [TestCase(null, "")]
+        [TestCase(null, " ")]
+        public void GivenInValidRequest_ThenIsValidIsFalse(int? id, string address)
         {
             //arrange
             var request = new SearchAssetRequest
             {
-                SchemeId = id
+                SchemeId = id,
+                Address = address
             };
             //act
             var response = _classUnderTest.Validate(request);
@@ -47,8 +54,6 @@ namespace HomesEnglandTest.UseCase.SearchAsset.Validation
             response.Should().NotBeNull();
             response.IsValid.Should().BeFalse();
             response.Errors.Should().NotBeNullOrEmpty();
-            response.Errors[0].PropertyName.Should().BeEquivalentTo("SchemeId");
-            response.Errors[0].ErrorMessage.Should().BeEquivalentTo(message);
         }
     }
 }
