@@ -11,6 +11,12 @@ namespace HomesEngland.UseCase.SearchAsset.Models
         public int? PageSize { get; set; }
         public string Address { get; set; }
 
+        public SearchAssetRequest()
+        {
+            Page = 1;
+            PageSize = 25;
+        }
+
         public RequestValidationResponse Validate(IRequest request)
         {
             if (request == null)
