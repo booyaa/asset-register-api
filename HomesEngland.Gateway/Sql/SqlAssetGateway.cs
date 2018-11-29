@@ -13,7 +13,7 @@ using PeregrineDb.Databases;
 
 namespace HomesEngland.Gateway.Sql
 {
-    public class SqlAssetGateway:IGateway<IAsset, int>, IAssetReader, IAssetCreator, IAssetSearcher
+    public class SqlAssetGateway : IGateway<IAsset, int>, IAssetReader, IAssetCreator, IAssetSearcher
     {
         private readonly IDbConnection _connection;
 
@@ -49,7 +49,8 @@ namespace HomesEngland.Gateway.Sql
             return entity;
         }
 
-        public Task<IList<IAsset>> Search(IAssetSearchQuery searchQueryRequest, CancellationToken cancellationToken)
+        public Task<IPagedResults<IAsset>> Search(IAssetSearchQuery searchQueryRequest,
+            CancellationToken cancellationToken)
         {
             if (_connection.State != ConnectionState.Open)
                 _connection.Open();
@@ -60,20 +61,32 @@ namespace HomesEngland.Gateway.Sql
             var searchObject = new
             {
                 schemeid = searchQueryRequest.SchemeId,
-                address = $"%{searchQueryRequest?.Address}%"
+                address = $"%{searchQueryRequest?.Address}%",
+                pageSize = searchQueryRequest.PageSize,
+                offset = searchQueryRequest.PageSize * (searchQueryRequest.Page - 1)
             };
             IEnumerable<IAsset> results = connection.Query<DapperAsset>(searchSql, searchObject);
+            IPagedResults<IAsset> pagedResults = new PagedResults<IAsset> {Results = results?.ToList()};
+
+            int totalCount = connection.ExecuteScalar<int>(GenerateTotalCountSql(searchQueryRequest), searchObject);
+
+            pagedResults.TotalCount = totalCount;
+
+            pagedResults.NumberOfPages =
+                (int) Math.Ceiling(totalCount / (decimal) searchQueryRequest.PageSize.Value);
+
             _connection.Close();
-            return Task.FromResult((IList<IAsset>)results?.ToList());
+            return Task.FromResult(pagedResults);
         }
 
-        private static string GenerateConditionalSearchSql(IAssetSearchQuery searchQueryRequest)
+        private static string GenerateTotalCountSql(IAssetSearchQuery assetSearchQuery)
         {
-            var sql = @"SELECT * FROM assets a ";
+            var sql = @"SELECT count(id) FROM assets a ";
+
             IList<string> filteringClauses = new List<string>();
-            if (searchQueryRequest.SchemeId.HasValue)
+            if (assetSearchQuery.SchemeId.HasValue)
                 filteringClauses.Add("a.schemeid = @schemeId ");
-            if (!string.IsNullOrEmpty(searchQueryRequest.Address) && !string.IsNullOrWhiteSpace(searchQueryRequest.Address))
+            if (!string.IsNullOrEmpty(assetSearchQuery.Address) && !string.IsNullOrWhiteSpace(assetSearchQuery.Address))
                 filteringClauses.Add("lower(a.address) LIKE lower(@address) ");
 
             var sb = new StringBuilder();
@@ -85,7 +98,31 @@ namespace HomesEngland.Gateway.Sql
                 sb.Append(filteringClauses.ElementAtOrDefault(i));
             }
 
-            sb.Append(" ORDER BY a.schemeid DESC;");
+            return sb.ToString();
+        }
+
+        private static string GenerateConditionalSearchSql(IAssetSearchQuery searchQueryRequest)
+        {
+            var sql = @"SELECT * FROM assets a ";
+            IList<string> filteringClauses = new List<string>();
+            if (searchQueryRequest.SchemeId.HasValue)
+                filteringClauses.Add("a.schemeid = @schemeId ");
+            if (!string.IsNullOrEmpty(searchQueryRequest.Address) &&
+                !string.IsNullOrWhiteSpace(searchQueryRequest.Address))
+                filteringClauses.Add("lower(a.address) LIKE lower(@address) ");
+
+            var sb = new StringBuilder();
+            sb.Append(sql);
+            for (int i = 0; i < filteringClauses.Count; i++)
+            {
+                sb.Append(i == 0 ? "WHERE " : "AND ");
+
+                sb.Append(filteringClauses.ElementAtOrDefault(i));
+            }
+
+            sb.Append(" ORDER BY a.schemeid DESC");
+
+            sb.Append(" LIMIT @pageSize OFFSET @offset;");
             return sb.ToString();
         }
     }

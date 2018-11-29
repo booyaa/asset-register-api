@@ -25,7 +25,7 @@ namespace HomesEngland.Gateway.Test
         public AssetSearchGatewayTests()
         {
             _databaseConnectionFactory = new PostgresDatabaseConnectionFactory(new PostgresDatabaseConnectionStringFormatter());
-            var databaseUrl = System.Environment.GetEnvironmentVariable("DATABASE_URL");
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             var connection = _databaseConnectionFactory.Create(databaseUrl);
             var gateway = new SqlAssetGateway(connection);
             _gateway = gateway;
@@ -50,7 +50,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
                 trans.Dispose();
             }
         }
@@ -75,8 +75,8 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.Count.Should().Be(1);
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset2.Id, createdAsset2);
+                assets.Results.Count.Should().Be(1);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset2.Id, createdAsset2);
                 trans.Dispose();
             }
         }
@@ -99,7 +99,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.Should().BeNullOrEmpty();
+                assets.Results.Should().BeNullOrEmpty();
                 trans.Dispose();
             }
         }
@@ -131,7 +131,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
                 trans.Dispose();
             }
         }
@@ -152,7 +152,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
                 trans.Dispose();
             }
         }
@@ -173,7 +173,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
                 trans.Dispose();
             }
         }
@@ -194,7 +194,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
                 trans.Dispose();
             }
         }
@@ -216,7 +216,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.Should().BeNullOrEmpty();
+                assets.Results.Should().BeNullOrEmpty();
                 trans.Dispose();
             }
         }
@@ -228,9 +228,9 @@ namespace HomesEngland.Gateway.Test
         [TestCase(null,"Address 1")]
         [TestCase(null,"somewh")]
         [TestCase(null,"where")]
-        [TestCase(null,"PO")]
-        [TestCase(null,"Tow")]
-        [TestCase(null,"C03")]
+        [TestCase(null,"PO919")]
+        [TestCase(null,"Tow111")]
+        [TestCase(null,"3C03")]
         public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaFieldsThatHaventBeenSet_ThenWeGetNullOrEmptyArray(int? schemeId, string searchAddress)
         {
             //arrange 
@@ -246,7 +246,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.Should().BeNullOrEmpty();
+                assets.Results.Should().BeNullOrEmpty();
 
                 trans.Dispose();
             }
@@ -284,7 +284,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
+                assets.Results.ElementAtOrDefault(0).AssetIsEqual(createdAsset.Id, createdAsset);
 
                 trans.Dispose();
             }
@@ -316,7 +316,7 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.Count.Should().Be(2);
+                assets.Results.Count.Should().Be(2);
 
                 trans.Dispose();
             }
@@ -330,7 +330,7 @@ namespace HomesEngland.Gateway.Test
         [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
         [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
         [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
-        public async Task GivenMultiplesAssetsHaveBeenCreatedWithASimilarAddress_WhenWeSearch_ThenTheAssetsAreOrderedBySchemeIdDesc( string address, string searchAddress)
+        public async Task GivenMultiplesAssetsHaveBeenCreatedWithASimilarAddress_WhenWeSearch_ThenTheAssetsAreOrderedBySchemeIdDesc(string address, string searchAddress)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -347,8 +347,100 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Search(assetSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                Assert.Greater(assets.ElementAt(0).SchemeId, assets.ElementAt(1).SchemeId);
+                Assert.Greater(assets.Results.ElementAt(0).SchemeId, assets.Results.ElementAt(1).SchemeId);
 
+                trans.Dispose();
+            }
+        }
+
+        [TestCase("Meow", 1, 3, 1)]
+        [TestCase("Woof", 2, 3, 2)]
+        [TestCase("Moo", 3, 3, 3)]
+        [TestCase("Cluck", 4, 3, 3)]
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeSearchWithPageSize_ReturnCorrectNumberOfAssetsPerPage(string address, int pageSize, int numberOfAssets, int expectedNumberOfAssets)
+        {
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                for (var i = 0; i < numberOfAssets; i++)
+                {
+                    
+                    var entity = TestData.Domain.GenerateAsset();
+                    entity.Address = address;
+                    await _gateway.CreateAsync(entity);
+                }
+
+                var assetQuery = new AssetSearchQuery
+                {
+                    Address = address,
+                    PageSize = pageSize
+                };
+
+                var response = await _classUnderTest.Search(assetQuery, CancellationToken.None);
+
+                response.Results.Count.Should().Be(expectedNumberOfAssets);
+                
+                trans.Dispose();
+            }
+        }
+        
+        [TestCase("Meow", 1, 1, 3, 1)]
+        [TestCase("Bark", 1, 2, 3, 1)]
+        [TestCase("Woof", 2, 1, 3, 2)]
+        [TestCase("Moo", 2, 2, 3, 1)]
+        [TestCase("Quack", 4, 1, 3, 3)]
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeSearchWithPageSize_ReturnCorrectNumberOfAssetsPerPage(string address, int pageSize, int page, int numberOfAssets, int expectedNumberOfAssets)
+        {
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                for (var i = 0; i < numberOfAssets; i++)
+                {
+                    
+                    var entity = TestData.Domain.GenerateAsset();
+                    entity.Address = address;
+                    await _gateway.CreateAsync(entity);
+                }
+
+                var assetQuery = new AssetSearchQuery
+                {
+                    Address = address,
+                    PageSize = pageSize,
+                    Page = page
+                };
+
+                var response = await _classUnderTest.Search(assetQuery, CancellationToken.None);
+
+                response.Results.Count.Should().Be(expectedNumberOfAssets);
+                
+                trans.Dispose();
+            }
+        }
+        
+        [TestCase("Meow", 1, 3, 3)]
+        [TestCase("Woof", 2, 3, 2)]
+        [TestCase("Moo", 3, 3, 1)]
+        [TestCase("Cluck", 4, 3, 1)]
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeSearchWithPageSize_ReturnCorrectNumberOfPages(string address, int pageSize, int numberOfAssets, int expectedNumberOfPages)
+        {
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                for (var i = 0; i < numberOfAssets; i++)
+                {
+                    
+                    var entity = TestData.Domain.GenerateAsset();
+                    entity.Address = address;
+                    await _gateway.CreateAsync(entity);
+                }
+
+                var assetQuery = new AssetSearchQuery
+                {
+                    Address = address,
+                    PageSize = pageSize
+                };
+
+                var response = await _classUnderTest.Search(assetQuery, CancellationToken.None);
+
+                response.NumberOfPages.Should().Be(expectedNumberOfPages);
+                
                 trans.Dispose();
             }
         }

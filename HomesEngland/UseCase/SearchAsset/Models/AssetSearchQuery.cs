@@ -2,9 +2,11 @@
 
 namespace HomesEngland.UseCase.SearchAsset.Models
 {
-    public class AssetSearchQuery:IAssetSearchQuery
+    public class AssetSearchQuery : IAssetSearchQuery
     {
         public int? SchemeId { get; set; }
+        public int? Page { get; set; } = 1;
+        public int? PageSize { get; set; } = 25;
         public string Address { get; set; }
     }
 }

@@ -21,7 +21,8 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
             _assetSearcher = assetSearcher;
         }
 
-        public async Task<SearchAssetResponse> ExecuteAsync(SearchAssetRequest request, CancellationToken cancellationToken)
+        public async Task<SearchAssetResponse> ExecuteAsync(SearchAssetRequest request,
+            CancellationToken cancellationToken)
         {
             ValidateRequest(request);
 
@@ -29,23 +30,34 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
 
             var response = new SearchAssetResponse
             {
-                Assets = foundAssets?.Select(s => new AssetOutputModel(s)).ToList()
+                Assets = foundAssets.Results?.Select(s => new AssetOutputModel(s)).ToList(),
+                Pages = foundAssets.NumberOfPages,
+                TotalCount = foundAssets.TotalCount
             };
 
             return response;
         }
 
-        private async Task<IList<IAsset>> SearchAssets(SearchAssetRequest request, CancellationToken cancellationToken)
+        private async Task<IPagedResults<IAsset>> SearchAssets(SearchAssetRequest request, CancellationToken cancellationToken)
         {
             var assetSearch = new AssetSearchQuery
             {
                 SchemeId = request.SchemeId,
                 Address = request.Address
             };
+
+            if (request.Page != null) assetSearch.Page = request.Page;
+            if (request.PageSize != null) assetSearch.PageSize = request.PageSize;
+
             var foundAssets = await _assetSearcher.Search(assetSearch, cancellationToken).ConfigureAwait(false);
 
             if (foundAssets == null)
-                foundAssets = new List<IAsset>();
+                foundAssets = new PagedResults<IAsset>
+                {
+                    Results = new List<IAsset>(), 
+                    NumberOfPages = 0, 
+                    TotalCount = 0
+                };
 
             return foundAssets;
         }
