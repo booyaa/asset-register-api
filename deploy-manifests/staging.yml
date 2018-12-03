@@ -1,3 +1,6 @@
 ---
 applications:
 - name: asset-register-api-staging
+  memory: 512M
+  services:
+  - asset-register-staging-db

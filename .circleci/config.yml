@@ -52,29 +52,17 @@ jobs:
       - checkout
       - run: dotnet test InfrastructureTest
 
-  deploy_dark_staging:
+  deploy_staging:
     executor: dotnet
     steps:
       - checkout
-      - run: scripts/deploy-dark.sh staging
-
-  flip_staging:
-    executor: dotnet
-    steps:
-      - checkout
-      - run: scripts/flip-dark-to-live.sh staging
-
-  revert_staging:
-    executor: dotnet
-    steps:
-      - checkout
-      - run: scripts/flip-dark-to-live.sh staging
+      - run: scripts/deploy.sh staging
 
   deploy_dark_production:
     executor: dotnet
     steps:
       - checkout
-      - run: scripts/deploy-dark.sh production
+      - run: scripts/deploy.sh production
 
   flip_production:
     executor: dotnet
@@ -108,7 +96,7 @@ workflows:
       - test_infrastructure:
           requires:
             - build
-      - deploy_dark_staging:
+      - deploy_staging:
           requires:
             - test_homes_england
             - test_web_api
@@ -118,20 +106,10 @@ workflows:
             branches:
               only:
                 - master
-      - flip_staging:
-          requires:
-            - deploy_dark_staging
-      - hold_revert_staging:
-          type: approval
-          requires: 
-            - flip_staging
-      - revert_staging:
-          requires: 
-            - hold_revert_staging
       - hold_production_deploy:
           type: approval
           requires:
-            - flip_staging
+            - deploy_staging
       - deploy_dark_production:
           requires:
             - hold_production_deploy
@@ -147,5 +125,5 @@ workflows:
           requires:
             - flip_production
       - revert_production:
-          requires: 
+          requires:
             - hold_revert_production
