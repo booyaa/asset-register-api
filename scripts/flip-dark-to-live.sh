@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-ENVIRONMENT_NAME=$1
+ENVIRONMENT_NAME="$1"
 SPACE_NAME="${ENVIRONMENT_NAME}"
 APP_NAME="asset-register-api-${ENVIRONMENT_NAME}"
 APP_HOSTNAME="asset-register-api-${ENVIRONMENT_NAME}"

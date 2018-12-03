@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-ENVIRONMENT_NAME=$1
+ENVIRONMENT_NAME="$1"
 APP_NAME=$1
 
 if [ "${ENVIRONMENT_NAME}" == "production" ]; then
