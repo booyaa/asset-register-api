@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
 fi
 
 ENVIRONMENT_NAME="$1"
-APP_NAME=$1
+APP_NAME="$1"
 
 if [ "${ENVIRONMENT_NAME}" == "production" ]; then
   APP_NAME="${APP_NAME}-dark"
