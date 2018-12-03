@@ -8,6 +8,7 @@ using HomesEngland.Gateway.Sql;
 using HomesEngland.Gateway.Sql.Postgres;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Impl;
+using HomesEngland.UseCase.ExportCsv;
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Impl;
 using HomesEngland.UseCase.GetAsset;
@@ -53,6 +54,8 @@ namespace Main
             RegisterExportedDependency<IGenerateAssetsUseCase, GenerateAssetsUseCase>();
             RegisterExportedDependency<IConsoleGenerator, ConsoleAssetGenerator>();
             RegisterExportedDependency<IInputParser, InputParser>();
+
+            RegisterExportedDependency<IExportCsvUseCase, ExportCsvUseCase>();
 
             ILoggerFactory loggerFactory = new LoggerFactory()
                 .AddConsole()
