@@ -1,6 +1,0 @@
----
-applications:
-- name: asset-register-api-staging-dark
-  memory: 512M
-  services:
-  - asset-register-staging-db
