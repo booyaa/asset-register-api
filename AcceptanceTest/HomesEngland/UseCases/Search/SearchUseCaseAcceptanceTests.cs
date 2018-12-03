@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -77,7 +78,8 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
                 Address = address
             };
 
-            var useCaseResponse = await _classUnderTest.ExecuteAsync(searchForAsset, CancellationToken.None).ConfigureAwait(false);
+            var useCaseResponse = await _classUnderTest.ExecuteAsync(searchForAsset, CancellationToken.None)
+                .ConfigureAwait(false);
             return useCaseResponse;
         }
 
@@ -88,17 +90,17 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
             foundAsset.Assets.ElementAt(0).AssetOutputModelIsEqual(createdAsset.Asset);
         }
 
-        [TestCase(7777, 7778, 7779,"address")]
-        [TestCase(2222, 2224, 2225,"address")]
-        [TestCase(3333, 3334, 3335,"address")]
+        [TestCase(7777, 7778, 7779, "address")]
+        [TestCase(2222, 2224, 2225, "address")]
+        [TestCase(3333, 3334, 3335, "address")]
         public async Task GivenThatMultipleAssetsHaveBeenCreated_WhenWeSearchViaSchemeIdThatHasBeenSet_ThenWeCanFindTheSameAssetAnd(int schemeId, int schemeId2, int schemeId3, string address)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var createdAsset = await CreateAsset(schemeId, address);
+                await CreateAsset(schemeId, address);
                 var createdAsset2 = await CreateAsset(schemeId2, address);
-                var createdAsset3 = await CreateAsset(schemeId3, address);
+                await CreateAsset(schemeId3, address);
 
                 var assetSearch = new SearchAssetRequest
                 {
@@ -131,19 +133,49 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
                 };
                 //act 
                 //assert
-                var response = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None).ConfigureAwait(false);
+                var response = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None)
+                    .ConfigureAwait(false);
                 response.Should().NotBeNull();
                 response.Assets.Should().BeNullOrEmpty();
                 trans.Dispose();
             }
         }
 
+        [TestCase(1111, "Address 1")]
+        [TestCase(2222, "Address 2")]
+        [TestCase(3333, "Address 3")]
+        public async Task GivenMultiplePages_WhenWeSearchByAddressThatMatches_ThenWeReturnOnlyTheSelectedPage(int schemeId, string address)
+        {
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                for (var i = 0; i < 15; i++)
+                {
+                    await CreateAsset(schemeId + i, address);
+                }
+
+                var assetSearch = new SearchAssetRequest
+                {
+                    Address = address,
+                    Page = 2,
+                    PageSize = 10
+                };
+
+                var response = await _classUnderTest.ExecuteAsync(assetSearch, CancellationToken.None)
+                    .ConfigureAwait(false);
+
+                response.Should().NotBeNull();
+                response.Assets.Count.Should().Be(5);
+                response.Pages.Should().Be(2);
+                response.TotalCount.Should().Be(15);
+                trans.Dispose();
+            }
+        }
 
 
         private async Task<CreateAssetResponse> CreateAsset(int? schemeId, string address)
         {
             var createAssetRequest = TestData.UseCase.GenerateCreateAssetRequest();
-            if(schemeId.HasValue)
+            if (schemeId.HasValue)
                 createAssetRequest.SchemeId = schemeId;
             if (!string.IsNullOrEmpty(address))
                 createAssetRequest.Address = address;

@@ -7,6 +7,6 @@ namespace HomesEngland.Gateway
 {
     public interface IDatabaseEntitySearcher<T, TIndex, TSearch> where T : IDatabaseEntity<TIndex>
     {
-        Task<IList<T>> Search(TSearch searchRequest, CancellationToken cancellationToken);
+        Task<IPagedResults<T>> Search(TSearch searchRequest, CancellationToken cancellationToken);
     }
 }
