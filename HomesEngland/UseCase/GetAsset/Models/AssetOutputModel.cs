@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Text;
 using HomesEngland.Domain;
+using HomesEngland.UseCase.ExportCsv.Models;
 
 namespace HomesEngland.UseCase.GetAsset.Models
 {
-    public class AssetOutputModel
+    public class AssetOutputModel:ICsvFormattable
     {
         public int Id { get; set; }
         public DateTime ModifiedDateTime { get; set; }
@@ -62,6 +64,28 @@ namespace HomesEngland.UseCase.GetAsset.Models
             ShareOfRestrictedEquity = asset.ShareOfRestrictedEquity;
             //Calcuation
             DifferenceFromImsExpectedCompletionToHopCompletionDate = asset.DifferenceFromImsExpectedCompletionToHopCompletionDate;
+        }
+
+        public string ToCsv()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append($"{Id},");
+            stringBuilder.Append($"{ModifiedDateTime},");
+            stringBuilder.Append($"{MonthPaid},");
+            stringBuilder.Append($"{AccountingYear},");
+            stringBuilder.Append($"{SchemeId},");
+            stringBuilder.Append($"{LocationLaRegionName},");
+            stringBuilder.Append($"{ImsOldRegion},");
+            stringBuilder.Append($"{NoOfBeds},");
+            stringBuilder.Append($"{Address},");
+            stringBuilder.Append($"{DevelopingRslName},");
+            stringBuilder.Append($"{CompletionDateForHpiStart},");
+            stringBuilder.Append($"{ImsActualCompletionDate},");
+            stringBuilder.Append($"{ImsExpectedCompletionDate},");
+            stringBuilder.Append($"{ImsLegalCompletionDate},");
+            stringBuilder.Append($"{HopCompletionDate},");
+            stringBuilder.Append($"{Deposit},");
+            stringBuilder.Append($"{AgencyEquityLoan},");
         }
     }
 }

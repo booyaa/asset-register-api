@@ -23,7 +23,7 @@ namespace InfrastructureTest.Api.Formatters
             //arrange
 
             //act
-
+            _classUnderTest.
             //assert
         }
     }
