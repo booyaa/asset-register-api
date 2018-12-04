@@ -21,7 +21,9 @@ services:
     volumes:
       - '.:/app'
       # persist the home, as cache goes in it
-      - 'home:/root'
+      - 'nuget:/.nuget'
+      - 'dotnet:/.dotnet'
 
 volumes:
-  home:
+  nuget:
+  dotnet:
