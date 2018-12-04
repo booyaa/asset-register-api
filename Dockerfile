@@ -2,6 +2,12 @@ FROM microsoft/dotnet:2.1.500-sdk AS base
 
 WORKDIR /app
 
+# Set up world readable folders for dotnet + package caching
+# This allows us to run as non-root
+RUN mkdir -m 777 /.dotnet
+RUN mkdir -m 777 /.nuget
+
+
 FROM base as development
 # we don't need to do anything else here, since we'll be using
 # a volume

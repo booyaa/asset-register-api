@@ -1,6 +1,8 @@
 COMPOSE = docker-compose
-RUN_WEB = $(COMPOSE) run --rm web
-RUN_WEB_SERVICE = $(COMPOSE) run --rm --service-ports web
+
+UID ?= $(shell id -u)
+RUN_WEB = $(COMPOSE) run -u $(UID) --rm web
+RUN_WEB_SERVICE = $(COMPOSE) run -u $(UID) --rm --service-ports web
 
 
 .PHONY: \
