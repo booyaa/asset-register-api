@@ -9,7 +9,7 @@ RUN_WEB_SERVICE = $(COMPOSE) run --rm --service-ports web
 		docker-build docker-down docker-stop \
 
 
-test: test-homes-england test-web-api test-homes-england-gateway test-infrastructure test-acceptance
+test: test-all
 
 test-homes-england: build
 	$(RUN_WEB) dotnet test HomesEnglandTest
