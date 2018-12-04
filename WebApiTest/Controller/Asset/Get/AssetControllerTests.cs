@@ -33,7 +33,7 @@ namespace WebApiTest.Controller.Asset.Get
         }
 
         [Test]
-        public async Task GivenInValidRequest_ThenThrowsBadRequestException()
+        public void GivenInValidRequest_ThenThrowsBadRequestException()
         {
             //arrange
             _mockUseCase.Setup(s => s.ExecuteAsync(It.IsAny<GetAssetRequest>())).Throws<BadRequestException>();

@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using HomesEngland.Gateway.Migrations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using WebApiContrib.Core.Formatter.Csv;
 
 namespace WebApi
 {
@@ -29,6 +31,22 @@ namespace WebApi
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IApiVersionDescriptionProvider, DefaultApiVersionDescriptionProvider>();
+
+            var csvOptions = new CsvFormatterOptions
+            {
+                UseSingleLineHeaderInCsv = true,
+                CsvDelimiter = ",",
+                IncludeExcelDelimiterHeader = true
+            };
+            var csvFormatterOptions = new CsvFormatterOptions();
+
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                //options.InputFormatters.Add(new CsvInputFormatter(csvFormatterOptions));
+                options.OutputFormatters.Add(new CsvOutputFormatter(csvFormatterOptions));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("csv", MediaTypeHeaderValue.Parse("text/csv"));
+            }).AddCsvSerializerFormatters(csvOptions);
 
             var assetRegister = new AssetRegister();
             assetRegister.ExportDependencies((type, provider) => services.AddTransient(type, _ => provider()));
@@ -61,6 +79,8 @@ namespace WebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            
         }
     }
 }

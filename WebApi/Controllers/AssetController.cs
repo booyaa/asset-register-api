@@ -22,12 +22,12 @@ namespace WebApi.Controllers
 
         [MapToApiVersion("1")]
         [HttpGet("{id}")]
-        [Produces("application/json")]
+        [Produces("application/json", "text/csv")]
         [ProducesResponseType(typeof(ApiResponse<GetAssetResponse>), 200)]
         public async Task<IActionResult> Get([FromRoute]GetAssetRequest request)
         {
             var result = await _assetUseCase.ExecuteAsync(request).ConfigureAwait(false);
-            return this.StandardiseResponse(result);
+            return this.StandardiseResponse<GetAssetResponse, AssetOutputModel>(result);
         }
     }
 }
