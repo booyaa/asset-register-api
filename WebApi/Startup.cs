@@ -64,7 +64,7 @@ namespace WebApi
             assetRegisterContext.Database.Migrate();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -72,7 +72,11 @@ namespace WebApi
                 app.UseHsts();
 
             app.ConfigureSwaggerUiPerApiVersion(_apiName);
-            app.UseCors(builder => builder.WithOrigins("*"));
+            app.UseCors(builder =>
+                builder.WithOrigins(configuration["CorsOrigins"].Split(";"))
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+            );
 
             app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
