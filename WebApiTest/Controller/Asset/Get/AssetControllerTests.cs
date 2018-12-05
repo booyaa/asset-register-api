@@ -10,11 +10,8 @@ using FluentAssertions;
 using Infrastructure.Api.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Primitives;
 using TestHelper;
-using WebApiContrib.Core.Formatter.Csv;
 
 namespace WebApiTest.Controller.Asset.Get
 {

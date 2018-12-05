@@ -38,7 +38,6 @@ namespace WebApi
                 CsvDelimiter = ",",
                 IncludeExcelDelimiterHeader = true
             };
-            
 
             services.AddMvc(options =>
             {
@@ -79,8 +78,6 @@ namespace WebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
-            
         }
     }
 }
