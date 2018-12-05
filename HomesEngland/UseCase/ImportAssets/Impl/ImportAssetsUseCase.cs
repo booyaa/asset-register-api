@@ -14,9 +14,9 @@ namespace HomesEngland.UseCase.ImportAssets
     public class ImportAssetsUseCase : IImportAssetsUseCase
     {
         private readonly ICreateAssetUseCase _createAssetUseCase;
-        private readonly ILogger<ImportAssetsUseCase> _logger;
+        private readonly ILogger<IImportAssetsUseCase> _logger;
 
-        public ImportAssetsUseCase(ICreateAssetUseCase createAssetUseCase, ILogger<ImportAssetsUseCase> logger)
+        public ImportAssetsUseCase(ICreateAssetUseCase createAssetUseCase, ILogger<IImportAssetsUseCase> logger)
         {
             _createAssetUseCase = createAssetUseCase;
             _logger = logger;
