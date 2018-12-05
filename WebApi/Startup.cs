@@ -38,13 +38,13 @@ namespace WebApi
                 CsvDelimiter = ",",
                 IncludeExcelDelimiterHeader = true
             };
-            var csvFormatterOptions = new CsvFormatterOptions();
+            
 
             services.AddMvc(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
                 //options.InputFormatters.Add(new CsvInputFormatter(csvFormatterOptions));
-                options.OutputFormatters.Add(new CsvOutputFormatter(csvFormatterOptions));
+                options.OutputFormatters.Add(new CsvOutputFormatter(csvOptions));
                 options.FormatterMappings.SetMediaTypeMappingForFormat("csv", MediaTypeHeaderValue.Parse("text/csv"));
             }).AddCsvSerializerFormatters(csvOptions);
 
