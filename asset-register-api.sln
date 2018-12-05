@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomesEngland.Gateway.Test",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomesEngland.Gateway.DataGenerator", "HomesEngland.Gateway.DataGenerator\HomesEngland.Gateway.DataGenerator.csproj", "{EC933935-9647-48BB-BE82-A9F7AB020A07}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console Apps", "Console Apps", "{B8854EC7-6476-42D1-B202-D6898E3EB792}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomesEngland.AssetImporter", "HomesEngland.AssetImporter\HomesEngland.AssetImporter.csproj", "{2E40DB0C-7B2C-4A27-940A-7437F549B9BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,9 +91,17 @@ Global
 		{EC933935-9647-48BB-BE82-A9F7AB020A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC933935-9647-48BB-BE82-A9F7AB020A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC933935-9647-48BB-BE82-A9F7AB020A07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E40DB0C-7B2C-4A27-940A-7437F549B9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E40DB0C-7B2C-4A27-940A-7437F549B9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E40DB0C-7B2C-4A27-940A-7437F549B9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E40DB0C-7B2C-4A27-940A-7437F549B9BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EC933935-9647-48BB-BE82-A9F7AB020A07} = {B8854EC7-6476-42D1-B202-D6898E3EB792}
+		{2E40DB0C-7B2C-4A27-940A-7437F549B9BB} = {B8854EC7-6476-42D1-B202-D6898E3EB792}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EC044FC2-FF48-4CF0-B945-6EB49F1D9807}

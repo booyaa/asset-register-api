@@ -12,6 +12,7 @@ using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Impl;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
+using HomesEngland.UseCase.ImportAssets;
 using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +60,10 @@ namespace Main
                 .AddDebug();
 
             RegisterExportedDependency<ILogger<ConsoleAssetGenerator>>(() => new Logger<ConsoleAssetGenerator>(loggerFactory));
+
+            RegisterExportedDependency<ILogger<IImportAssetsUseCase>>(() => new Logger<IImportAssetsUseCase>(loggerFactory));
+
+            RegisterExportedDependency<IImportAssetsUseCase, ImportAssetsUseCase>();
         }
 
         public override T Get<T>()
