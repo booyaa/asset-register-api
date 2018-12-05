@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using HomesEngland.UseCase.Models;
 using Infrastructure.Api.Response.Validation;
 
@@ -28,6 +29,14 @@ namespace HomesEngland.UseCase.CreateAsset.Models
         public RequestValidationResponse Validate(IRequest request)
         {
             throw new NotImplementedException();
+        }
+
+        public CreateAssetRequest(){}
+
+        public CreateAssetRequest(string csvLine, string delimiter)
+        {
+            var fields = csvLine.Split(delimiter);
+
         }
     }
 }
