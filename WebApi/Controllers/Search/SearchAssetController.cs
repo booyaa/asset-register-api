@@ -24,12 +24,12 @@ namespace WebApi.Controllers.Search
 
         [MapToApiVersion("1")]
         [HttpGet("search")]
-        [Produces("application/json")]
+        [Produces("application/json", "text/csv")]
         [ProducesResponseType(typeof(ApiResponse<SearchAssetResponse>), 200)]
         public async Task<IActionResult> Get([FromQuery]SearchAssetRequest request)
         {
             var result = await _useCase.ExecuteAsync(request, this.GetCancellationToken()).ConfigureAwait(false);
-            return this.StandardiseResponse(result);
+            return this.StandardiseResponse<SearchAssetResponse, AssetOutputModel>(result);
         }
     }
 }

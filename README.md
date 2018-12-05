@@ -40,3 +40,9 @@ The application runs on port `5000`.
 [link_gov_pass]: https://www.cloud.service.gov.uk/
 [link_sentry]: https://sentry.io/welcome/
 [link_circleci]: https://circleci.com/
+
+## WebAPI
+
+**CSV Generation**
+
+```WebApiContrib.Core.Formatter.Csv``` library has been used to automatically generate CSV data from an ```IEnumerable<T>``` once the ```accept: text/csv``` header is sent in the request. Please refer to [Csv Outputter](https://github.com/damienbod/WebAPIContrib.Core/tree/master/src/WebApiContrib.Core.Formatter.Csv). Please refer to [architectural decision record 1](./ArchitectureDecisionRecords/1-CsvExport.md).
