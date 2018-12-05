@@ -11,11 +11,11 @@ namespace WebApi.Extensions
     {
         public static IActionResult StandardiseResponse<TResponse,TData>(this ControllerBase controller, TResponse useCaseResult) where TResponse:IResponse<TData>
         {
-            controller.HttpContext?.Response?.Headers.Add("Content-Disposition", "attachment; filename=export.csv;");
+            
             if (controller?.Request != null &&
-                controller.Request.Headers.Contains(new KeyValuePair<string, StringValues>("accept", "text/csv")))
+                controller.ControllerContext.HttpContext.Request.Headers.Contains(new KeyValuePair<string, StringValues>("accept", "text/csv")))
             {
-                
+                controller.ControllerContext.HttpContext?.Response?.Headers.Add("Content-Disposition", "attachment; filename=export.csv;");
                 return controller.StatusCode(200, useCaseResult?.ToCsv());
             }
                 

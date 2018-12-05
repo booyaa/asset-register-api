@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Bogus;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Models;
 using Moq;
@@ -6,6 +8,13 @@ using NUnit.Framework;
 using WebApi.Controllers;
 using FluentAssertions;
 using Infrastructure.Api.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using Microsoft.Extensions.Primitives;
+using TestHelper;
+using WebApiContrib.Core.Formatter.Csv;
 
 namespace WebApiTest.Controller.Asset.Get
 {
@@ -30,6 +39,34 @@ namespace WebApiTest.Controller.Asset.Get
             var response = await _classUnderTest.Get(request);
             //assert
             response.Should().NotBeNull();
+        }
+
+        [Test]
+        public async Task GivenValidRequestWithAcceptTextCsvHeader_ThenReturnsListOfAssetOutputModel()
+        {
+            //arrange
+            var assetOutputModel = new AssetOutputModel(TestData.Domain.GenerateAsset());
+            assetOutputModel.Id = Faker.GlobalUniqueIndex;
+            _mockUseCase.Setup(s => s.ExecuteAsync(It.IsAny<GetAssetRequest>())).ReturnsAsync(new GetAssetResponse
+            {
+                Asset = assetOutputModel
+            });
+            _classUnderTest.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+            _classUnderTest.ControllerContext.HttpContext.Request.Headers.Add(new KeyValuePair<string, StringValues>("accept", "text/csv"));
+            var request = new GetAssetRequest
+            {
+                Id = assetOutputModel.Id
+            };
+            //act
+            var response = await _classUnderTest.Get(request).ConfigureAwait(false);
+            //assert
+            response.Should().NotBeNull();
+            var result = response as ObjectResult;
+            result.Should().NotBeNull();
+            result.Value.Should().BeOfType<List<AssetOutputModel>>();
         }
 
         [Test]
