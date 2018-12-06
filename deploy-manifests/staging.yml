@@ -3,4 +3,8 @@ applications:
 - name: asset-register-api-staging
   memory: 512M
   services:
-  - asset-register-staging-db
+    - asset-register-staging-db
+  env:
+    circle_commit: ((circle_commit))
+    SENTRY_DSN: ((SENTRY_DSN))
+    CorsOrigins: ((CorsOrigins))

@@ -2,3 +2,7 @@
 applications:
 - name: asset-register-api-production-dark
   memory: 512M
+  env:
+    circle_commit: ((circle_commit))
+    SENTRY_DSN: ((SENTRY_DSN))
+    CorsOrigins: ((CorsOrigins))
