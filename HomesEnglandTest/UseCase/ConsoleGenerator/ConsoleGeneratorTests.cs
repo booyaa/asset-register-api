@@ -5,6 +5,7 @@ using HomesEngland.UseCase.GenerateAssets.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using HomesEngland.UseCase.Models;
 
 namespace HomesEnglandTest.UseCase.ConsoleGenerator
 {

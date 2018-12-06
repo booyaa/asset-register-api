@@ -2,13 +2,14 @@
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.ImportAssets.Models;
 using NUnit.Framework;
+using HomesEngland.UseCase.Models;
 
 namespace HomesEnglandTest.UseCase.GenerateAssets
 {
     [TestFixture]
     public class ImportAssetsInputParserTests
     {
-        private IInputParser<ImportAssetsRequest> _classUnderTest;
+        private IInputParser<ImportAssetConsoleInput> _classUnderTest;
         public ImportAssetsInputParserTests()
         {
             _classUnderTest = new ImportAssetInputParser();

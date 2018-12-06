@@ -20,6 +20,7 @@ using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using HomesEngland.UseCase.Models;
 
 namespace Main
 {
@@ -69,6 +70,7 @@ namespace Main
             RegisterExportedDependency<IImportAssetsUseCase, ImportAssetsUseCase>();
             RegisterExportedDependency<IConsoleImporter, ConsoleImporter>();
             RegisterExportedDependency<IInputParser<ImportAssetsRequest>, ImportAssetInputParser>();
+            RegisterExportedDependency<IFileReader<string>, TextFileReader>();
         }
 
         public override T Get<T>()

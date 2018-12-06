@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using HomesEngland.UseCase.Models;
 using HomesEngland.UseCase.GenerateAssets.Models;
 
 namespace HomesEngland.UseCase.GenerateAssets

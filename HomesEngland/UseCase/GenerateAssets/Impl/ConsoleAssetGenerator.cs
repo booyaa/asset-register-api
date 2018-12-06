@@ -7,6 +7,7 @@ using HomesEngland.UseCase.GetAsset.Models;
 using Infrastructure.Api.Exceptions;
 using Infrastructure.Api.Response.Validation;
 using Microsoft.Extensions.Logging;
+using HomesEngland.UseCase.Models;
 
 namespace HomesEngland.UseCase.GenerateAssets
 {

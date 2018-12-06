@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.ImportAssets.Models;
-using Infrastructure.Api.Exceptions;
-using Infrastructure.Api.Response.Validation;
+using HomesEngland.UseCase.Models;
 using Microsoft.Extensions.Logging;
 
 namespace HomesEngland.UseCase.ImportAssets.Impl
@@ -14,50 +13,45 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
     public class ConsoleImporter : IConsoleImporter
     {
         private readonly IImportAssetsUseCase _importAssetsUseCase;
-        private readonly IInputParser<ImportAssetsRequest> _inputParser;
+        private readonly IInputParser<ImportAssetConsoleInput> _inputParser;
+        private readonly IFileReader<string> _fileReader;
         private readonly ILogger<IConsoleImporter> _logger;
 
-        public ConsoleImporter(IImportAssetsUseCase importAssetsUseCase, IInputParser<ImportAssetsRequest> inputParser, ILogger<IConsoleImporter> logger)
+        public ConsoleImporter(IImportAssetsUseCase importAssetsUseCase, IInputParser<ImportAssetConsoleInput> inputParser,IFileReader<string> fileReader, ILogger<IConsoleImporter> logger)
         {
             _importAssetsUseCase = importAssetsUseCase;
             _inputParser = inputParser;
+            _fileReader = fileReader;
             _logger = logger;
         }
 
         public async Task<IList<AssetOutputModel>> ProcessAsync(string[] args)
         {
-            var importAssetsRequest = ValidateInput(args);
+            ValidateConsoleInput(args);
+            var parsedInput = _inputParser.Parse(args);
+            
+            var cancellationTokenSource = new CancellationTokenSource();
 
+            var text = await _fileReader.ReadAsync(parsedInput.FilePath, cancellationTokenSource.Token).ConfigureAwait(false);
 
+            var importAssetsRequest = new ImportAssetsRequest
+            {
+                Delimiter = parsedInput.Delimiter,
+                //AssetLines = text?.Split("\n")
+            };
 
-            await _importAssetsUseCase.ExecuteAsync(importAssetsRequest, CancellationToken.None).ConfigureAwait(false);
+            await _importAssetsUseCase.ExecuteAsync(importAssetsRequest, cancellationTokenSource.Token).ConfigureAwait(false);
 
             return null;
         }
 
-        private ImportAssetsRequest ValidateInput(string[] args)
+        private void ValidateConsoleInput(string[] args)
         {
             if (args == null)
             {
                 _logger.Log(LogLevel.Information, "Please enter input '--file {absolutePathToFile} --delimiter {delimiter}'");
                 throw new ArgumentNullException(nameof(args));
             }
-
-            var request = _inputParser.Parse(args);
-            var validationResponse = request.Validate(request);
-            if (!validationResponse.IsValid)
-                HandleProcessingFailure(validationResponse);
-            return request;
-        }
-
-        private void HandleProcessingFailure(RequestValidationResponse validationResponse)
-        {
-            foreach (var error in validationResponse.ValidationErrors)
-            {
-                _logger.Log(LogLevel.Information, $"FieldName: {error?.FieldName}");
-                _logger.Log(LogLevel.Information, $"Message: {error?.Message}");
-            }
-            throw new BadRequestException(validationResponse);
         }
     }
 }

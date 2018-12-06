@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using FluentAssertions;
-using HomesEngland.UseCase.GetAsset.Models;
-using HomesEngland.UseCase.GetAsset.Models.Validation;
 using HomesEngland.UseCase.ImportAssets.Models;
 using HomesEngland.UseCase.ImportAssets.Validation;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.UseCase.ImportAssets.Validation
 {
-    
-
     [TestFixture]
     public class ImportAssetsRequestValidatorTests
     {
@@ -45,10 +39,13 @@ namespace HomesEnglandTest.UseCase.ImportAssets.Validation
         public void GivenInValidRequest_ThenIsValidIsFalse(string csvLines, string delimiter)
         {
             //arrange
+            IList<string> csvLinesList = null;
+            if(!string.IsNullOrEmpty(csvLines))
+                csvLinesList = new List<string>();
             var request = new ImportAssetsRequest
             {
                 Delimiter = delimiter,
-                AssetLines = new List<string> { csvLines }
+                AssetLines = csvLinesList
             };
             //act
             var response = _classUnderTest.Validate(request);

@@ -2,6 +2,7 @@
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Models;
 using NUnit.Framework;
+using HomesEngland.UseCase.Models;
 
 namespace HomesEnglandTest.UseCase.GenerateAssets
 {
