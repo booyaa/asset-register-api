@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Models;
@@ -13,7 +12,7 @@ namespace HomesEnglandTest.UseCase.ConsoleGenerator
     public class ConsoleGeneratorTests
     {
         private IConsoleGenerator _classUnderTest;
-        private IInputParser _inputParser;
+        private IInputParser<GenerateAssetsRequest> _inputParser;
         private Mock<IGenerateAssetsUseCase> _mockGenerateAssetUseCase;
         private Mock<ILogger<ConsoleAssetGenerator>> _mockLogger;
         [SetUp]

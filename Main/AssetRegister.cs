@@ -10,9 +10,12 @@ using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Impl;
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Impl;
+using HomesEngland.UseCase.GenerateAssets.Models;
 using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Impl;
 using HomesEngland.UseCase.ImportAssets;
+using HomesEngland.UseCase.ImportAssets.Impl;
+using HomesEngland.UseCase.ImportAssets.Models;
 using HomesEngland.UseCase.SearchAsset;
 using HomesEngland.UseCase.SearchAsset.Impl;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,7 +56,7 @@ namespace Main
             RegisterExportedDependency<ICreateAssetUseCase, CreateAssetUseCase>();
             RegisterExportedDependency<IGenerateAssetsUseCase, GenerateAssetsUseCase>();
             RegisterExportedDependency<IConsoleGenerator, ConsoleAssetGenerator>();
-            RegisterExportedDependency<IInputParser, InputParser>();
+            RegisterExportedDependency<IInputParser<GenerateAssetsRequest>, InputParser>();
 
             ILoggerFactory loggerFactory = new LoggerFactory()
                 .AddConsole()
@@ -64,6 +67,8 @@ namespace Main
             RegisterExportedDependency<ILogger<IImportAssetsUseCase>>(() => new Logger<IImportAssetsUseCase>(loggerFactory));
 
             RegisterExportedDependency<IImportAssetsUseCase, ImportAssetsUseCase>();
+            RegisterExportedDependency<IConsoleImporter, ConsoleImporter>();
+            RegisterExportedDependency<IInputParser<ImportAssetsRequest>, ImportAssetInputParser>();
         }
 
         public override T Get<T>()

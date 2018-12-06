@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HomesEngland.UseCase.GenerateAssets;
+using HomesEngland.UseCase.GenerateAssets.Models;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.UseCase.GenerateAssets
@@ -7,7 +8,7 @@ namespace HomesEnglandTest.UseCase.GenerateAssets
     [TestFixture]
     public class InputParserTests
     {
-        private IInputParser _classUnderTest;
+        private IInputParser<GenerateAssetsRequest> _classUnderTest;
         public InputParserTests()
         {
             _classUnderTest = new InputParser();

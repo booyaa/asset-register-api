@@ -2,8 +2,8 @@
 
 namespace HomesEngland.UseCase.GenerateAssets
 {
-    public interface IInputParser
+    public interface IInputParser<T>
     {
-        GenerateAssetsRequest Parse(string[] args);
+        T Parse(string[] args);
     }
 }

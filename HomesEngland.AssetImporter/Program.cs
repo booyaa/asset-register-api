@@ -1,5 +1,6 @@
 ﻿using System;
 using HomesEngland.UseCase.GenerateAssets;
+using HomesEngland.UseCase.ImportAssets;
 using Main;
 
 namespace HomesEngland.AssetImporter
@@ -9,7 +10,7 @@ namespace HomesEngland.AssetImporter
         static void Main(string[] args)
         {
             var assetRegister = new AssetRegister();
-            IAssetImporter assetImporter = assetRegister.Get<IAssetImporter>();
+            IConsoleImporter assetImporter = assetRegister.Get<IConsoleImporter>();
             assetImporter.ProcessAsync(args).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }

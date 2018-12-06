@@ -4,7 +4,7 @@ using HomesEngland.UseCase.GenerateAssets.Models;
 
 namespace HomesEngland.UseCase.GenerateAssets
 {
-    public class InputParser: IInputParser
+    public class InputParser: IInputParser<GenerateAssetsRequest>
     {
         public GenerateAssetsRequest Parse(string[] args)
         {

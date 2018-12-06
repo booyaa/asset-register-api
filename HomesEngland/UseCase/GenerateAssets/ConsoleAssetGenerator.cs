@@ -12,11 +12,11 @@ namespace HomesEngland.UseCase.GenerateAssets
 {
     public class ConsoleAssetGenerator : IConsoleGenerator
     {
-        private readonly IInputParser _inputParser;
+        private readonly IInputParser<GenerateAssetsRequest> _inputParser;
         private readonly IGenerateAssetsUseCase _generateAssetUseCase;
         private readonly ILogger<ConsoleAssetGenerator> _logger;
 
-        public ConsoleAssetGenerator(IInputParser inputParser, IGenerateAssetsUseCase generateAssetUseCase, ILogger<ConsoleAssetGenerator> logger)
+        public ConsoleAssetGenerator(IInputParser<GenerateAssetsRequest> inputParser, IGenerateAssetsUseCase generateAssetUseCase, ILogger<ConsoleAssetGenerator> logger)
         {
             _inputParser = inputParser;
             _generateAssetUseCase = generateAssetUseCase;
@@ -73,8 +73,8 @@ namespace HomesEngland.UseCase.GenerateAssets
         {
             foreach (var error in validationResponse.ValidationErrors)
             {
-                Console.WriteLine($"FieldName: {error?.FieldName}");
-                Console.WriteLine($"Message: {error?.Message}");
+                _logger.Log(LogLevel.Information, $"FieldName: {error?.FieldName}");
+                _logger.Log(LogLevel.Information, $"Message: {error?.Message}");
             }
             throw new BadRequestException(validationResponse);
         }

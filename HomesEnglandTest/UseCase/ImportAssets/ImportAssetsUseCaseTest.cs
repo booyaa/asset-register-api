@@ -7,6 +7,7 @@ using FluentAssertions;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.ImportAssets;
+using HomesEngland.UseCase.ImportAssets.Impl;
 using HomesEngland.UseCase.ImportAssets.Models;
 using Microsoft.Extensions.Logging;
 using Moq;

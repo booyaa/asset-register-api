@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +8,7 @@ using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.ImportAssets.Models;
 using Microsoft.Extensions.Logging;
 
-namespace HomesEngland.UseCase.ImportAssets
+namespace HomesEngland.UseCase.ImportAssets.Impl
 {
     public class ImportAssetsUseCase : IImportAssetsUseCase
     {
