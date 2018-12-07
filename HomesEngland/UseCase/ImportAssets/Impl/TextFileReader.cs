@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HomesEngland.UseCase.ImportAssets
+namespace HomesEngland.UseCase.ImportAssets.Impl
 {
     public class TextFileReader : IFileReader<string>
     {

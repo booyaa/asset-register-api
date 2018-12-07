@@ -15,13 +15,15 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
         private readonly IImportAssetsUseCase _importAssetsUseCase;
         private readonly IInputParser<ImportAssetConsoleInput> _inputParser;
         private readonly IFileReader<string> _fileReader;
+        private readonly ITextSplitter _textSplitter;
         private readonly ILogger<IConsoleImporter> _logger;
 
-        public ConsoleImporter(IImportAssetsUseCase importAssetsUseCase, IInputParser<ImportAssetConsoleInput> inputParser,IFileReader<string> fileReader, ILogger<IConsoleImporter> logger)
+        public ConsoleImporter(IImportAssetsUseCase importAssetsUseCase, IInputParser<ImportAssetConsoleInput> inputParser,IFileReader<string> fileReader, ITextSplitter textSplitter, ILogger<IConsoleImporter> logger)
         {
             _importAssetsUseCase = importAssetsUseCase;
             _inputParser = inputParser;
             _fileReader = fileReader;
+            _textSplitter = textSplitter;
             _logger = logger;
         }
 
@@ -34,10 +36,12 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
 
             var text = await _fileReader.ReadAsync(parsedInput.FilePath, cancellationTokenSource.Token).ConfigureAwait(false);
 
+            var csvLines = _textSplitter.SplitIntoLines(text);
+
             var importAssetsRequest = new ImportAssetsRequest
             {
                 Delimiter = parsedInput.Delimiter,
-                //AssetLines = text?.Split("\n")
+                AssetLines = csvLines
             };
 
             await _importAssetsUseCase.ExecuteAsync(importAssetsRequest, cancellationTokenSource.Token).ConfigureAwait(false);

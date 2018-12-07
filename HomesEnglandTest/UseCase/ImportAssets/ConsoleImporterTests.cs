@@ -20,6 +20,7 @@ namespace HomesEnglandTest.UseCase.ImportAssets
         private Mock<IImportAssetsUseCase> _mockImportAssetUseCase;
         private IInputParser<ImportAssetConsoleInput> _inputParser;
         private Mock<IFileReader<string>> _mockFileReader;
+        private ITextSplitter _textSplitter;
 
         [SetUp]
         public void Setup()
@@ -28,7 +29,8 @@ namespace HomesEnglandTest.UseCase.ImportAssets
             _mockImportAssetUseCase = new Mock<IImportAssetsUseCase>();
             _inputParser = new ImportAssetInputParser();
             _mockFileReader = new Mock<IFileReader<string>>();
-            _classUnderTest = new ConsoleImporter(_mockImportAssetUseCase.Object, _inputParser, _mockFileReader.Object, _mockLogger.Object);
+            _textSplitter = new TextSplitter();
+            _classUnderTest = new ConsoleImporter(_mockImportAssetUseCase.Object, _inputParser, _mockFileReader.Object,_textSplitter, _mockLogger.Object);
         }
 
         [TestCase("--file", "test.csv", "--delimiter", ";")]
@@ -103,6 +105,20 @@ namespace HomesEnglandTest.UseCase.ImportAssets
             await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
             //assert
             _mockFileReader.Verify(s => s.ReadAsync(It.Is<string>(i=> i.Equals(arg2)), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [TestCase("--file", "test.csv", "--delimiter", ";",3, "Line1\nLine2\nLine3")]
+        [TestCase("--file", "TEST.CSV", "--delimiter", ";",2, "Line1\nLine2")]
+        [TestCase("--file", "Test.csv", "--delimiter", ";",1, "Line1")]
+        public async Task GivenWeNeedToImportAssets_WhenWeWantParse_Then(string arg1, string arg2, string arg3, string arg4, int expectedLineCount, string csvText)
+        {
+            //arrange
+            var args = new[] { arg1, arg2, arg3, arg4 };
+            _mockFileReader.Setup(s => s.ReadAsync(arg2, It.IsAny<CancellationToken>())).ReturnsAsync(csvText);
+            //act
+            await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
+            //assert
+            _mockImportAssetUseCase.Verify(s => s.ExecuteAsync(It.Is<ImportAssetsRequest>(i=> i.AssetLines.Count.Equals(expectedLineCount)), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }
