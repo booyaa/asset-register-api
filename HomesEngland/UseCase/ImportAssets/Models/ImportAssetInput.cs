@@ -1,4 +1,4 @@
-﻿namespace HomesEngland.UseCase.GenerateAssets
+﻿namespace HomesEngland.UseCase.ImportAssets.Models
 {
     public class ImportAssetConsoleInput
     {

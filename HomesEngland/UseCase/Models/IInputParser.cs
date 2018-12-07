@@ -1,6 +1,4 @@
-﻿using HomesEngland.UseCase.GenerateAssets.Models;
-
-namespace HomesEngland.UseCase.Models
+﻿namespace HomesEngland.UseCase.Models
 {
     public interface IInputParser<T>
     {

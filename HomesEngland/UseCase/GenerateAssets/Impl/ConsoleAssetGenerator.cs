@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.UseCase.GenerateAssets.Models;
 using HomesEngland.UseCase.GetAsset.Models;
+using HomesEngland.UseCase.Models;
 using Infrastructure.Api.Exceptions;
 using Infrastructure.Api.Response.Validation;
 using Microsoft.Extensions.Logging;
-using HomesEngland.UseCase.Models;
 
-namespace HomesEngland.UseCase.GenerateAssets
+namespace HomesEngland.UseCase.GenerateAssets.Impl
 {
     public class ConsoleAssetGenerator : IConsoleGenerator
     {

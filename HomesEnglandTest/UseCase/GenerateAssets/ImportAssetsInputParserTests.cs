@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using HomesEngland.UseCase.GenerateAssets;
+using HomesEngland.UseCase.ImportAssets.Impl;
 using HomesEngland.UseCase.ImportAssets.Models;
 using NUnit.Framework;
 using HomesEngland.UseCase.Models;

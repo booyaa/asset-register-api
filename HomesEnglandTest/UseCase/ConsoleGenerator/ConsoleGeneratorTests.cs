@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.UseCase.GenerateAssets;
+using HomesEngland.UseCase.GenerateAssets.Impl;
 using HomesEngland.UseCase.GenerateAssets.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -16,6 +17,7 @@ namespace HomesEnglandTest.UseCase.ConsoleGenerator
         private IInputParser<GenerateAssetsRequest> _inputParser;
         private Mock<IGenerateAssetsUseCase> _mockGenerateAssetUseCase;
         private Mock<ILogger<ConsoleAssetGenerator>> _mockLogger;
+
         [SetUp]
         public void Setup()
         {

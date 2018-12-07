@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using DependencyInjection;
 using HomesEngland.Domain;
+using HomesEngland.Domain.Factory;
 using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.Gateway.Migrations;
@@ -8,6 +9,8 @@ using HomesEngland.Gateway.Sql;
 using HomesEngland.Gateway.Sql.Postgres;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Impl;
+using HomesEngland.UseCase.CreateAsset.Models;
+using HomesEngland.UseCase.CreateAsset.Models.Factory;
 using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GenerateAssets.Impl;
 using HomesEngland.UseCase.GenerateAssets.Models;
@@ -69,8 +72,10 @@ namespace Main
 
             RegisterExportedDependency<IImportAssetsUseCase, ImportAssetsUseCase>();
             RegisterExportedDependency<IConsoleImporter, ConsoleImporter>();
-            RegisterExportedDependency<IInputParser<ImportAssetsRequest>, ImportAssetInputParser>();
             RegisterExportedDependency<IFileReader<string>, TextFileReader>();
+            RegisterExportedDependency<ITextSplitter, TextSplitter>();
+            RegisterExportedDependency<IInputParser<ImportAssetConsoleInput>, ImportAssetConsoleInput>();
+            RegisterExportedDependency<IFactory<CreateAssetRequest, CsvAsset>, CreateAssetRequestFactory>();
         }
 
         public override T Get<T>()

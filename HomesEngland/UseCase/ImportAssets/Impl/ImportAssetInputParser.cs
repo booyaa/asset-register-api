@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using HomesEngland.UseCase.ImportAssets.Models;
 using HomesEngland.UseCase.Models;
 
-namespace HomesEngland.UseCase.GenerateAssets
+namespace HomesEngland.UseCase.ImportAssets.Impl
 {
     public class ImportAssetInputParser : IInputParser<ImportAssetConsoleInput>
     {

@@ -26,8 +26,4 @@
       <ProjectReference Include="..\TestHelper\TestHelper.csproj" />
       <ProjectReference Include="..\WebApi\WebApi.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="HomesEngland\AssetImporter\" />
-    </ItemGroup>
 </Project>
