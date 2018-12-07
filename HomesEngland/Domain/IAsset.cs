@@ -53,7 +53,17 @@ namespace HomesEngland.Domain
         decimal? AgencyPercentage { get; set; }
         decimal? MortgageEffect { get; set; }
         decimal? RemainingAgencyCost { get; set; }
-        //WA Estimated Property Value; Agency FV +/-; Impairment provision; FV reserve; Agency FV; Disposals  - Cost;Duration(months); Month of completion since scheme start; Disposal - month since completion;Payment date(IMS); Paid?;Asset?;Property Type; Tenure;Expected staircasing rate;Estimated sale price(sale); Estimated valuation(stair); Regional Adj(sale); Regional Adj(stair); Not limited by 1st charge; Early mortgage if never repay(used to limit effect of modelled arrears); Arrears effect applied or limited?;Relative property type & tenure adjustment(sale); Relative property type & tenure adjustment(stair); London or not?;Quarter - spend;Mortgage provider; HouseType;Purchase price band;Household Income; Household Income Band(£5k bands); Household Income Band(£50k bands); First-time buyer?
+
+        decimal? WAEstimatedPropertyValue { get; set; }
+        decimal? AgencyFairValueDifference{ get; set; }
+        decimal? ImpairmentProvision{ get; set; }
+        decimal? FairValueReserve { get; set; }
+        decimal? AgencyFairValue { get; set; }
+        decimal? DisposalsCost { get; set; }
+        decimal? DurationInMonths { get; set; }
+
+        decimal? MonthOfCompletionSinceSchemeStart { get; set; }
+        // Disposal - month since completion;Payment date(IMS); Paid?;Asset?;Property Type; Tenure;Expected staircasing rate;Estimated sale price(sale); Estimated valuation(stair); Regional Adj(sale); Regional Adj(stair); Not limited by 1st charge; Early mortgage if never repay(used to limit effect of modelled arrears); Arrears effect applied or limited?;Relative property type & tenure adjustment(sale); Relative property type & tenure adjustment(stair); London or not?;Quarter - spend;Mortgage provider; HouseType;Purchase price band;Household Income; Household Income Band(£5k bands); Household Income Band(£50k bands); First-time buyer?
 
 
         int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
