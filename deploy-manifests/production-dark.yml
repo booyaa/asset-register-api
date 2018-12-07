@@ -1,4 +1,4 @@
 ---
 applications:
 - name: asset-register-api-production-dark
-  memory: 512M
+  memory: 1G
