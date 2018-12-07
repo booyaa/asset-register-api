@@ -4,14 +4,20 @@ namespace HomesEngland.Domain
 {
     public interface IAsset:IDatabaseEntity<int>
     {
-        string MonthPaid { get; set; }
-        string AccountingYear { get; set; }
+        string Programme { get; set; }
+        string EquityOwner { get; set; }
         int? SchemeId { get; set; }
         string LocationLaRegionName { get; set; }
         string ImsOldRegion { get; set; }
         string NoOfBeds { get; set; }
         string Address { get; set; }
+        string PropertyHouseName { get; set; }
+        string PropertyStreetNumber { get; set; }
+        string PropertyStreet { get; set; }
+        string PropertyTown { get; set; }
+        string PropertyPostcode { get; set; }
         string DevelopingRslName { get; set; }
+        string LBHA { get; set; }
         DateTime? CompletionDateForHpiStart { get; set; }
         DateTime? ImsActualCompletionDate { get; set; }
         DateTime? ImsExpectedCompletionDate { get; set; }
@@ -21,6 +27,37 @@ namespace HomesEngland.Domain
         decimal? AgencyEquityLoan { get; set; }
         decimal? DeveloperEquityLoan { get; set; }
         decimal? ShareOfRestrictedEquity { get; set; }
+        decimal? DeveloperDiscount { get; set; }
+        decimal? Mortgage { get; set; }
+        decimal? PurchasePrice { get; set; }
+
+        decimal? Fees { get; set; }
+        decimal? HistoricUnallocatedFees { get; set; }
+        decimal? ActualAgencyEquityCostIncludingHomeBuyAgentFee { get; set; }
+
+        DateTime? FullDisposalDate { get; set; }
+        decimal? OriginalAgencyPercentage { get; set; }
+        decimal? StaircasingPercentage { get; set; }
+        decimal? NewAgencyPercentage { get; set; }
+        int Invested { get; set; }
+
+        int Month { get; set; }
+        int CalendarYear { get; set; }
+        string MMYYYY { get; set; }
+        int Row { get; set; }
+        int Column { get; set; }
+
+        decimal? HPIStart { get; set; }
+        decimal? HPIEnd { get; set; }
+        decimal? HPIPlusMinus { get; set; }
+        decimal? AgencyPercentage { get; set; }
+        decimal? MortgageEffect { get; set; }
+        decimal? RemainingAgencyCost { get; set; }
+        //WA Estimated Property Value; Agency FV +/-; Impairment provision; FV reserve; Agency FV; Disposals  - Cost;Duration(months); Month of completion since scheme start; Disposal - month since completion;Payment date(IMS); Paid?;Asset?;Property Type; Tenure;Expected staircasing rate;Estimated sale price(sale); Estimated valuation(stair); Regional Adj(sale); Regional Adj(stair); Not limited by 1st charge; Early mortgage if never repay(used to limit effect of modelled arrears); Arrears effect applied or limited?;Relative property type & tenure adjustment(sale); Relative property type & tenure adjustment(stair); London or not?;Quarter - spend;Mortgage provider; HouseType;Purchase price band;Household Income; Household Income Band(£5k bands); Household Income Band(£50k bands); First-time buyer?
+
+
         int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
+        string MonthPaid { get; set; }
+        string AccountingYear { get; set; }
     }
 }
