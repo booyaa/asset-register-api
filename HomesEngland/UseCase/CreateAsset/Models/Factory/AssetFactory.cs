@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using HomesEngland.Domain.Factory;
+using HomesEngland.UseCase.ImportAssets.Models.ParserExtensions;
 
 namespace HomesEngland.UseCase.CreateAsset.Models.Factory
 {
@@ -14,20 +15,23 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             var fields = csvAsset?.CsvLine?.Split(csvAsset.Delimiter);
             int.TryParse(fields.ElementAtOrDefault(2), out var schemeId);
             int.TryParse(fields.ElementAtOrDefault(5), out var noOfBeds);
-            DateTime.TryParse(fields.ElementAtOrDefault(14), out var completionDateForHpiStart);
-            DateTime.TryParse(fields.ElementAtOrDefault(15), out var imsActualCompletionDate);
-            DateTime.TryParse(fields.ElementAtOrDefault(16), out var imsExpectedCompletionDate);
-            DateTime.TryParse(fields.ElementAtOrDefault(17), out var imsLegalCompletionDate);
-            DateTime.TryParse(fields.ElementAtOrDefault(18), out var hopCompletionDate);
-            decimal.TryParse(fields.ElementAtOrDefault(19), out var deposit);
-            decimal.TryParse(fields.ElementAtOrDefault(20), out var agencyEquityLoan);
-            decimal.TryParse(fields.ElementAtOrDefault(21), out var developerEquityLoan);
-            decimal.TryParse(fields.ElementAtOrDefault(22), out var shareOfRestrictedEquity);
-            decimal.TryParse(fields.ElementAtOrDefault(23), out var developerDiscount);
-            decimal.TryParse(fields.ElementAtOrDefault(24), out var mortgage);
-            decimal.TryParse(fields.ElementAtOrDefault(25), out var purchasePrice);
-            decimal.TryParse(fields.ElementAtOrDefault(26), out var fees);
-            decimal.TryParse(fields.ElementAtOrDefault(27), out var historicUnallocatedFees);
+            DateTime? completionDateForHpiStart = fields.ElementAtOrDefault(14).TryParseDateTimeNullable();
+            DateTime? imsActualCompletionDate = fields.ElementAtOrDefault(15).TryParseDateTimeNullable();
+            DateTime? imsExpectedCompletionDate = fields.ElementAtOrDefault(16).TryParseDateTimeNullable();
+            DateTime? imsLegalCompletionDate = fields.ElementAtOrDefault(17).TryParseDateTimeNullable();
+            DateTime? hopCompletionDate = fields.ElementAtOrDefault(18).TryParseDateTimeNullable();
+            decimal? deposit = fields.ElementAtOrDefault(19).TryParseDecimalNullable();
+            decimal? agencyEquityLoan = fields.ElementAtOrDefault(20).TryParseDecimalNullable();
+            decimal? developerEquityLoan = fields.ElementAtOrDefault(21).TryParseDecimalNullable();
+            decimal? shareOfRestrictedEquity = fields.ElementAtOrDefault(22).TryParseDecimalNullable();
+            decimal? developerDiscount = fields.ElementAtOrDefault(23).TryParseDecimalNullable();
+            decimal? mortgage = fields.ElementAtOrDefault(24).TryParseDecimalNullable();
+            decimal? purchasePrice = fields.ElementAtOrDefault(25).TryParseDecimalNullable();
+
+
+
+            decimal? fees = fields.ElementAtOrDefault(26).TryParseDecimalNullable();
+            decimal? historicUnallocatedFees = fields.ElementAtOrDefault(27).TryParseDecimalNullable();
             decimal.TryParse(fields.ElementAtOrDefault(28), out var actualAgencyEquityCostIncludingHomeBuyAgentFee);
             DateTime.TryParse(fields.ElementAtOrDefault(29), out var fullDisposalDate);
             decimal.TryParse(fields.ElementAtOrDefault(30), out var originalAgencyPercentage);
