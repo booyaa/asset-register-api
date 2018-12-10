@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Bogus.DataSets;
 using HomesEngland.Domain.Factory;
 
 namespace HomesEngland.UseCase.CreateAsset.Models.Factory
@@ -7,12 +9,50 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
     {
         public CreateAssetRequest Create(CsvAsset csvAsset)
         {
-            if (csvAsset == null || string.IsNullOrEmpty(csvAsset.CsvLine) || string.IsNullOrWhiteSpace(csvAsset.CsvLine) || string.IsNullOrEmpty(csvAsset.Delimiter))
+            if (csvAsset == null || string.IsNullOrEmpty(csvAsset.CsvLine) || string.IsNullOrWhiteSpace(csvAsset.CsvLine) || string.IsNullOrWhiteSpace(csvAsset.Delimiter) || string.IsNullOrEmpty(csvAsset.Delimiter))
                 return null;
 
             var fields = csvAsset?.CsvLine?.Split(csvAsset.Delimiter);
             int.TryParse(fields.ElementAtOrDefault(2), out var schemeId);
             int.TryParse(fields.ElementAtOrDefault(5), out var noOfBeds);
+            DateTime.TryParse(fields.ElementAtOrDefault(14), out var completionDateForHpiStart);
+            DateTime.TryParse(fields.ElementAtOrDefault(15), out var imsActualCompletionDate);
+            DateTime.TryParse(fields.ElementAtOrDefault(16), out var imsExpectedCompletionDate);
+            DateTime.TryParse(fields.ElementAtOrDefault(17), out var imsLegalCompletionDate);
+            DateTime.TryParse(fields.ElementAtOrDefault(18), out var hopCompletionDate);
+            decimal.TryParse(fields.ElementAtOrDefault(19), out var deposit);
+            decimal.TryParse(fields.ElementAtOrDefault(20), out var agencyEquityLoan);
+            decimal.TryParse(fields.ElementAtOrDefault(21), out var developerEquityLoan);
+            decimal.TryParse(fields.ElementAtOrDefault(22), out var shareOfRestrictedEquity);
+            decimal.TryParse(fields.ElementAtOrDefault(23), out var developerDiscount);
+            decimal.TryParse(fields.ElementAtOrDefault(24), out var mortgage);
+            decimal.TryParse(fields.ElementAtOrDefault(25), out var purchasePrice);
+            decimal.TryParse(fields.ElementAtOrDefault(26), out var fees);
+            decimal.TryParse(fields.ElementAtOrDefault(27), out var historicUnallocatedFees);
+            decimal.TryParse(fields.ElementAtOrDefault(28), out var actualAgencyEquityCostIncludingHomeBuyAgentFee);
+            DateTime.TryParse(fields.ElementAtOrDefault(29), out var fullDisposalDate);
+            decimal.TryParse(fields.ElementAtOrDefault(30), out var originalAgencyPercentage);
+            decimal.TryParse(fields.ElementAtOrDefault(31), out var staircasingPercentage);
+            decimal.TryParse(fields.ElementAtOrDefault(32), out var newAgencyPercentage);
+            int.TryParse(fields.ElementAtOrDefault(33), out var invested);
+            int.TryParse(fields.ElementAtOrDefault(34), out var month);
+            int.TryParse(fields.ElementAtOrDefault(35), out var calendarYear);
+            int.TryParse(fields.ElementAtOrDefault(36), out var row);
+            int.TryParse(fields.ElementAtOrDefault(37), out var col);
+            decimal.TryParse(fields.ElementAtOrDefault(38), out var hpiStart);
+            decimal.TryParse(fields.ElementAtOrDefault(39), out var hpiEnd);
+            decimal.TryParse(fields.ElementAtOrDefault(40), out var hpiPlusMinus);
+            decimal.TryParse(fields.ElementAtOrDefault(41), out var agencyPercentage);
+            decimal.TryParse(fields.ElementAtOrDefault(42), out var mortgageEffect);
+            decimal.TryParse(fields.ElementAtOrDefault(43), out var remainingAgencyCost);
+            decimal.TryParse(fields.ElementAtOrDefault(44), out var waEstimatedPropertyValue);
+            decimal.TryParse(fields.ElementAtOrDefault(45), out var agencyFairValueDifference);
+            decimal.TryParse(fields.ElementAtOrDefault(46), out var impairmentProvision);
+            decimal.TryParse(fields.ElementAtOrDefault(47), out var fairValueReserve);
+            decimal.TryParse(fields.ElementAtOrDefault(48), out var agencyFairValue);
+            decimal.TryParse(fields.ElementAtOrDefault(49), out var disposalsCost);
+            decimal.TryParse(fields.ElementAtOrDefault(50), out var durationInMonths);
+            decimal.TryParse(fields.ElementAtOrDefault(51), out var monthOfCompletionSinceSchemeStart);
             var createAssetRequest = new CreateAssetRequest
             {
                 Programme = fields.ElementAtOrDefault(0),
@@ -22,6 +62,52 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
                 ImsOldRegion = fields.ElementAtOrDefault(4),
                 NoOfBeds = noOfBeds,
                 Address = fields.ElementAtOrDefault(6),
+                PropertyHouseName = fields.ElementAtOrDefault(7),
+                PropertyStreetNumber = fields.ElementAtOrDefault(8),
+                PropertyStreet = fields.ElementAtOrDefault(9),
+                PropertyTown = fields.ElementAtOrDefault(10),
+                PropertyPostcode = fields.ElementAtOrDefault(11),
+                DevelopingRslName = fields.ElementAtOrDefault(12),
+                LBHA = fields.ElementAtOrDefault(13),
+                CompletionDateForHpiStart = completionDateForHpiStart,
+                ImsActualCompletionDate = imsActualCompletionDate,
+                ImsExpectedCompletionDate = imsExpectedCompletionDate,
+                ImsLegalCompletionDate = imsLegalCompletionDate,
+                HopCompletionDate = hopCompletionDate,
+                Deposit = deposit,
+                AgencyEquityLoan = agencyEquityLoan,
+                DeveloperEquityLoan = developerEquityLoan,
+                ShareOfRestrictedEquity = shareOfRestrictedEquity,
+                DeveloperDiscount = developerDiscount,
+                Mortgage = mortgage,
+                PurchasePrice = purchasePrice,
+                Fees = fees,
+                HistoricUnallocatedFees = historicUnallocatedFees,
+                ActualAgencyEquityCostIncludingHomeBuyAgentFee = actualAgencyEquityCostIncludingHomeBuyAgentFee,
+                FullDisposalDate = fullDisposalDate,
+                OriginalAgencyPercentage = originalAgencyPercentage,
+                StaircasingPercentage = staircasingPercentage,
+                NewAgencyPercentage = newAgencyPercentage,
+                Invested = invested,
+                Month = month,
+                CalendarYear = calendarYear,
+                MMYYYY = fields.ElementAtOrDefault(35),
+                Row = row,
+                Col = col,
+                HPIStart = hpiStart,
+                HPIEnd = hpiEnd,
+                HPIPlusMinus = hpiPlusMinus,
+                AgencyPercentage = agencyPercentage,
+                MortgageEffect = mortgageEffect,
+                RemainingAgencyCost = remainingAgencyCost,
+                WAEstimatedPropertyValue = waEstimatedPropertyValue,
+                AgencyFairValueDifference = agencyFairValueDifference,
+                ImpairmentProvision = impairmentProvision,
+                FairValueReserve = fairValueReserve,
+                AgencyFairValue = agencyFairValue,
+                DisposalsCost = disposalsCost,
+                DurationInMonths = durationInMonths,
+                MonthOfCompletionSinceSchemeStart = monthOfCompletionSinceSchemeStart,
             };
             return createAssetRequest;
         }

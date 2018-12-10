@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using HomesEngland.Domain.Factory;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.CreateAsset.Models.Factory;
@@ -67,11 +68,11 @@ namespace HomesEnglandTest.Domain
             asset.PropertyPostcode.Should().NotBeNull();
             asset.DevelopingRslName.Should().NotBeNull();
             asset.LBHA.Should().NotBeNull();
-            asset.CompletionDateForHpiStart.Should().NotBeNull();
-            asset.ImsActualCompletionDate.Should().NotBeNull();
-            asset.ImsExpectedCompletionDate.Should().NotBeNull();
-            asset.ImsLegalCompletionDate.Should().NotBeNull();
-            asset.HopCompletionDate.Should().NotBeNull();
+            asset.CompletionDateForHpiStart.Should().NotBeNull().Should().NotBe(DateTime.MinValue);
+            asset.ImsActualCompletionDate.Should().NotBeNull().Should().NotBe(DateTime.MinValue);
+            asset.ImsExpectedCompletionDate.Should().NotBeNull().Should().NotBe(DateTime.MinValue);
+            asset.ImsLegalCompletionDate.Should().NotBeNull().Should().NotBe(DateTime.MinValue);
+            asset.HopCompletionDate.Should().NotBeNull().Should().NotBe(DateTime.MinValue);
             asset.Deposit.Should().NotBeNull();
             asset.AgencyEquityLoan.Should().NotBeNull();
             asset.DeveloperEquityLoan.Should().NotBeNull();
@@ -91,7 +92,7 @@ namespace HomesEnglandTest.Domain
             asset.CalendarYear.Should().NotBeNull();
             asset.MMYYYY.Should().NotBeNull();
             asset.Row.Should().NotBeNull();
-            asset.Column.Should().NotBeNull();
+            asset.Col.Should().NotBeNull();
             asset.HPIStart.Should().NotBeNull();
             asset.HPIEnd.Should().NotBeNull();
             asset.HPIPlusMinus.Should().NotBeNull();
@@ -106,7 +107,6 @@ namespace HomesEnglandTest.Domain
             asset.DisposalsCost.Should().NotBeNull();
             asset.DurationInMonths.Should().NotBeNull();
             asset.MonthOfCompletionSinceSchemeStart.Should().NotBeNull();
-            asset.DifferenceFromImsExpectedCompletionToHopCompletionDate.Should().NotBeNull();
         }
     }
 }

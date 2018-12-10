@@ -88,8 +88,5 @@ namespace HomesEngland.Domain
         decimal? HouseholdFiveKIncomeBand { get; set; }
         decimal? HouseholdFiftyKIncomeBand { get; set; }
         bool? FirstTimeBuyer { get; set; }
-
-
-        int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
     }
 }

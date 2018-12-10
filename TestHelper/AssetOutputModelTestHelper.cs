@@ -22,7 +22,6 @@ namespace TestHelper
             assetOutputModel.Deposit.Should().Be(entity.Deposit);
             assetOutputModel.DeveloperEquityLoan.Should().Be(entity.DeveloperEquityLoan);
             assetOutputModel.DevelopingRslName.Should().Be(entity.DevelopingRslName);
-            assetOutputModel.DifferenceFromImsExpectedCompletionToHopCompletionDate.Should().Be(entity.DifferenceFromImsExpectedCompletionToHopCompletionDate);
             assetOutputModel.HopCompletionDate.Should().BeCloseTo(entity.HopCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             assetOutputModel.ImsActualCompletionDate.Should().BeCloseTo(entity.ImsActualCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             assetOutputModel.ImsExpectedCompletionDate.Should().BeCloseTo(entity.ImsExpectedCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));

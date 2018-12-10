@@ -11,21 +11,19 @@ namespace HomesEngland.Domain
         public Asset() { }
         public Asset(CreateAssetRequest request)
         {
-            AccountingYear = request.AccountingYear;
             Address = request.Address;
             AgencyEquityLoan = request.AgencyEquityLoan;
             CompletionDateForHpiStart = request.CompletionDateForHpiStart;
             Deposit = request.Deposit;
             DeveloperEquityLoan = request.DeveloperEquityLoan;
             DevelopingRslName = request.DevelopingRslName;
-            DifferenceFromImsExpectedCompletionToHopCompletionDate = request.DifferenceFromImsExpectedCompletionToHopCompletionDate;
             HopCompletionDate = request.HopCompletionDate;
             ImsActualCompletionDate = request.ImsActualCompletionDate;
             ImsExpectedCompletionDate = request.ImsExpectedCompletionDate;
             ImsLegalCompletionDate = request.ImsLegalCompletionDate;
             ImsOldRegion = request.ImsOldRegion;
             LocationLaRegionName = request.LocationLaRegionName;
-            MonthPaid = request.MonthPaid;
+            
             NoOfBeds = request.NoOfBeds;
             SchemeId = request.SchemeId;
             ShareOfRestrictedEquity = request.ShareOfRestrictedEquity;
@@ -39,7 +37,6 @@ namespace HomesEngland.Domain
             Deposit = request.Deposit;
             DeveloperEquityLoan = request.DeveloperEquityLoan;
             DevelopingRslName = request.DevelopingRslName;
-            DifferenceFromImsExpectedCompletionToHopCompletionDate = request.DifferenceFromImsExpectedCompletionToHopCompletionDate;
             HopCompletionDate = request.HopCompletionDate;
             ImsActualCompletionDate = request.ImsActualCompletionDate;
             ImsExpectedCompletionDate = request.ImsExpectedCompletionDate;

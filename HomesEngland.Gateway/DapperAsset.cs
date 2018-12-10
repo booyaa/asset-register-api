@@ -178,9 +178,6 @@ namespace HomesEngland.Gateway
         [Column("firsttimebuyer")]
         public bool? FirstTimeBuyer { get; set; }
 
-        //Calcuation
-        [Column("differencefromimsexpectedcompletiontohopcompletiondate")]
-        public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
 
         public DapperAsset() { }
         public DapperAsset(IAsset asset)
@@ -192,7 +189,6 @@ namespace HomesEngland.Gateway
             Deposit = asset.Deposit;
             DeveloperEquityLoan = asset.DeveloperEquityLoan;
             DevelopingRslName = asset.DevelopingRslName;
-            DifferenceFromImsExpectedCompletionToHopCompletionDate = asset.DifferenceFromImsExpectedCompletionToHopCompletionDate;
             HopCompletionDate = asset.HopCompletionDate;
             ImsActualCompletionDate = asset.ImsActualCompletionDate;
             ImsExpectedCompletionDate = asset.ImsExpectedCompletionDate;

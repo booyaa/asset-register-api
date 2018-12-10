@@ -44,7 +44,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models
         public int? CalendarYear { get; set; }
         public string MMYYYY { get; set; }
         public int? Row { get; set; }
-        public int? Column { get; set; }
+        public int? Col { get; set; }
         public decimal? HPIStart { get; set; }
         public decimal? HPIEnd { get; set; }
         public decimal? HPIPlusMinus { get; set; }
@@ -82,9 +82,6 @@ namespace HomesEngland.UseCase.CreateAsset.Models
         public decimal? HouseholdFiveKIncomeBand { get; set; }
         public decimal? HouseholdFiftyKIncomeBand { get; set; }
         public bool? FirstTimeBuyer { get; set; }
-        public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
-        public string MonthPaid { get; set; }
-        public string AccountingYear { get; set; }
 
         public RequestValidationResponse Validate(IRequest request)
         {

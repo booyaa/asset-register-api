@@ -34,8 +34,6 @@ namespace HomesEngland.UseCase.GetAsset.Models
             AgencyEquityLoan = asset.AgencyEquityLoan;
             DeveloperEquityLoan = asset.DeveloperEquityLoan;
             ShareOfRestrictedEquity = asset.ShareOfRestrictedEquity;
-            //Calcuation
-            DifferenceFromImsExpectedCompletionToHopCompletionDate = asset.DifferenceFromImsExpectedCompletionToHopCompletionDate;
         }
 
         public string Programme { get; set; }
