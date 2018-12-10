@@ -77,7 +77,7 @@ namespace HomesEngland.Domain
         decimal? RegionalStairAdjust { get; set; }
         bool? NotLimitedByFirstCharge { get; set; }
         decimal? EarlyMortgageIfNeverRepay { get; set; }
-        decimal? ArrearsEffectAppliedOrLimited { get; set; }
+        string ArrearsEffectAppliedOrLimited { get; set; }
         decimal? RelativeSalePropertyTypeAndTenureAdjustment { get; set; }
         decimal? RelativeStairPropertyTypeAndTenureAdjustment { get; set; }
         bool? IsLondon { get; set; }
