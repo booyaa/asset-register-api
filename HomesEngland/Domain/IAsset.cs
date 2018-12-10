@@ -63,7 +63,35 @@ namespace HomesEngland.Domain
         decimal? DurationInMonths { get; set; }
 
         decimal? MonthOfCompletionSinceSchemeStart { get; set; }
-        // Disposal - month since completion;Payment date(IMS); Paid?;Asset?;Property Type; Tenure;Expected staircasing rate;Estimated sale price(sale); Estimated valuation(stair); Regional Adj(sale); Regional Adj(stair); Not limited by 1st charge; Early mortgage if never repay(used to limit effect of modelled arrears); Arrears effect applied or limited?;Relative property type & tenure adjustment(sale); Relative property type & tenure adjustment(stair); London or not?;Quarter - spend;Mortgage provider; HouseType;Purchase price band;Household Income; Household Income Band(£5k bands); Household Income Band(£50k bands); First-time buyer?
+
+        decimal? DisposalMonthSinceCompletion { get; set; }
+        DateTime? IMSPaymentDate { get; set; }
+        
+        bool? IsPaid { get; set; }
+        bool? IsAsset { get; set; }
+        string PropertyType { get; set; }
+        string Tenure { get; set; }
+        decimal? ExpectedStaircasingRate { get; set; }
+        decimal? EstimatedSalePrice { get; set; }
+        decimal? RegionalSaleAdjust { get; set; }
+        decimal? RegionalStairAdjust { get; set; }
+        bool? NotLimitedByFirstCharge { get; set; }
+        decimal? EarlyMortgageIfNeverRepay { get; set; }
+        decimal? ArrearsEffectAppliedOrLimited { get; set; }
+        decimal? RelativeSalePropertyTypeAndTenureAdjustment { get; set; }
+        decimal? RelativeStairPropertyTypeAndTenureAdjustment { get; set; }
+        bool? IsLondon { get; set; }
+        decimal? QuarterSpend { get; set; }
+        string MortgageProvider { get; set; }
+        string HouseType { get; set; }
+        decimal? PurchasePriceBand { get; set; }
+        decimal? HouseholdFiveKIncomeBand { get; set; }
+        decimal? HouseholdFiftyKIncomeBand { get; set; }
+        bool? FirstTimeBuyer { get; set; }
+        
+        
+
+        //  Relative property type & tenure adjustment(sale); Relative property type & tenure adjustment(stair); London or not?;Quarter - spend;Mortgage provider; HouseType;Purchase price band;Household Income; Household Income Band(£5k bands); Household Income Band(£50k bands); First-time buyer?
 
 
         int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
