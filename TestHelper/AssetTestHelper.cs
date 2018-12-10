@@ -110,7 +110,7 @@ namespace TestHelper
             readAsset.Deposit.Should().Be(entity.Deposit);
             readAsset.DeveloperEquityLoan.Should().Be(entity.DeveloperEquityLoan);
             readAsset.DevelopingRslName.Should().Be(entity.DevelopingRslName);
-            readAsset.DifferenceFromImsExpectedCompletionToHopCompletionDate.Should().Be(entity.DifferenceFromImsExpectedCompletionToHopCompletionDate);
+            
             readAsset.HopCompletionDate.Should().BeCloseTo(entity.HopCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             readAsset.ImsActualCompletionDate.Should().BeCloseTo(entity.ImsActualCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             readAsset.ImsExpectedCompletionDate.Should().BeCloseTo(entity.ImsExpectedCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));

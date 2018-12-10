@@ -112,6 +112,5 @@ namespace HomesEngland.UseCase.GetAsset.Models
         public decimal? HouseholdFiveKIncomeBand { get; set; }
         public decimal? HouseholdFiftyKIncomeBand { get; set; }
         public bool? FirstTimeBuyer { get; set; }
-        public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
     }
 }

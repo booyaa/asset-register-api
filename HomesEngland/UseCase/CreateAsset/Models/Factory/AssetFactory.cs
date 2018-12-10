@@ -53,6 +53,24 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             decimal.TryParse(fields.ElementAtOrDefault(49), out var disposalsCost);
             decimal.TryParse(fields.ElementAtOrDefault(50), out var durationInMonths);
             decimal.TryParse(fields.ElementAtOrDefault(51), out var monthOfCompletionSinceSchemeStart);
+            decimal.TryParse(fields.ElementAtOrDefault(52), out var disposalMonthSinceCompletion);
+            DateTime.TryParse(fields.ElementAtOrDefault(53), out var imsPaymentDate);
+            bool.TryParse(fields.ElementAtOrDefault(54), out var isPaid);
+            bool.TryParse(fields.ElementAtOrDefault(55), out var isAsset);
+            decimal.TryParse(fields.ElementAtOrDefault(56), out var expectedStaircasingRate);
+            decimal.TryParse(fields.ElementAtOrDefault(57), out var estimatedSalePrice);
+            decimal.TryParse(fields.ElementAtOrDefault(58), out var regionalSaleAdjust);
+            decimal.TryParse(fields.ElementAtOrDefault(59), out var regionalStairAdjust);
+            bool.TryParse(fields.ElementAtOrDefault(60), out var notLimitedByFirstCharge);
+            decimal.TryParse(fields.ElementAtOrDefault(61), out var earlyMortgageIfNeverRepay);
+            decimal.TryParse(fields.ElementAtOrDefault(62), out var relativeSalePropertyTypeAndTenureAdjustment);
+            decimal.TryParse(fields.ElementAtOrDefault(63), out var relativeStairPropertyTypeAndTenureAdjustment);
+            bool.TryParse(fields.ElementAtOrDefault(64), out var isLondon);
+            decimal.TryParse(fields.ElementAtOrDefault(65), out var quarterSpend);
+            decimal.TryParse(fields.ElementAtOrDefault(68), out var purchasePriceBand);
+            decimal.TryParse(fields.ElementAtOrDefault(69), out var householdFiveKIncomeBand);
+            decimal.TryParse(fields.ElementAtOrDefault(70), out var householdFiftyKIncomeBand);
+            bool.TryParse(fields.ElementAtOrDefault(71), out var firstTimeBuyer);
             var createAssetRequest = new CreateAssetRequest
             {
                 Programme = fields.ElementAtOrDefault(0),
@@ -108,6 +126,29 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
                 DisposalsCost = disposalsCost,
                 DurationInMonths = durationInMonths,
                 MonthOfCompletionSinceSchemeStart = monthOfCompletionSinceSchemeStart,
+                DisposalMonthSinceCompletion = disposalMonthSinceCompletion,
+                IMSPaymentDate = imsPaymentDate,
+                IsPaid = isPaid,
+                IsAsset = isAsset,
+                PropertyType = fields.ElementAtOrDefault(56),
+                Tenure = fields.ElementAtOrDefault(57),
+                ExpectedStaircasingRate = expectedStaircasingRate,
+                EstimatedSalePrice = estimatedSalePrice,
+                RegionalSaleAdjust = regionalSaleAdjust,
+                RegionalStairAdjust = regionalStairAdjust,
+                NotLimitedByFirstCharge = notLimitedByFirstCharge,
+                EarlyMortgageIfNeverRepay = earlyMortgageIfNeverRepay,
+                ArrearsEffectAppliedOrLimited = fields.ElementAtOrDefault(62),
+                RelativeSalePropertyTypeAndTenureAdjustment = relativeSalePropertyTypeAndTenureAdjustment,
+                RelativeStairPropertyTypeAndTenureAdjustment = relativeStairPropertyTypeAndTenureAdjustment,
+                IsLondon = isLondon,
+                QuarterSpend = quarterSpend,
+                MortgageProvider = fields.ElementAtOrDefault(66),
+                HouseType = fields.ElementAtOrDefault(67),
+                PurchasePriceBand = purchasePriceBand,
+                HouseholdFiveKIncomeBand = householdFiveKIncomeBand,
+                HouseholdFiftyKIncomeBand = householdFiftyKIncomeBand,
+                FirstTimeBuyer = firstTimeBuyer
             };
             return createAssetRequest;
         }

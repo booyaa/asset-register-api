@@ -124,8 +124,5 @@ namespace HomesEngland.Domain
         public decimal? HouseholdFiveKIncomeBand { get; set; }
         public decimal? HouseholdFiftyKIncomeBand { get; set; }
         public bool? FirstTimeBuyer { get; set; }
-        public int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
-        public string MonthPaid { get; set; }
-        public string AccountingYear { get; set; }
     }
 }

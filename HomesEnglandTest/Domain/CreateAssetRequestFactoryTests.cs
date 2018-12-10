@@ -107,6 +107,29 @@ namespace HomesEnglandTest.Domain
             asset.DisposalsCost.Should().NotBeNull();
             asset.DurationInMonths.Should().NotBeNull();
             asset.MonthOfCompletionSinceSchemeStart.Should().NotBeNull();
-        }
+            asset.DisposalMonthSinceCompletion.Should().NotBeNull();
+            asset.IMSPaymentDate.Should().NotBeNull();
+            asset.IsPaid.Should().NotBeNull();
+            asset.IsAsset.Should().NotBeNull();
+            asset.PropertyType.Should().NotBeNull();
+            asset.Tenure.Should().NotBeNull();
+            asset.ExpectedStaircasingRate.Should().NotBeNull();
+            asset.EstimatedSalePrice.Should().NotBeNull();
+            asset.RegionalSaleAdjust.Should().NotBeNull();
+            asset.RegionalStairAdjust.Should().NotBeNull();
+            asset.NotLimitedByFirstCharge.Should().NotBeNull();
+            asset.EarlyMortgageIfNeverRepay.Should().NotBeNull();
+            asset.ArrearsEffectAppliedOrLimited.Should().NotBeNull();
+            asset.RelativeSalePropertyTypeAndTenureAdjustment.Should().NotBeNull();
+            asset.RelativeStairPropertyTypeAndTenureAdjustment.Should().NotBeNull();
+            asset.IsLondon.Should().NotBeNull();
+            asset.QuarterSpend.Should().NotBeNull();
+            asset.MortgageProvider.Should().NotBeNull();
+            asset.HouseType.Should().NotBeNull();
+            asset.PurchasePriceBand.Should().NotBeNull();
+            asset.HouseholdFiveKIncomeBand.Should().NotBeNull();
+            asset.HouseholdFiftyKIncomeBand.Should().NotBeNull();
+            asset.FirstTimeBuyer.Should().NotBeNull();
+    }
     }
 }
