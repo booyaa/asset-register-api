@@ -91,7 +91,5 @@ namespace HomesEngland.Domain
 
 
         int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
-        string MonthPaid { get; set; }
-        string AccountingYear { get; set; }
     }
 }

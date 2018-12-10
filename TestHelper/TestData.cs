@@ -22,15 +22,14 @@ namespace TestHelper
                     (imsExpectedCompletionDate.Date - hopCompletionDate).Days;
 
                 var asset = new Faker<DapperAsset>("en")
-                        .RuleFor(property => property.AccountingYear,
-                            (fake, model) => random.Next(2018, 2020).ToString())
+                        
                         .RuleFor(property => property.Address, (fake, model) => fake.Address.FullAddress())
                         .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
                         .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
                         .RuleFor(property => property.DevelopingRslName, (fake, model) => fake.Company.CompanyName())
                         .RuleFor(property => property.LocationLaRegionName, (fake, model) => fake.Address.County())
                         .RuleFor(property => property.ImsOldRegion, (fake, model) => fake.Address.County())
-                        .RuleFor(property => property.MonthPaid, (fake, model) => fake.Date.Month())
+                        
                         .RuleFor(property => property.SchemeId, (fake, model) => fake.IndexGlobal)
                         .RuleFor(property => property.AgencyEquityLoan,
                             (fake, model) => fake.Finance.Amount(5000m, 100000m))

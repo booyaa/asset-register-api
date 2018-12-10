@@ -9,7 +9,6 @@ namespace HomesEngland.Gateway.Test
         public static void AssetIsEqual(this IAsset readAsset, int id, IAsset entity)
         {
             readAsset.Id.Should().Be(id);
-            readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
             readAsset.Address.Should().BeEquivalentTo(entity.Address);
             readAsset.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);
             readAsset.CompletionDateForHpiStart.Should().BeCloseTo(entity.CompletionDateForHpiStart.Value, TimeSpan.FromMilliseconds(1.0));
@@ -23,7 +22,7 @@ namespace HomesEngland.Gateway.Test
             readAsset.ImsLegalCompletionDate.Should().BeCloseTo(entity.ImsLegalCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             readAsset.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             readAsset.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
-            readAsset.MonthPaid.Should().BeEquivalentTo(entity.MonthPaid);
+            
             readAsset.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
             readAsset.SchemeId.Should().Be(entity.SchemeId);
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);

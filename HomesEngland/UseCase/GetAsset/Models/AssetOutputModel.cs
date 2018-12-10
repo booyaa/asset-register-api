@@ -38,8 +38,6 @@ namespace HomesEngland.UseCase.GetAsset.Models
         {
             Id = asset.Id;
             ModifiedDateTime = asset.ModifiedDateTime;
-            MonthPaid = asset.MonthPaid;
-            AccountingYear = asset.AccountingYear;
             SchemeId = asset.SchemeId;
 
             //Identifying Information

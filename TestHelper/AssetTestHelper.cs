@@ -18,7 +18,7 @@ namespace TestHelper
         public static void AssetIsEqual(this IAsset readAsset, IAsset entity)
         {
             readAsset.Id.Should().Be(entity.Id);
-            readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
+            
             readAsset.Address.Should().BeEquivalentTo(entity.Address);
             readAsset.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);
             readAsset.CompletionDateForHpiStart.Should().BeCloseTo(entity.CompletionDateForHpiStart.Value, TimeSpan.FromMilliseconds(1.0));
@@ -32,7 +32,7 @@ namespace TestHelper
             readAsset.ImsLegalCompletionDate.Should().BeCloseTo(entity.ImsLegalCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             readAsset.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             readAsset.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
-            readAsset.MonthPaid.Should().BeEquivalentTo(entity.MonthPaid);
+            
             readAsset.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
             readAsset.SchemeId.Should().Be(entity.SchemeId);
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
@@ -47,7 +47,7 @@ namespace TestHelper
         public static bool AssetIsEqual(this IAsset readAsset, CreateAssetRequest entity)
         {
             return
-                readAsset.AccountingYear.Equals(entity.AccountingYear) &&
+                
                 readAsset.Address.Equals(entity.Address) &&
                 readAsset.AgencyEquityLoan.Equals(entity.AgencyEquityLoan) &&
                 readAsset.CompletionDateForHpiStart.Equals(entity.CompletionDateForHpiStart.Value) &&
@@ -61,7 +61,7 @@ namespace TestHelper
                 readAsset.ImsLegalCompletionDate.Equals(entity.ImsLegalCompletionDate.Value) &&
                 readAsset.ImsOldRegion.Equals(entity.ImsOldRegion) &&
                 readAsset.LocationLaRegionName.Equals(entity.LocationLaRegionName) &&
-                readAsset.MonthPaid.Equals(entity.MonthPaid) &&
+                
                 readAsset.NoOfBeds.Equals(entity.NoOfBeds) &&
                 readAsset.SchemeId.Equals(entity.SchemeId) &&
                 readAsset.ShareOfRestrictedEquity.Equals(entity.ShareOfRestrictedEquity);

@@ -33,7 +33,6 @@ namespace HomesEngland.Domain
 
         public Asset(IAsset request)
         {
-            AccountingYear = request.AccountingYear;
             Address = request.Address;
             AgencyEquityLoan = request.AgencyEquityLoan;
             CompletionDateForHpiStart = request.CompletionDateForHpiStart;
@@ -47,7 +46,6 @@ namespace HomesEngland.Domain
             ImsLegalCompletionDate = request.ImsLegalCompletionDate;
             ImsOldRegion = request.ImsOldRegion;
             LocationLaRegionName = request.LocationLaRegionName;
-            MonthPaid = request.MonthPaid;
             NoOfBeds = request.NoOfBeds;
             SchemeId = request.SchemeId;
             ShareOfRestrictedEquity = request.ShareOfRestrictedEquity;

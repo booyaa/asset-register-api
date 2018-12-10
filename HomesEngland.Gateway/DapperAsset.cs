@@ -16,12 +16,10 @@ namespace HomesEngland.Gateway
         public int Id { get; set; }
         [Column("modifieddatetime")]
         public DateTime ModifiedDateTime { get; set; }
-        [Column("monthpaid")]
-        public string MonthPaid { get; set; }
-        [Column("accountingyear")]
-        public string AccountingYear { get; set; }
 
+        [Column("programme")]
         public string Programme { get; set; }
+        [Column("equityowner")]
         public string EquityOwner { get; set; }
 
         [Column("schemeid")]
@@ -131,7 +129,7 @@ namespace HomesEngland.Gateway
         public DapperAsset() { }
         public DapperAsset(IAsset asset)
         {
-            AccountingYear = asset.AccountingYear;
+            
             Address = asset.Address;
             AgencyEquityLoan = asset.AgencyEquityLoan;
             CompletionDateForHpiStart = asset.CompletionDateForHpiStart;
@@ -145,7 +143,7 @@ namespace HomesEngland.Gateway
             ImsLegalCompletionDate = asset.ImsLegalCompletionDate;
             ImsOldRegion = asset.ImsOldRegion;
             LocationLaRegionName = asset.LocationLaRegionName;
-            MonthPaid = asset.MonthPaid;
+            
             NoOfBeds = asset.NoOfBeds;
             SchemeId = asset.SchemeId;
             ShareOfRestrictedEquity = asset.ShareOfRestrictedEquity;
