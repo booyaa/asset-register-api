@@ -23,7 +23,7 @@ namespace HomesEngland.Gateway.Test
             readAsset.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             readAsset.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
             
-            readAsset.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
+            readAsset.NoOfBeds.Should().Be(entity.NoOfBeds);
             readAsset.SchemeId.Should().Be(entity.SchemeId);
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }

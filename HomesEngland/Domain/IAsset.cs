@@ -9,7 +9,7 @@ namespace HomesEngland.Domain
         int? SchemeId { get; set; }
         string LocationLaRegionName { get; set; }
         string ImsOldRegion { get; set; }
-        string NoOfBeds { get; set; }
+        int? NoOfBeds { get; set; }
         string Address { get; set; }
         string PropertyHouseName { get; set; }
         string PropertyStreetNumber { get; set; }
@@ -45,7 +45,7 @@ namespace HomesEngland.Domain
         int? CalendarYear { get; set; }
         string MMYYYY { get; set; }
         int? Row { get; set; }
-        int? Column { get; set; }
+        int? Col { get; set; }
 
         decimal? HPIStart { get; set; }
         decimal? HPIEnd { get; set; }

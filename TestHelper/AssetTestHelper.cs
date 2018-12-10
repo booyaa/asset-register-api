@@ -33,7 +33,7 @@ namespace TestHelper
             readAsset.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             readAsset.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
             
-            readAsset.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
+            readAsset.NoOfBeds.Should().Be(entity.NoOfBeds);
             readAsset.SchemeId.Should().Be(entity.SchemeId);
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }
@@ -75,7 +75,7 @@ namespace TestHelper
         /// <param name="entity"></param>
         public static void AssetOutputModelIsEqual(this AssetOutputModel readAsset, CreateAssetRequest entity)
         {
-            readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
+            
             readAsset.Address.Should().BeEquivalentTo(entity.Address);
             readAsset.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);
             readAsset.CompletionDateForHpiStart.Should().BeCloseTo(entity.CompletionDateForHpiStart.Value, TimeSpan.FromMilliseconds(1.0));
@@ -89,8 +89,8 @@ namespace TestHelper
             readAsset.ImsLegalCompletionDate.Should().BeCloseTo(entity.ImsLegalCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             readAsset.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             readAsset.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
-            readAsset.MonthPaid.Should().BeEquivalentTo(entity.MonthPaid);
-            readAsset.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
+            
+            readAsset.NoOfBeds.Should().Be(entity.NoOfBeds);
             readAsset.SchemeId.Should().Be(entity.SchemeId);
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }
@@ -103,7 +103,7 @@ namespace TestHelper
         /// <param name="entity"></param>
         public static void AssetOutputModelIsEqual(this AssetOutputModel readAsset, AssetOutputModel entity)
         {
-            readAsset.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
+            
             readAsset.Address.Should().BeEquivalentTo(entity.Address);
             readAsset.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);
             readAsset.CompletionDateForHpiStart.Should().BeCloseTo(entity.CompletionDateForHpiStart.Value, TimeSpan.FromMilliseconds(1.0));
@@ -117,8 +117,8 @@ namespace TestHelper
             readAsset.ImsLegalCompletionDate.Should().BeCloseTo(entity.ImsLegalCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             readAsset.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             readAsset.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
-            readAsset.MonthPaid.Should().BeEquivalentTo(entity.MonthPaid);
-            readAsset.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
+            
+            readAsset.NoOfBeds.Should().Be(entity.NoOfBeds);
             readAsset.SchemeId.Should().Be(entity.SchemeId);
             readAsset.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }

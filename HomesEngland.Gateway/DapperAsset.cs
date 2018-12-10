@@ -31,7 +31,7 @@ namespace HomesEngland.Gateway
         [Column("imsoldregion")]
         public string ImsOldRegion { get; set; }
         [Column("noofbeds")]
-        public string NoOfBeds { get; set; }
+        public int? NoOfBeds { get; set; }
         //IMS Adress
         [Column("address")]
         public string Address { get; set; }
@@ -102,7 +102,7 @@ namespace HomesEngland.Gateway
         [Column("row")]
         public int? Row { get; set; }
         [Column("col")]
-        public int? Column { get; set; }
+        public int? Col { get; set; }
         [Column("hpistart")]
         public decimal? HPIStart { get; set; }
         [Column("hpiend")]

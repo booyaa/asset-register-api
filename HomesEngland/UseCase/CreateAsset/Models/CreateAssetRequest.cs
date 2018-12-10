@@ -11,7 +11,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models
         public int? SchemeId { get; set; }
         public string LocationLaRegionName { get; set; }
         public string ImsOldRegion { get; set; }
-        public string NoOfBeds { get; set; }
+        public int? NoOfBeds { get; set; }
         public string Address { get; set; }
         public string PropertyHouseName { get; set; }
         public string PropertyStreetNumber { get; set; }

@@ -24,8 +24,8 @@ namespace TestHelper
                 var asset = new Faker<DapperAsset>("en")
                         
                         .RuleFor(property => property.Address, (fake, model) => fake.Address.FullAddress())
-                        .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
-                        .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
+                        .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4))
+                        
                         .RuleFor(property => property.DevelopingRslName, (fake, model) => fake.Company.CompanyName())
                         .RuleFor(property => property.LocationLaRegionName, (fake, model) => fake.Address.County())
                         .RuleFor(property => property.ImsOldRegion, (fake, model) => fake.Address.County())
@@ -66,8 +66,7 @@ namespace TestHelper
                 var request = new Faker<CreateAssetRequest>()
                     .RuleFor(property => property.AccountingYear, (fake, model) => random.Next(2018, 2020).ToString())
                     .RuleFor(property => property.Address, (fake, model) => fake.Address.FullAddress())
-                    .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
-                    .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4).ToString())
+                    .RuleFor(property => property.NoOfBeds, (fake, model) => fake.Random.Int(1, 4))
                     .RuleFor(property => property.DevelopingRslName, (fake, model) => fake.Company.CompanyName())
                     .RuleFor(property => property.LocationLaRegionName, (fake, model) => fake.Address.County())
                     .RuleFor(property => property.ImsOldRegion, (fake, model) => fake.Address.County())

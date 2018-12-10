@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentAssertions;
-using HomesEngland.Domain;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.GetAsset.Models;
 
@@ -16,7 +15,7 @@ namespace TestHelper
         /// <param name="entity"></param>
         public static void AssetOutputModelIsEqual(this CreateAssetRequest assetOutputModel, AssetOutputModel entity)
         {
-            assetOutputModel.AccountingYear.Should().BeEquivalentTo(entity.AccountingYear);
+            
             assetOutputModel.Address.Should().BeEquivalentTo(entity.Address);
             assetOutputModel.AgencyEquityLoan.Should().Be(entity.AgencyEquityLoan);
             assetOutputModel.CompletionDateForHpiStart.Should().BeCloseTo(entity.CompletionDateForHpiStart.Value, TimeSpan.FromMilliseconds(1.0));
@@ -30,8 +29,8 @@ namespace TestHelper
             assetOutputModel.ImsLegalCompletionDate.Should().BeCloseTo(entity.ImsLegalCompletionDate.Value, TimeSpan.FromMilliseconds(1.0));
             assetOutputModel.ImsOldRegion.Should().BeEquivalentTo(entity.ImsOldRegion);
             assetOutputModel.LocationLaRegionName.Should().BeEquivalentTo(entity.LocationLaRegionName);
-            assetOutputModel.MonthPaid.Should().BeEquivalentTo(entity.MonthPaid);
-            assetOutputModel.NoOfBeds.Should().BeEquivalentTo(entity.NoOfBeds);
+            
+            assetOutputModel.NoOfBeds.Should().Be(entity.NoOfBeds);
             assetOutputModel.SchemeId.Should().Be(entity.SchemeId);
             assetOutputModel.ShareOfRestrictedEquity.Should().Be(entity.ShareOfRestrictedEquity);
         }
