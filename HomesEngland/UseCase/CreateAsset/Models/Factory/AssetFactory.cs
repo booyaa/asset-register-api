@@ -13,6 +13,8 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             var fields = csvAsset?.CsvLine?.Split(csvAsset.Delimiter);
             var createAssetRequest = new CreateAssetRequest
             {
+                Programme = fields.ElementAtOrDefault(0),
+                EquityOwner = fields.ElementAtOrDefault(1),
                 Address = fields.ElementAtOrDefault(6),
             };
             return createAssetRequest;

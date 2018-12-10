@@ -74,7 +74,7 @@ namespace Main
             RegisterExportedDependency<IConsoleImporter, ConsoleImporter>();
             RegisterExportedDependency<IFileReader<string>, TextFileReader>();
             RegisterExportedDependency<ITextSplitter, TextSplitter>();
-            RegisterExportedDependency<IInputParser<ImportAssetConsoleInput>, ImportAssetConsoleInput>();
+            RegisterExportedDependency<IInputParser<ImportAssetConsoleInput>, ImportAssetInputParser>();
             RegisterExportedDependency<IFactory<CreateAssetRequest, CsvAsset>, CreateAssetRequestFactory>();
         }
 
