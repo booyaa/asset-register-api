@@ -39,13 +39,13 @@ namespace HomesEngland.Domain
         decimal? OriginalAgencyPercentage { get; set; }
         decimal? StaircasingPercentage { get; set; }
         decimal? NewAgencyPercentage { get; set; }
-        int Invested { get; set; }
+        int? Invested { get; set; }
 
-        int Month { get; set; }
-        int CalendarYear { get; set; }
+        int? Month { get; set; }
+        int? CalendarYear { get; set; }
         string MMYYYY { get; set; }
-        int Row { get; set; }
-        int Column { get; set; }
+        int? Row { get; set; }
+        int? Column { get; set; }
 
         decimal? HPIStart { get; set; }
         decimal? HPIEnd { get; set; }
@@ -88,10 +88,6 @@ namespace HomesEngland.Domain
         decimal? HouseholdFiveKIncomeBand { get; set; }
         decimal? HouseholdFiftyKIncomeBand { get; set; }
         bool? FirstTimeBuyer { get; set; }
-        
-        
-
-        //  Relative property type & tenure adjustment(sale); Relative property type & tenure adjustment(stair); London or not?;Quarter - spend;Mortgage provider; HouseType;Purchase price band;Household Income; Household Income Band(£5k bands); Household Income Band(£50k bands); First-time buyer?
 
 
         int? DifferenceFromImsExpectedCompletionToHopCompletionDate { get; set; }
