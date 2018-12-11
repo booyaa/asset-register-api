@@ -20,6 +20,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             DateTime? imsExpectedCompletionDate = fields.ElementAtOrDefault(16).TryParseDateTimeNullable();
             DateTime? imsLegalCompletionDate = fields.ElementAtOrDefault(17).TryParseDateTimeNullable();
             DateTime? hopCompletionDate = fields.ElementAtOrDefault(18).TryParseDateTimeNullable();
+
             decimal? deposit = fields.ElementAtOrDefault(19).TryParseDecimalNullable();
             decimal? agencyEquityLoan = fields.ElementAtOrDefault(20).TryParseDecimalNullable();
             decimal? developerEquityLoan = fields.ElementAtOrDefault(21).TryParseDecimalNullable();
@@ -27,8 +28,6 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             decimal? developerDiscount = fields.ElementAtOrDefault(23).TryParseDecimalNullable();
             decimal? mortgage = fields.ElementAtOrDefault(24).TryParseDecimalNullable();
             decimal? purchasePrice = fields.ElementAtOrDefault(25).TryParseDecimalNullable();
-
-
 
             decimal? fees = fields.ElementAtOrDefault(26).TryParseDecimalNullable();
             decimal? historicUnallocatedFees = fields.ElementAtOrDefault(27).TryParseDecimalNullable();

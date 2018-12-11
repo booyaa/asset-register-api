@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using HomesEngland.UseCase.GenerateAssets;
 using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.ImportAssets.Models;
 using HomesEngland.UseCase.Models;
@@ -44,9 +43,9 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
                 AssetLines = csvLines
             };
 
-            await _importAssetsUseCase.ExecuteAsync(importAssetsRequest, cancellationTokenSource.Token).ConfigureAwait(false);
+            var response = await _importAssetsUseCase.ExecuteAsync(importAssetsRequest, cancellationTokenSource.Token).ConfigureAwait(false);
 
-            return null;
+            return response?.AssetsImported;
         }
 
         private void ValidateConsoleInput(string[] args)

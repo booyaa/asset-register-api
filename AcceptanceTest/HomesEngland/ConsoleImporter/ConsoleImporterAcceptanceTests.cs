@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 using FluentAssertions;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.UseCase.ImportAssets;
@@ -21,13 +24,15 @@ namespace AssetRegisterTests.HomesEngland.ConsoleImporter
             _classUnderTest = assetRegister.Get<IConsoleImporter>();
         }
 
-        [TestCase(1,"--file",".\\asset-register-1-row.csv", "--delimiter", ";")]
-        [TestCase(5,"--file",".\\asset-register-5-row.csv", "--delimiter", ";")]
-        [TestCase(10,"--file",".\\asset-register-10-row.csv","--delimiter", ";")]
+        [TestCase(1,"--file","asset-register-1-rows.csv", "--delimiter", ";")]
+        [TestCase(5,"--file","asset-register-5-rows.csv", "--delimiter", ";")]
+        [TestCase(10,"--file","asset-register-10-rows.csv","--delimiter", ";")]
         public async Task GivenValidFilePathAndDemiliter_WhenWeCallProcess_ThenWeImportTheCsv(int expectedCount, string fileFlag, string fileValue, string delimiterFlag, string delimiterValue)
         {
             //arrange
-            var args = new[] { fileFlag, fileValue, delimiterFlag, delimiterValue };
+            var directory = Directory.GetCurrentDirectory();
+            var path = Path.Combine(directory,"HomesEngland", "ConsoleImporter", fileValue);
+            var args = new[] { fileFlag, path, delimiterFlag, delimiterValue };
             //act
             var response = await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
             //assert

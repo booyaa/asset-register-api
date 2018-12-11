@@ -8,7 +8,7 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
     {
         public async Task<string> ReadAsync(string absoluteFilePath, CancellationToken cancellationToken)
         {
-            var exists = Directory.Exists(absoluteFilePath);
+            var exists = File.Exists(absoluteFilePath);
             if(!exists)
                 throw new FileNotFoundException(absoluteFilePath);
             var text = await File.ReadAllTextAsync(absoluteFilePath, cancellationToken).ConfigureAwait(false);
