@@ -24,7 +24,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             decimal? deposit = fields.ElementAtOrDefault(19).TryParseDecimalNullable();
             decimal? agencyEquityLoan = fields.ElementAtOrDefault(20).TryParseDecimalNullable();
             decimal? developerEquityLoan = fields.ElementAtOrDefault(21).TryParseDecimalNullable();
-            decimal? shareOfRestrictedEquity = fields.ElementAtOrDefault(22).TryParseDecimalNullable();
+            decimal? shareOfRestrictedEquity = fields.ElementAtOrDefault(22).TryParseDecimalNullable("%");
             decimal? developerDiscount = fields.ElementAtOrDefault(23).TryParseDecimalNullable();
             decimal? mortgage = fields.ElementAtOrDefault(24).TryParseDecimalNullable();
             decimal? purchasePrice = fields.ElementAtOrDefault(25).TryParseDecimalNullable();
@@ -34,22 +34,22 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
 
             decimal? actualAgencyEquityCostIncludingHomeBuyAgentFee = fields.ElementAtOrDefault(28).TryParseDecimalNullable();
             DateTime? fullDisposalDate = fields.ElementAtOrDefault(29).TryParseDateTimeNullable();
-            decimal? originalAgencyPercentage = fields.ElementAtOrDefault(30).TryParseDecimalNullable();
+            decimal? originalAgencyPercentage = fields.ElementAtOrDefault(30).TryParseDecimalNullable("%");
 
-            decimal? staircasingPercentage = fields.ElementAtOrDefault(31).TryParseDecimalNullable();
+            decimal? staircasingPercentage = fields.ElementAtOrDefault(31).TryParseDecimalNullable("%");
 
-            decimal? newAgencyPercentage = fields.ElementAtOrDefault(32).TryParseDecimalNullable();
+            decimal? newAgencyPercentage = fields.ElementAtOrDefault(32).TryParseDecimalNullable("%");
             int? invested = fields.ElementAtOrDefault(33).TryParseIntNullable(); 
             int? month = fields.ElementAtOrDefault(34).TryParseIntNullable(); 
-            int? calendarYear = fields.ElementAtOrDefault(36).TryParseIntNullable(); 
+            int? calendarYear = fields.ElementAtOrDefault(35).TryParseIntNullable(); 
             int? row = fields.ElementAtOrDefault(37).TryParseIntNullable(); 
             int? col = fields.ElementAtOrDefault(38).TryParseIntNullable(); 
 
             decimal? hpiStart = fields.ElementAtOrDefault(39).TryParseDecimalNullable(); 
             decimal? hpiEnd = fields.ElementAtOrDefault(40).TryParseDecimalNullable(); 
-            decimal? hpiPlusMinus = fields.ElementAtOrDefault(41).TryParseDecimalNullable(); 
-            decimal? agencyPercentage = fields.ElementAtOrDefault(42).TryParseDecimalNullable(); 
-            decimal? mortgageEffect = fields.ElementAtOrDefault(43).TryParseDecimalNullable(); 
+            decimal? hpiPlusMinus = fields.ElementAtOrDefault(41).TryParseDecimalNullable("%"); 
+            decimal? agencyPercentage = fields.ElementAtOrDefault(42).TryParseDecimalNullable("%"); 
+            decimal? mortgageEffect = fields.ElementAtOrDefault(43).TryParseDecimalNullable("%"); 
             decimal? remainingAgencyCost = fields.ElementAtOrDefault(44).TryParseDecimalNullable(); 
             decimal? waEstimatedPropertyValue = fields.ElementAtOrDefault(45).TryParseDecimalNullable(); 
             decimal? agencyFairValueDifference = fields.ElementAtOrDefault(46).TryParseDecimalNullable(); 
@@ -117,7 +117,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
                 Invested = invested,
                 Month = month,
                 CalendarYear = calendarYear,
-                MMYYYY = fields.ElementAtOrDefault(35),
+                MMYYYY = fields.ElementAtOrDefault(36),
                 Row = row,
                 Col = col,
                 HPIStart = hpiStart,

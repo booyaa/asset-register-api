@@ -1,6 +1,4 @@
-﻿using System;
-using HomesEngland.UseCase.GenerateAssets;
-using HomesEngland.UseCase.ImportAssets;
+﻿using HomesEngland.UseCase.ImportAssets;
 using Main;
 
 namespace HomesEngland.AssetImporter

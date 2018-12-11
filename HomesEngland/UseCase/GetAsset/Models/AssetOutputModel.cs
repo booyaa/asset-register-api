@@ -14,26 +14,83 @@ namespace HomesEngland.UseCase.GetAsset.Models
         {
             Id = asset.Id;
             ModifiedDateTime = asset.ModifiedDateTime;
-            SchemeId = asset.SchemeId;
 
-            //Identifying Information
+            Programme = asset.Programme;
+            EquityOwner = asset.EquityOwner;
+            SchemeId = asset.SchemeId;
             LocationLaRegionName = asset.LocationLaRegionName;
             ImsOldRegion = asset.ImsOldRegion;
             NoOfBeds = asset.NoOfBeds;
-            //IMS Adress
             Address = asset.Address;
+            PropertyHouseName = asset.PropertyHouseName;
+            PropertyStreetNumber = asset.PropertyStreetNumber;
+            PropertyStreet = asset.PropertyStreet;
+            PropertyTown = asset.PropertyTown;
+            PropertyPostcode = asset.PropertyPostcode;
             DevelopingRslName = asset.DevelopingRslName;
-            //Completion Dates
+            LBHA = asset.LBHA;
             CompletionDateForHpiStart = asset.CompletionDateForHpiStart;
             ImsActualCompletionDate = asset.ImsActualCompletionDate;
             ImsExpectedCompletionDate = asset.ImsExpectedCompletionDate;
             ImsLegalCompletionDate = asset.ImsLegalCompletionDate;
             HopCompletionDate = asset.HopCompletionDate;
-            //Financial Information
             Deposit = asset.Deposit;
             AgencyEquityLoan = asset.AgencyEquityLoan;
             DeveloperEquityLoan = asset.DeveloperEquityLoan;
             ShareOfRestrictedEquity = asset.ShareOfRestrictedEquity;
+            DeveloperDiscount = asset.DeveloperDiscount;
+            Mortgage = asset.Mortgage;
+            PurchasePrice = asset.PurchasePrice;
+            Fees = asset.Fees;
+            HistoricUnallocatedFees = asset.HistoricUnallocatedFees;
+            ActualAgencyEquityCostIncludingHomeBuyAgentFee = asset.ActualAgencyEquityCostIncludingHomeBuyAgentFee;
+            FullDisposalDate = asset.FullDisposalDate;
+            OriginalAgencyPercentage = asset.OriginalAgencyPercentage;
+            StaircasingPercentage = asset.StaircasingPercentage;
+            NewAgencyPercentage = asset.NewAgencyPercentage;
+            Invested = asset.Invested;
+            Month = asset.Month;
+            CalendarYear = asset.CalendarYear;
+            MMYYYY = asset.MMYYYY;
+            Row = asset.Row;
+            Col = asset.Col;
+            HPIStart = asset.HPIStart;
+            HPIEnd = asset.HPIEnd;
+            HPIPlusMinus = asset.HPIPlusMinus;
+            AgencyPercentage = asset.AgencyPercentage;
+            MortgageEffect = asset.MortgageEffect;
+            RemainingAgencyCost = asset.RemainingAgencyCost;
+            WAEstimatedPropertyValue = asset.WAEstimatedPropertyValue;
+            AgencyFairValueDifference = asset.AgencyFairValueDifference;
+            ImpairmentProvision = asset.ImpairmentProvision;
+            FairValueReserve = asset.FairValueReserve;
+            AgencyFairValue = asset.AgencyFairValue;
+            DisposalsCost = asset.DisposalsCost;
+            DurationInMonths = asset.DurationInMonths;
+            MonthOfCompletionSinceSchemeStart = asset.MonthOfCompletionSinceSchemeStart;
+            DisposalMonthSinceCompletion = asset.DisposalMonthSinceCompletion;
+            IMSPaymentDate = asset.IMSPaymentDate;
+            IsPaid = asset.IsPaid;
+            IsAsset = asset.IsAsset;
+            PropertyType = asset.PropertyType;
+            Tenure = asset.Tenure;
+            ExpectedStaircasingRate = asset.ExpectedStaircasingRate;
+            EstimatedSalePrice = asset.EstimatedSalePrice;
+            RegionalSaleAdjust = asset.RegionalSaleAdjust;
+            RegionalStairAdjust = asset.RegionalStairAdjust;
+            NotLimitedByFirstCharge = asset.NotLimitedByFirstCharge;
+            EarlyMortgageIfNeverRepay = asset.EarlyMortgageIfNeverRepay;
+            ArrearsEffectAppliedOrLimited = asset.ArrearsEffectAppliedOrLimited;
+            RelativeSalePropertyTypeAndTenureAdjustment = asset.RelativeSalePropertyTypeAndTenureAdjustment;
+            RelativeStairPropertyTypeAndTenureAdjustment = asset.RelativeStairPropertyTypeAndTenureAdjustment;
+            IsLondon = asset.IsLondon;
+            QuarterSpend = asset.QuarterSpend;
+            MortgageProvider = asset.MortgageProvider;
+            HouseType = asset.HouseType;
+            PurchasePriceBand = asset.PurchasePriceBand;
+            HouseholdFiveKIncomeBand = asset.HouseholdFiveKIncomeBand;
+            HouseholdFiftyKIncomeBand = asset.HouseholdFiftyKIncomeBand;
+            FirstTimeBuyer = asset.FirstTimeBuyer;
         }
 
         public string Programme { get; set; }
