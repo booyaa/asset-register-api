@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using HomesEngland.Domain.Factory;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.CreateAsset.Models.Factory;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.Domain
@@ -133,6 +135,63 @@ namespace HomesEnglandTest.Domain
             asset.FirstTimeBuyer.Should().NotBeNull();
     }
 
+        [TestCase("Help to buy")]
+        [TestCase("")]
+        public void GivenProgramme_ThenAssetHasFieldPopulatedCorrectly(string input)
+        {
+            var asset = CreateAssetRequestForColumn(input, 0);
+
+            asset.Programme.Should().BeEquivalentTo(input);
+        }
+        
+        [TestCase("Homes England")]
+        [TestCase("")]
+        public void GivenEquityOwner_ThenAssetHasFieldPopulatedCorrectly(string input)
+        {
+            var asset = CreateAssetRequestForColumn(input, 1);
+
+            asset.EquityOwner.Should().BeEquivalentTo(input);
+        }
+        
+        [TestCase("1001", 1001)]
+        [TestCase("2002", 2002)]
+        public void GivenSchemeID_ThenAssetHasFieldPopulatedCorrectly(string input, int expectedSchemeId)
+        {
+            var asset = CreateAssetRequestForColumn(input, 2);
+
+            asset.SchemeId.Should().Be(expectedSchemeId);
+        }
+        
+        [TestCase("LocationLAOne")]
+        [TestCase("LocationLATwo")]
+        public void GivenLocationLARegionName_ThenAssetHasFieldPopulatedCorrectly(string input)
+        {
+            var asset = CreateAssetRequestForColumn(input, 3);
+
+            asset.LocationLaRegionName.Should().BeEquivalentTo(input);
+        }
+        
+        private CreateAssetRequest CreateAssetRequestForColumn(string input, int csvColumn)
+        {
+            List<string> values = new List<string>();
+            for (int i = 0; i < 100; i++)
+            {
+                values.Add("");
+            }
+
+            values[csvColumn] = input;
+
+            var csvAsset = new CsvAsset
+            {
+                CsvLine = String.Join(";", values),
+                Delimiter = ";"
+            };
+
+            var asset = _classUnderTest.Create(csvAsset);
+            return asset;
+        }
+
+        [Ignore("Meow")]
         [TestCase(";", "Help to Buy;Homes England;583417;Midlands;West Midlands; 2 ; Primrose Gardens Plot 14 30 Mews Mews Netherton  Dudley DY2 9LD ; Primrose Gardens Plot 14 ; 30 ; Mews Mews ; Cat Town, DogVille ; DY2 9LD ; Taylor Wimpey ; Orbit Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; 1000 ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Halifax;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
         [TestCase(";", "Old Scheme ;Homes England;583417;Midlands;West Midlands; 2 ; Primrose Gardens Plot 14 30 Mews Mews Netherton  Dudley DY2 9LD ; Primrose Gardens Plot 14 ; 30 ; Mews Mews ; Cat Town, DogVille ; DY2 9LD ; Taylor Wimpey ; Orbit Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; 1000 ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Halifax;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
         [TestCase(";", "Help to Buy;Homes England;583417;Midlands;West Midlands; 2 ; Primrose Gardens Plot 14 30 Mews Mews Netherton  Dudley DY2 9LD ; Primrose Gardens Plot 14 ; 30 ; Mews Mews ; Cat Town, DogVille ; DY2 9LD ; Taylor Wimpey ; Orbit Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; 1000 ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Halifax;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]

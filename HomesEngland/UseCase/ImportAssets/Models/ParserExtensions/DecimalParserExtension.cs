@@ -1,23 +1,28 @@
-﻿namespace HomesEngland.UseCase.ImportAssets.Models.ParserExtensions
+﻿using System;
+
+namespace HomesEngland.UseCase.ImportAssets.Models.ParserExtensions
 {
     public static class DecimalParserExtension
     {
         public static decimal? TryParseDecimalNullable(this string str, string strip = "")
         {
-            decimal? value = null;
+            if (str == null) return null;
+            
             try
             {
-                if (!string.IsNullOrEmpty(str) && !string.IsNullOrWhiteSpace(str))
-                {
-                    if(!string.IsNullOrEmpty(strip) && !string.IsNullOrWhiteSpace(strip))
-                        str = str.Replace(strip, "");
-                    value = decimal.Parse(str);
-                }
-                    
-            }
-            catch { }
+                bool isNegative = str.StartsWith("(") && str.EndsWith(")");
+                str = str.Replace("(", "");
+                str = str.Replace(")", "");
+                str = str.Replace("%", "");
+                decimal? value = Convert.ToDecimal(str);
+                if (isNegative) value *= -1;
 
-            return value;
+                return value;
+            }
+            catch (FormatException)
+            {
+                return null;
+            }
         }
     }
 }
