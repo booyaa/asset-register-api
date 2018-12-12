@@ -9,10 +9,10 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
     {
         public CreateAssetRequest Create(CsvAsset csvAsset)
         {
-            if (csvAsset == null || string.IsNullOrEmpty(csvAsset.CsvLine) ||
-                string.IsNullOrWhiteSpace(csvAsset.CsvLine) || string.IsNullOrWhiteSpace(csvAsset.Delimiter) ||
-                string.IsNullOrEmpty(csvAsset.Delimiter))
+            if (CsvAssetInvalid(csvAsset))
+            {
                 return null;
+            }
 
             var fields = csvAsset?.CsvLine?.Split(csvAsset.Delimiter);
             int.TryParse(fields.ElementAtOrDefault(2), out var schemeId);
@@ -168,6 +168,13 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
                 FirstTimeBuyer = firstTimeBuyer
             };
             return createAssetRequest;
+        }
+
+        private static bool CsvAssetInvalid(CsvAsset csvAsset)
+        {
+            return csvAsset == null || string.IsNullOrEmpty(csvAsset.CsvLine) ||
+                   string.IsNullOrWhiteSpace(csvAsset.CsvLine) || string.IsNullOrWhiteSpace(csvAsset.Delimiter) ||
+                   string.IsNullOrEmpty(csvAsset.Delimiter);
         }
 
         private bool ParseIsPaid(string isPaid)
