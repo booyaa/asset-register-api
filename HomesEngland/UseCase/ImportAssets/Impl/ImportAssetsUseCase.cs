@@ -16,13 +16,13 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
     public class ImportAssetsUseCase : IImportAssetsUseCase
     {
         private readonly ICreateAssetUseCase _createAssetUseCase;
-        private readonly IFactory<CreateAssetRequest, CsvAsset> _createAssetFactory;
+        private readonly IFactory<CreateAssetRequest, CsvAsset> _createAssetRequestFactory;
 
         public ImportAssetsUseCase(ICreateAssetUseCase createAssetUseCase,
-            IFactory<CreateAssetRequest, CsvAsset> createAssetFactory)
+            IFactory<CreateAssetRequest, CsvAsset> createAssetRequestFactory)
         {
             _createAssetUseCase = createAssetUseCase;
-            _createAssetFactory = createAssetFactory;
+            _createAssetRequestFactory = createAssetRequestFactory;
         }
 
         public async Task<ImportAssetsResponse> ExecuteAsync(ImportAssetsRequest request,
@@ -53,7 +53,7 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
                 Delimiter = request.Delimiter
             };
 
-            CreateAssetRequest createAssetRequest = _createAssetFactory.Create(csvAsset);
+            CreateAssetRequest createAssetRequest = _createAssetRequestFactory.Create(csvAsset);
 
             var createdAsset = await _createAssetUseCase.ExecuteAsync(createAssetRequest, cancellationToken)
                 .ConfigureAwait(false);
