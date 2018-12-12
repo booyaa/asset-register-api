@@ -186,7 +186,7 @@ namespace HomesEnglandTest.Domain
 
             asset.IsPaid.Should().Be(expectedIsPaid);
         }
-        
+
         [TestCase("Asset", true)]
         [TestCase("  Asset  ", true)]
         [TestCase("AsSeT", true)]
@@ -198,7 +198,7 @@ namespace HomesEnglandTest.Domain
 
             asset.IsAsset.Should().Be(expectedIsAsset);
         }
-        
+
         [TestCase("Non-London", false)]
         [TestCase("  Non-London  ", false)]
         [TestCase("  NoN-lOnDoN  ", false)]
@@ -210,7 +210,7 @@ namespace HomesEnglandTest.Domain
 
             asset.IsLondon.Should().Be(expectedIsLondon);
         }
-        
+
         [TestCase("Y", true)]
         [TestCase("  Y  ", true)]
         [TestCase("y", true)]
@@ -222,7 +222,7 @@ namespace HomesEnglandTest.Domain
 
             asset.FirstTimeBuyer.Should().Be(expectedIsFirstTimeBuyer);
         }
-        
+
 
         private CreateAssetRequest CreateAssetRequestForColumn(string input, int csvColumn)
         {
@@ -245,7 +245,7 @@ namespace HomesEnglandTest.Domain
         }
 
         [TestCase(";",
-            "Help to Buy;Homes England;583417;Midlands;West Midlands; 2 ; Primrose Gardens Plot 14 30 Mews Mews Netherton  Dudley DY2 9LD ; Primrose Gardens Plot 14 ; 30 ; Mews Mews ; Cat Town, DogVille ; DY2 9LD ; Taylor Wimpey ; Orbit Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;27-Jul-13;26-Jul-13; 7,350 ; 29,400 ; 1000 ;100%; 2 ; 110,250 ; 147,000 ; 600 ; 10,000 ; 30,000 ;15-May-17;20.0000%; 20.0% ;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Halifax;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
+            "Help to Buy;Homes England;583417;Midlands;West Midlands; 2 ; Primrose Gardens Plot 14 30 Mews Mews Netherton  Dudley DY2 9LD ; Primrose Gardens Plot 14 ; 30 ; Mews Mews ; Cat Town, DogVille ; DY2 9LD ; Taylor Wimpey ; Orbit Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;27-Jul-13;26-Jul-13; 7,350 ; 29,400 ; 1000 ;100%; 2 ; 110,250 ; 147,000 ; 600 ; 10,000 ; 30,000 ;15-May-17;20.0000%; 20.0% ;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;10 ;20 ;30 ;40 ;50 ;60 ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Halifax;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
         public void GivenValidInput_WhenWeCallCreate_ThenAssetHasFieldsPopulatedInOrder(string delimiter,
             string csvLine)
         {
@@ -296,45 +296,47 @@ namespace HomesEnglandTest.Domain
             asset.Invested.Should().Be(0);
             asset.Month.Should().Be(7);
             asset.CalendarYear.Should().Be(2013);
-            asset.MMYYYY.Should().Be("MMYYYY");
-            asset.Row.Should().Be(123);
-            asset.Col.Should().Be(123);
-            asset.HPIStart.Should().Be(123);
-            asset.HPIEnd.Should().Be(123);
-            asset.HPIPlusMinus.Should().Be(123);
-            asset.AgencyPercentage.Should().Be(123);
-            asset.MortgageEffect.Should().Be(123);
-            asset.RemainingAgencyCost.Should().Be(123);
-            asset.WAEstimatedPropertyValue.Should().Be(123);
-            asset.AgencyFairValueDifference.Should().Be(123);
-            asset.ImpairmentProvision.Should().Be(123);
-            asset.FairValueReserve.Should().Be(123);
-            asset.AgencyFairValue.Should().Be(123);
-            asset.DisposalsCost.Should().Be(123);
-            asset.DurationInMonths.Should().Be(123);
-            asset.MonthOfCompletionSinceSchemeStart.Should().Be(123);
-            asset.DisposalMonthSinceCompletion.Should().Be(123);
-            asset.IMSPaymentDate.Should().Be(DateTime.Now);
+            asset.MMYYYY.Should().Be("7/2013");
+            asset.Row.Should().Be(99);
+            asset.Col.Should().Be(13);
+            asset.HPIStart.Should().Be((decimal) 94.7);
+            asset.HPIEnd.Should().Be((decimal) 125.4);
+            asset.HPIPlusMinus.Should().Be((decimal) 32.4);
+            asset.AgencyPercentage.Should().Be(20);
+            asset.MortgageEffect.Should().Be(0);
+            asset.RemainingAgencyCost.Should().Be(10);
+            asset.WAEstimatedPropertyValue.Should().Be(20);
+            asset.AgencyFairValueDifference.Should().Be(30);
+            asset.ImpairmentProvision.Should().Be(40);
+            asset.FairValueReserve.Should().Be(50);
+            asset.AgencyFairValue.Should().Be(60);
+            asset.DisposalsCost.Should().Be(-30000);
+            asset.DurationInMonths.Should().Be(63);
+            asset.MonthOfCompletionSinceSchemeStart.Should().Be(3);
+            asset.DisposalMonthSinceCompletion.Should().Be(46);
+            asset.IMSPaymentDate.Should().Be(DateTime.Parse("11-Sep-13"));
             asset.IsPaid.Should().Be(true);
             asset.IsAsset.Should().Be(true);
-            asset.PropertyType.Should().Be("Property type");
-            asset.Tenure.Should().Be("Tenure");
-            asset.ExpectedStaircasingRate.Should().Be(123);
-            asset.EstimatedSalePrice.Should().Be(123);
-            asset.RegionalSaleAdjust.Should().Be(123);
-            asset.RegionalStairAdjust.Should().Be(123);
-            asset.NotLimitedByFirstCharge.Should().Be(true);
-            asset.EarlyMortgageIfNeverRepay.Should().Be(123);
-            asset.ArrearsEffectAppliedOrLimited.Should().Be("Yes?");
-            asset.RelativeSalePropertyTypeAndTenureAdjustment.Should().Be(123);
-            asset.RelativeStairPropertyTypeAndTenureAdjustment.Should().Be(123);
-            asset.IsLondon.Should().Be(true);
-            asset.QuarterSpend.Should().Be(123);
-            asset.MortgageProvider.Should().Be("Mortgage provider");
-            asset.HouseType.Should().Be("House type");
-            asset.PurchasePriceBand.Should().Be(123);
-            asset.HouseholdFiveKIncomeBand.Should().Be(123);
-            asset.HouseholdFiftyKIncomeBand.Should().Be(123);
+            asset.PropertyType.Should().Be("Semi-detached");
+            asset.Tenure.Should().Be("Freehold");
+            asset.ExpectedStaircasingRate.Should().Be(42);
+            asset.EstimatedSalePrice.Should().Be(179332);
+            // Esimated valueation 
+            asset.RegionalSaleAdjust.Should().Be((decimal) -7.84);
+            asset.RegionalStairAdjust.Should().Be((decimal) -9.07);
+            asset.NotLimitedByFirstCharge.Should().Be(false);
+            asset.EarlyMortgageIfNeverRepay.Should().Be(0);
+            asset.ArrearsEffectAppliedOrLimited.Should().Be("");
+            asset.RelativeSalePropertyTypeAndTenureAdjustment.Should().Be(0);
+            asset.RelativeStairPropertyTypeAndTenureAdjustment.Should().Be(0);
+            asset.IsLondon.Should().Be(false);
+            asset.QuarterSpend.Should().Be(2);
+            asset.MortgageProvider.Should().Be("Halifax");
+            asset.HouseType.Should().Be("Semi-detached");
+            asset.PurchasePriceBand.Should().Be(200000);
+            // Household income
+            asset.HouseholdFiveKIncomeBand.Should().Be(30000);
+            asset.HouseholdFiftyKIncomeBand.Should().Be(50000);
             asset.FirstTimeBuyer.Should().Be(true);
         }
     }
