@@ -321,7 +321,7 @@ namespace HomesEnglandTest.Domain
             asset.Tenure.Should().Be("Freehold");
             asset.ExpectedStaircasingRate.Should().Be(42);
             asset.EstimatedSalePrice.Should().Be(179332);
-            // Esimated valueation 
+            asset.EstimatedValuation.Should().Be(176939);
             asset.RegionalSaleAdjust.Should().Be((decimal) -7.84);
             asset.RegionalStairAdjust.Should().Be((decimal) -9.07);
             asset.NotLimitedByFirstCharge.Should().Be(false);

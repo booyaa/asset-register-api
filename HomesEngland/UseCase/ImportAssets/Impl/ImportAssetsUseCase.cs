@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,51 +17,47 @@ namespace HomesEngland.UseCase.ImportAssets.Impl
     {
         private readonly ICreateAssetUseCase _createAssetUseCase;
         private readonly IFactory<CreateAssetRequest, CsvAsset> _createAssetFactory;
-        private readonly ILogger<IImportAssetsUseCase> _logger;
 
-        public ImportAssetsUseCase(ICreateAssetUseCase createAssetUseCase, IFactory<CreateAssetRequest, CsvAsset> createAssetFactory,ILogger<IImportAssetsUseCase> logger)
+        public ImportAssetsUseCase(ICreateAssetUseCase createAssetUseCase,
+            IFactory<CreateAssetRequest, CsvAsset> createAssetFactory)
         {
             _createAssetUseCase = createAssetUseCase;
             _createAssetFactory = createAssetFactory;
-            _logger = logger;
         }
 
-        public async Task<ImportAssetsResponse> ExecuteAsync(ImportAssetsRequest request, CancellationToken cancellationToken)
+        public async Task<ImportAssetsResponse> ExecuteAsync(ImportAssetsRequest request,
+            CancellationToken cancellationToken)
         {
-            var importedAssets = await ImportAssets(request, cancellationToken);
-
-            var importResponse = new ImportAssetsResponse
+            ImportAssetsResponse response = new ImportAssetsResponse
             {
-                AssetsImported = importedAssets
+                AssetsImported = new List<AssetOutputModel>()
             };
-            return importResponse;
-        }
 
-        private async Task<IList<AssetOutputModel>> ImportAssets(ImportAssetsRequest request, CancellationToken cancellationToken)
-        {
-            IList<AssetOutputModel> importedAssets = new List<AssetOutputModel>();
-            for (int i = 0; i < request?.AssetLines?.Count; i++)
+            foreach (var requestAssetLine in request.AssetLines)
             {
-                var createAssetRequest = CreateAssetRequest(request, i);
+                var createdAsset = await CreateAssetForLine(request, cancellationToken, requestAssetLine);
 
-                var response = await _createAssetUseCase.ExecuteAsync(createAssetRequest, cancellationToken).ConfigureAwait(false);
-
-                _logger.LogInformation($"Record: Imported {i} of {request?.AssetLines.Count}");
-                importedAssets.Add(response?.Asset);
+                response.AssetsImported.Add(createdAsset.Asset);
             }
 
-            return importedAssets;
+            return response;
         }
 
-        private CreateAssetRequest CreateAssetRequest(ImportAssetsRequest request, int i)
+        private async Task<CreateAssetResponse> CreateAssetForLine(ImportAssetsRequest request,
+            CancellationToken cancellationToken,
+            string requestAssetLine)
         {
-            var csvAsset = new CsvAsset
+            CsvAsset csvAsset = new CsvAsset
             {
-                Delimiter = request.Delimiter,
-                CsvLine = request.AssetLines.ElementAtOrDefault(i)
+                CsvLine = requestAssetLine,
+                Delimiter = request.Delimiter
             };
-            var createAssetRequest = _createAssetFactory.Create(csvAsset);
-            return createAssetRequest;
+
+            CreateAssetRequest createAssetRequest = _createAssetFactory.Create(csvAsset);
+
+            var createdAsset = await _createAssetUseCase.ExecuteAsync(createAssetRequest, cancellationToken)
+                .ConfigureAwait(false);
+            return createdAsset;
         }
     }
 }

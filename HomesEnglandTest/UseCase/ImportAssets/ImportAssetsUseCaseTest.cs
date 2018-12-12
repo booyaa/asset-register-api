@@ -6,11 +6,14 @@ using HomesEngland.Domain.Factory;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Models;
 using HomesEngland.UseCase.CreateAsset.Models.Factory;
+using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.ImportAssets;
 using HomesEngland.UseCase.ImportAssets.Impl;
 using HomesEngland.UseCase.ImportAssets.Models;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Moq;
+using NSubstitute.Exceptions;
 using NUnit.Framework;
 
 namespace HomesEnglandTest.UseCase.ImportAssets
@@ -20,68 +23,181 @@ namespace HomesEnglandTest.UseCase.ImportAssets
     {
         public IImportAssetsUseCase _classUnderTest;
         public Mock<ICreateAssetUseCase> _mockCreateAssetUseCase;
-        public Mock<ILogger<IImportAssetsUseCase>> _mockLogger;
-        public IFactory<CreateAssetRequest, CsvAsset> _createAssetFactory;
+        public Mock<IFactory<CreateAssetRequest, CsvAsset>> _mockCreateAssetFactory;
+
         [SetUp]
         public void Setup()
         {
             _mockCreateAssetUseCase = new Mock<ICreateAssetUseCase>();
-            _mockLogger = new Mock<ILogger<IImportAssetsUseCase>>();
-            _createAssetFactory = new CreateAssetRequestFactory();
-            _classUnderTest = new ImportAssetsUseCase(_mockCreateAssetUseCase.Object, _createAssetFactory, _mockLogger.Object);
+            _mockCreateAssetFactory = new Mock<IFactory<CreateAssetRequest, CsvAsset>>();
+            _classUnderTest = new ImportAssetsUseCase(_mockCreateAssetUseCase.Object, _mockCreateAssetFactory.Object);
         }
 
-        [TestCase("Old Scheme; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        [TestCase("Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        public async Task GivenValidInput_ThenWeCallCreateAssetUseCaseOnce(string csvLine)
+        private void StubCreateAssetUseCase()
         {
-            //arrange
-            var request = new ImportAssetsRequest
+            var createAssetResponse = new CreateAssetResponse
             {
-                AssetLines = new List<string> {csvLine}
+                Asset = new AssetOutputModel
+                {
+                    Address = "Test"
+                }
             };
-            //act
-            var response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
-            
-            //assert
-            _mockCreateAssetUseCase.Verify(v=> v.ExecuteAsync(It.IsAny<CreateAssetRequest>(),It.IsAny<CancellationToken>()));
+
+            _mockCreateAssetUseCase
+                .Setup(s => s.ExecuteAsync(It.IsAny<CreateAssetRequest>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(createAssetResponse);
         }
 
-        [TestCase(1, "Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        [TestCase(2, "Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y \nHelp to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        [TestCase(3, "Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y \nHelp to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y \nHelp to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        public async Task GivenValidInput_ThenWeCallCreateAssetUseCaseXTimes(int executionCount, string multipleCsvLines)
+        private void StubCreateAssetUseCaseWithAddress(string address)
         {
-            //arrange
-            var csvLines = multipleCsvLines.Split("\n");
-            var request = new ImportAssetsRequest
+            var assetResponse = new CreateAssetResponse
             {
-                AssetLines = csvLines
+                Asset = new AssetOutputModel
+                {
+                    Address = address
+                }
             };
-            //act
-            var response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
 
-            //assert
-            _mockCreateAssetUseCase.Verify(v => v.ExecuteAsync(It.IsAny<CreateAssetRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(executionCount));
+            _mockCreateAssetUseCase
+                .Setup(s => s.ExecuteAsync(It.Is<CreateAssetRequest>(req => req.Address.Equals(address)),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(assetResponse);
         }
 
-        [TestCase(1, "Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        [TestCase(2, "Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y \nHelp to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        [TestCase(3, "Help to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y \nHelp to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y \nHelp to Buy; Homes England;583417;Midlands;West Midlands; 2 ; Kew Gardens Plot 2000 1000 Mews Mews Netherton  Dudley DY2 9YY ; Kew Gardens Plot 14 ; 1000 ; Mews Mews ; Cat Town, DogVille ; DY2 9YY ; John Smith ; Property Development Group Limited ;26-Jul-13;2-Sep-13;26-Jul-13;#N/A;26-Jul-13; 7,350 ; 29,400 ; - ;100%; - ; 110,250 ; 147,000 ; 600 ; - ; 30,000 ;15-May-17;20.0000%;;0.0000%;0;7;2013;7/2013;99;13;94.7;125.4;32.4%;20.0%;0.000%;- ;- ;- ;- ;- ;- ;(30,000.00);63;3;46;11-Sep-13;Paid;Asset;Semi-detached;Freehold;42%; 179,332 ; 176,939 ;-7.84%;-9.07%;;0.00%;;0.00%;0.00%;Non-London;2;Building Society 2;Semi-detached; 200,000 ; 28,842 ; 30,000 ; 50,000 ; Y ")]
-        public async Task GivenValidInput_ThenXAssetsAreReturned(int executionCount, string multipleCsvLines)
+        private void StubFactoryWithAddress(string csvLine, string address)
         {
-            //arrange
-            var csvLines = multipleCsvLines.Split("\n");
-            var request = new ImportAssetsRequest
+            var factoryResponse = new CreateAssetRequest
             {
-                AssetLines = csvLines
+                Address = address
             };
-            //act
-            var response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
 
-            //assert
-            response.Should().NotBeNull();
-            response.AssetsImported.Count.Should().Be(executionCount);
+            _mockCreateAssetFactory.Setup(s => s.Create(It.Is<CsvAsset>(req => req.CsvLine.Equals(csvLine))))
+                .Returns(factoryResponse);
+        }
+
+
+        public class GivenSingleInput : ImportAssetsUseCaseTest
+        {
+            [TestCase("Meow")]
+            [TestCase("Woof")]
+            public async Task ThenCallTheFactoryWithTheCorrectInput(string input)
+            {
+                StubCreateAssetUseCase();
+
+                var request = new ImportAssetsRequest
+                {
+                    AssetLines = new List<string> {input}
+                };
+
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
+
+                _mockCreateAssetFactory.Verify(v => v.Create(It.Is<CsvAsset>(req => req.CsvLine == input)));
+            }
+
+            [TestCase(";")]
+            [TestCase(",")]
+            public async Task ThenCallTheFactoryWithTheCorrectDelimiter(string delimiter)
+            {
+                StubCreateAssetUseCase();
+
+                var request = new ImportAssetsRequest
+                {
+                    AssetLines = new List<string> {"Test"},
+                    Delimiter = delimiter
+                };
+
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
+
+                _mockCreateAssetFactory.Verify(v => v.Create(It.Is<CsvAsset>(req => req.Delimiter == delimiter)));
+            }
+
+            [TestCase("Meow")]
+            [TestCase("Woof")]
+            public async Task ThenCallTheCreateAssetUseCaseWithTheResultFromTheFactory(string input)
+            {
+                StubCreateAssetUseCase();
+                StubFactoryWithAddress(input, input);
+
+                var request = new ImportAssetsRequest
+                {
+                    AssetLines = new List<string> {input}
+                };
+
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
+
+                _mockCreateAssetUseCase.Verify(v =>
+                    v.ExecuteAsync(It.Is<CreateAssetRequest>(req => req.Address.Equals(input)),
+                        It.IsAny<CancellationToken>()));
+            }
+
+            [TestCase("Meow")]
+            [TestCase("Woof")]
+            public async Task ThenReturnTheCreatedAssets(string input)
+            {
+                var createAssetResponse = new CreateAssetResponse
+                {
+                    Asset = new AssetOutputModel
+                    {
+                        Address = input
+                    }
+                };
+
+                _mockCreateAssetUseCase
+                    .Setup(s => s.ExecuteAsync(It.IsAny<CreateAssetRequest>(), It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(createAssetResponse);
+
+                var request = new ImportAssetsRequest
+                {
+                    AssetLines = new List<string> {input}
+                };
+
+                var results = await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
+
+                var createdAsset = results.AssetsImported[0];
+
+                createdAsset.Address.Should().BeEquivalentTo(input);
+            }
+        }
+
+        public class GivenTwoLines : ImportAssetsUseCaseTest
+        {
+            [TestCase("Meow", "Woof")]
+            public async Task ThenWeCallTheFactoryWithTheInputs(string inputOne, string inputTwo)
+            {
+                StubCreateAssetUseCase();
+
+                var request = new ImportAssetsRequest
+                {
+                    AssetLines = new List<string> {inputOne, inputTwo}
+                };
+
+                await _classUnderTest.ExecuteAsync(request, CancellationToken.None).ConfigureAwait(false);
+
+                _mockCreateAssetFactory.Verify(v => v.Create(It.Is<CsvAsset>(req => req.CsvLine == inputOne)));
+                _mockCreateAssetFactory.Verify(v => v.Create(It.Is<CsvAsset>(req => req.CsvLine == inputTwo)));
+            }
+
+            [TestCase("Meow", "Woof")]
+            public async Task ThenWeReturnAListOfTheCreatedAssets(string inputOne, string inputTwo)
+            {
+                StubCreateAssetUseCaseWithAddress(inputOne);
+                StubFactoryWithAddress(inputOne, inputOne);
+                StubCreateAssetUseCaseWithAddress(inputTwo);
+                StubFactoryWithAddress(inputTwo, inputTwo);
+
+                var request = new ImportAssetsRequest
+                {
+                    AssetLines = new List<string> {inputOne, inputTwo}
+                };
+
+                var response = await _classUnderTest.ExecuteAsync(request, CancellationToken.None)
+                    .ConfigureAwait(false);
+
+                var createdAssets = response.AssetsImported;
+
+                createdAssets[0].Address.Should().BeEquivalentTo(inputOne);
+                createdAssets[1].Address.Should().BeEquivalentTo(inputTwo);
+            }
         }
     }
 }

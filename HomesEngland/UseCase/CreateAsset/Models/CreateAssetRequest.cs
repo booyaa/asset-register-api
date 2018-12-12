@@ -67,6 +67,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models
         public string Tenure { get; set; }
         public decimal? ExpectedStaircasingRate { get; set; }
         public decimal? EstimatedSalePrice { get; set; }
+        public decimal? EstimatedValuation { get; set; }
         public decimal? RegionalSaleAdjust { get; set; }
         public decimal? RegionalStairAdjust { get; set; }
         public bool? NotLimitedByFirstCharge { get; set; }

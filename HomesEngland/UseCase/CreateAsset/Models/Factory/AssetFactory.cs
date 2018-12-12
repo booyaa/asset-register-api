@@ -69,7 +69,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             bool? isAsset = ParseIsAsset(fields.ElementAtOrDefault(56));
             decimal? expectedStaircasingRate = fields.ElementAtOrDefault(59).TryParseDecimalNullable();
             decimal? estimatedSalePrice = fields.ElementAtOrDefault(60).TryParseDecimalNullable();
-            // estimated valuation
+            decimal? estimatedValuation = fields.ElementAtOrDefault(61).TryParseDecimalNullable();
             decimal? regionalSaleAdjust = fields.ElementAtOrDefault(62).TryParseDecimalNullable();
             decimal? regionalStairAdjust = fields.ElementAtOrDefault(63).TryParseDecimalNullable();
             bool? notLimitedByFirstCharge = ParseNotLimitedByFirstCharge(fields.ElementAtOrDefault(64));
@@ -150,6 +150,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
                 Tenure = fields.ElementAtOrDefault(58),
                 ExpectedStaircasingRate = expectedStaircasingRate,
                 EstimatedSalePrice = estimatedSalePrice,
+                EstimatedValuation = estimatedValuation,
                 RegionalSaleAdjust = regionalSaleAdjust,
                 RegionalStairAdjust = regionalStairAdjust,
                 NotLimitedByFirstCharge = notLimitedByFirstCharge,
