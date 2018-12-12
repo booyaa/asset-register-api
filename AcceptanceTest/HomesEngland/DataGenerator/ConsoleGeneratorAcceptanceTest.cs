@@ -61,7 +61,8 @@ namespace AssetRegisterTests.HomesEngland.DataGenerator
         {
             var record = await _searchAssetUseCase.ExecuteAsync(new SearchAssetRequest
             {
-                SchemeId = generatedAsset?.SchemeId
+                SchemeId = generatedAsset?.SchemeId,
+                
             }, CancellationToken.None).ConfigureAwait(false);
             return record.Assets.ElementAtOrDefault(0);
         }

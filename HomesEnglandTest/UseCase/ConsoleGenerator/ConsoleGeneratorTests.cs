@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.UseCase.GenerateAssets;
+using HomesEngland.UseCase.GenerateAssets.Impl;
 using HomesEngland.UseCase.GenerateAssets.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using HomesEngland.UseCase.Models;
 
 namespace HomesEnglandTest.UseCase.ConsoleGenerator
 {
@@ -13,9 +14,10 @@ namespace HomesEnglandTest.UseCase.ConsoleGenerator
     public class ConsoleGeneratorTests
     {
         private IConsoleGenerator _classUnderTest;
-        private IInputParser _inputParser;
+        private IInputParser<GenerateAssetsRequest> _inputParser;
         private Mock<IGenerateAssetsUseCase> _mockGenerateAssetUseCase;
         private Mock<ILogger<ConsoleAssetGenerator>> _mockLogger;
+
         [SetUp]
         public void Setup()
         {
