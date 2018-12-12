@@ -135,8 +135,7 @@ namespace TestHelper
                 readAsset.PurchasePrice.Equals(entity.PurchasePrice) &&
                 readAsset.Fees.Equals(entity.Fees) &&
                 readAsset.HistoricUnallocatedFees.Equals(entity.HistoricUnallocatedFees) &&
-                readAsset.ActualAgencyEquityCostIncludingHomeBuyAgentFee.Equals(entity
-                    .ActualAgencyEquityCostIncludingHomeBuyAgentFee) &&
+                readAsset.ActualAgencyEquityCostIncludingHomeBuyAgentFee.Equals(entity.ActualAgencyEquityCostIncludingHomeBuyAgentFee) &&
                 readAsset.FullDisposalDate.Equals(entity.FullDisposalDate.Value) &&
                 readAsset.OriginalAgencyPercentage.Equals(entity.OriginalAgencyPercentage) &&
                 readAsset.StaircasingPercentage.Equals(entity.StaircasingPercentage) &&
@@ -174,10 +173,8 @@ namespace TestHelper
                 readAsset.NotLimitedByFirstCharge.Equals(entity.NotLimitedByFirstCharge) &&
                 readAsset.EarlyMortgageIfNeverRepay.Equals(entity.EarlyMortgageIfNeverRepay) &&
                 readAsset.ArrearsEffectAppliedOrLimited.Equals(entity.ArrearsEffectAppliedOrLimited) &&
-                readAsset.RelativeSalePropertyTypeAndTenureAdjustment.Equals(entity
-                    .RelativeSalePropertyTypeAndTenureAdjustment) &&
-                readAsset.RelativeStairPropertyTypeAndTenureAdjustment.Equals(entity
-                    .RelativeStairPropertyTypeAndTenureAdjustment) &&
+                readAsset.RelativeSalePropertyTypeAndTenureAdjustment.Equals(entity.RelativeSalePropertyTypeAndTenureAdjustment) &&
+                readAsset.RelativeStairPropertyTypeAndTenureAdjustment.Equals(entity.RelativeStairPropertyTypeAndTenureAdjustment) &&
                 readAsset.IsLondon.Equals(entity.IsLondon) &&
                 readAsset.QuarterSpend.Equals(entity.QuarterSpend) &&
                 readAsset.MortgageProvider.Equals(entity.MortgageProvider) &&
