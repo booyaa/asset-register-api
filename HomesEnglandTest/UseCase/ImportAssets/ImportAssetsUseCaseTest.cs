@@ -27,6 +27,7 @@ namespace HomesEnglandTest.UseCase.ImportAssets
         {
             _mockCreateAssetUseCase = new Mock<ICreateAssetUseCase>();
             _mockLogger = new Mock<ILogger<IImportAssetsUseCase>>();
+            _createAssetFactory = new CreateAssetRequestFactory();
             _classUnderTest = new ImportAssetsUseCase(_mockCreateAssetUseCase.Object, _createAssetFactory, _mockLogger.Object);
         }
 
