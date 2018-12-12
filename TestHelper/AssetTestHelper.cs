@@ -107,24 +107,85 @@ namespace TestHelper
         public static bool AssetIsEqual(this IAsset readAsset, CreateAssetRequest entity)
         {
             return
-                
+                readAsset.Programme.Equals(entity.Programme) &&
+                readAsset.EquityOwner.Equals(entity.EquityOwner) &&
+                readAsset.SchemeId.Equals(entity.SchemeId) &&
+                readAsset.LocationLaRegionName.Equals(entity.LocationLaRegionName) &&
+                readAsset.ImsOldRegion.Equals(entity.ImsOldRegion) &&
+                readAsset.NoOfBeds.Equals(entity.NoOfBeds) &&
                 readAsset.Address.Equals(entity.Address) &&
-                readAsset.AgencyEquityLoan.Equals(entity.AgencyEquityLoan) &&
-                readAsset.CompletionDateForHpiStart.Equals(entity.CompletionDateForHpiStart.Value) &&
-                readAsset.Deposit.Equals(entity.Deposit) &&
-                readAsset.DeveloperEquityLoan.Equals(entity.DeveloperEquityLoan) &&
+                readAsset.PropertyHouseName.Equals(entity.PropertyHouseName) &&
+                readAsset.PropertyStreetNumber.Equals(entity.PropertyStreetNumber) &&
+                readAsset.PropertyStreet.Equals(entity.PropertyStreet) &&
+                readAsset.PropertyTown.Equals(entity.PropertyTown) &&
+                readAsset.PropertyPostcode.Equals(entity.PropertyPostcode) &&
                 readAsset.DevelopingRslName.Equals(entity.DevelopingRslName) &&
-                
-                readAsset.HopCompletionDate.Equals(entity.HopCompletionDate.Value) &&
+                readAsset.LBHA.Equals(entity.LBHA) &&
+                readAsset.CompletionDateForHpiStart.Equals(entity.CompletionDateForHpiStart.Value) &&
                 readAsset.ImsActualCompletionDate.Equals(entity.ImsActualCompletionDate.Value) &&
                 readAsset.ImsExpectedCompletionDate.Equals(entity.ImsExpectedCompletionDate.Value) &&
                 readAsset.ImsLegalCompletionDate.Equals(entity.ImsLegalCompletionDate.Value) &&
-                readAsset.ImsOldRegion.Equals(entity.ImsOldRegion) &&
-                readAsset.LocationLaRegionName.Equals(entity.LocationLaRegionName) &&
-                
-                readAsset.NoOfBeds.Equals(entity.NoOfBeds) &&
-                readAsset.SchemeId.Equals(entity.SchemeId) &&
-                readAsset.ShareOfRestrictedEquity.Equals(entity.ShareOfRestrictedEquity);
+                readAsset.HopCompletionDate.Equals(entity.HopCompletionDate.Value) &&
+                readAsset.Deposit.Equals(entity.Deposit) &&
+                readAsset.AgencyEquityLoan.Equals(entity.AgencyEquityLoan) &&
+                readAsset.DeveloperEquityLoan.Equals(entity.DeveloperEquityLoan) &&
+                readAsset.ShareOfRestrictedEquity.Equals(entity.ShareOfRestrictedEquity) &&
+                readAsset.DeveloperDiscount.Equals(entity.DeveloperDiscount) &&
+                readAsset.Mortgage.Equals(entity.Mortgage) &&
+                readAsset.PurchasePrice.Equals(entity.PurchasePrice) &&
+                readAsset.Fees.Equals(entity.Fees) &&
+                readAsset.HistoricUnallocatedFees.Equals(entity.HistoricUnallocatedFees) &&
+                readAsset.ActualAgencyEquityCostIncludingHomeBuyAgentFee.Equals(entity
+                    .ActualAgencyEquityCostIncludingHomeBuyAgentFee) &&
+                readAsset.FullDisposalDate.Equals(entity.FullDisposalDate.Value) &&
+                readAsset.OriginalAgencyPercentage.Equals(entity.OriginalAgencyPercentage) &&
+                readAsset.StaircasingPercentage.Equals(entity.StaircasingPercentage) &&
+                readAsset.NewAgencyPercentage.Equals(entity.NewAgencyPercentage) &&
+                readAsset.Invested.Equals(entity.Invested) &&
+                readAsset.Month.Equals(entity.Month) &&
+                readAsset.CalendarYear.Equals(entity.CalendarYear) &&
+                readAsset.MMYYYY.Equals(entity.MMYYYY) &&
+                readAsset.Row.Equals(entity.Row) &&
+                readAsset.Col.Equals(entity.Col) &&
+                readAsset.HPIStart.Equals(entity.HPIStart) &&
+                readAsset.HPIEnd.Equals(entity.HPIEnd) &&
+                readAsset.HPIPlusMinus.Equals(entity.HPIPlusMinus) &&
+                readAsset.AgencyPercentage.Equals(entity.AgencyPercentage) &&
+                readAsset.MortgageEffect.Equals(entity.MortgageEffect) &&
+                readAsset.RemainingAgencyCost.Equals(entity.RemainingAgencyCost) &&
+                readAsset.WAEstimatedPropertyValue.Equals(entity.WAEstimatedPropertyValue) &&
+                readAsset.AgencyFairValueDifference.Equals(entity.AgencyFairValueDifference) &&
+                readAsset.ImpairmentProvision.Equals(entity.ImpairmentProvision) &&
+                readAsset.FairValueReserve.Equals(entity.FairValueReserve) &&
+                readAsset.AgencyFairValue.Equals(entity.AgencyFairValue) &&
+                readAsset.DisposalsCost.Equals(entity.DisposalsCost) &&
+                readAsset.DurationInMonths.Equals(entity.DurationInMonths) &&
+                readAsset.MonthOfCompletionSinceSchemeStart.Equals(entity.MonthOfCompletionSinceSchemeStart) &&
+                readAsset.DisposalMonthSinceCompletion.Equals(entity.DisposalMonthSinceCompletion) &&
+                readAsset.IMSPaymentDate.Equals(entity.IMSPaymentDate.Value) &&
+                readAsset.IsPaid.Equals(entity.IsPaid) &&
+                readAsset.IsAsset.Equals(entity.IsAsset) &&
+                readAsset.PropertyType.Equals(entity.PropertyType) &&
+                readAsset.Tenure.Equals(entity.Tenure) &&
+                readAsset.ExpectedStaircasingRate.Equals(entity.ExpectedStaircasingRate) &&
+                readAsset.EstimatedSalePrice.Equals(entity.EstimatedSalePrice) &&
+                readAsset.RegionalSaleAdjust.Equals(entity.RegionalSaleAdjust) &&
+                readAsset.RegionalStairAdjust.Equals(entity.RegionalStairAdjust) &&
+                readAsset.NotLimitedByFirstCharge.Equals(entity.NotLimitedByFirstCharge) &&
+                readAsset.EarlyMortgageIfNeverRepay.Equals(entity.EarlyMortgageIfNeverRepay) &&
+                readAsset.ArrearsEffectAppliedOrLimited.Equals(entity.ArrearsEffectAppliedOrLimited) &&
+                readAsset.RelativeSalePropertyTypeAndTenureAdjustment.Equals(entity
+                    .RelativeSalePropertyTypeAndTenureAdjustment) &&
+                readAsset.RelativeStairPropertyTypeAndTenureAdjustment.Equals(entity
+                    .RelativeStairPropertyTypeAndTenureAdjustment) &&
+                readAsset.IsLondon.Equals(entity.IsLondon) &&
+                readAsset.QuarterSpend.Equals(entity.QuarterSpend) &&
+                readAsset.MortgageProvider.Equals(entity.MortgageProvider) &&
+                readAsset.HouseType.Equals(entity.HouseType) &&
+                readAsset.PurchasePriceBand.Equals(entity.PurchasePriceBand) &&
+                readAsset.HouseholdFiveKIncomeBand.Equals(entity.HouseholdFiveKIncomeBand) &&
+                readAsset.HouseholdFiftyKIncomeBand.Equals(entity.HouseholdFiftyKIncomeBand) &&
+                readAsset.FirstTimeBuyer.Equals(entity.FirstTimeBuyer);
         }
 
         /// <summary>
