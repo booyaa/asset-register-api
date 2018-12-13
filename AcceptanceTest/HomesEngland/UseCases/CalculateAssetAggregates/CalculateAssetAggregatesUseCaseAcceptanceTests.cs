@@ -54,15 +54,15 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
             }
         }
 
-        [TestCase(3, 1, 1000.0001, 1111, null, null)]
-        [TestCase(3, 1, 1000.0001, 2222, null, null)]
-        [TestCase(3, 1, 1000.0001, 3333, null, null)]
-        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "Address 10")]
-        [TestCase(2, 2, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "somewh")]
-        [TestCase(1, 1, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "where")]
-        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "PO57")]
-        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "City")]
-        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "C03")]
+        [TestCase(3, 1, 1000.01, 1111, null, null)]
+        [TestCase(3, 1, 1000.01, 2222, null, null)]
+        [TestCase(3, 1, 1000.01, 3333, null, null)]
+        [TestCase(3, 3, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "Address 10")]
+        [TestCase(2, 2, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "somewh")]
+        [TestCase(1, 1, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "where")]
+        [TestCase(3, 3, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "PO57")]
+        [TestCase(3, 3, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "City")]
+        [TestCase(3, 3, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "C03")]
         public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateBasedOnSearchCriteria_ThenWeCanGetTheMoneyPaidOut(int createdCount, int expectedCount, decimal? agencyFairValue, int? schemeId, string address, string searchAddress)
         {
             //arrange 
@@ -72,7 +72,7 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
                 //act
                 var searchAggregate = await CalculateAggregatesForSearchCriteria(schemeId, searchAddress);
                 //assert
-                searchAggregate.AssetAggregates.MoneyPaidOut.Should().Be(expectedCount * agencyFairValue);
+                searchAggregate.AssetAggregates.MoneyPaidOut.Should().Be(createdCount * agencyFairValue);
                 trans.Dispose();
             }
         }
