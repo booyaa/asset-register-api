@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.Domain;
+using HomesEngland.Domain.Impl;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.Gateway.Sql.Postgres;
 using PeregrineDb;
@@ -82,20 +83,7 @@ namespace HomesEngland.Gateway.Sql
         {
             var sql = @"SELECT count(id) FROM assets a ";
 
-            IList<string> filteringClauses = new List<string>();
-            if (assetPagedSearchQuery.SchemeId.HasValue)
-                filteringClauses.Add("a.schemeid = @schemeId ");
-            if (!string.IsNullOrEmpty(assetPagedSearchQuery.Address) && !string.IsNullOrWhiteSpace(assetPagedSearchQuery.Address))
-                filteringClauses.Add("lower(a.address) LIKE lower(@address) ");
-
-            var sb = new StringBuilder();
-            sb.Append(sql);
-            for (int i = 0; i < filteringClauses.Count; i++)
-            {
-                sb.Append(i == 0 ? "WHERE " : "AND ");
-
-                sb.Append(filteringClauses.ElementAtOrDefault(i));
-            }
+            var sb = GenerateFilteringCriteria(assetPagedSearchQuery, sql);
 
             return sb.ToString();
         }
@@ -126,22 +114,35 @@ namespace HomesEngland.Gateway.Sql
             };
 
             var generateUniqueCountSql = GenerateUniqueCountSql(searchRequest);
-            int uniqueCount = connection.ExecuteScalar<int>(generateUniqueCountSql, searchObject);
+
+            var moneyOutSql = GenerateMoneyOutSql(searchRequest);
+
+            var uniqueCount = connection.ExecuteScalar<int>(generateUniqueCountSql, searchObject);
+            var moneyOut = connection.Query<int>(moneyOutSql, searchObject);
 
             
-            _connection.Close();
-
-            var assetAggregation = new DapperAssetAggregation
+            var assetAggregates = new AssetAggregation
             {
                 UniqueRecords = uniqueCount,
-
+                MoneyPaidOut = moneyOut?.Sum(s => s)
             };
-            return assetAggregation;
+
+            _connection.Close();
+
+            return assetAggregates;
         }
 
-        private static string GenerateConditionalSearchSql(IAssetSearchQuery pagedSearchQueryRequest)
+        private string GenerateConditionalSearchSql(IAssetSearchQuery pagedSearchQueryRequest)
         {
             var sql = @"SELECT * FROM assets a ";
+
+            var sb = GenerateFilteringCriteria(pagedSearchQueryRequest, sql);
+
+            return sb.ToString();
+        }
+
+        private StringBuilder GenerateFilteringCriteria(IAssetSearchQuery pagedSearchQueryRequest, string sql)
+        {
             IList<string> filteringClauses = new List<string>();
             if (pagedSearchQueryRequest.SchemeId.HasValue)
                 filteringClauses.Add("a.schemeid = @schemeId ");
@@ -158,27 +159,23 @@ namespace HomesEngland.Gateway.Sql
                 sb.Append(filteringClauses.ElementAtOrDefault(i));
             }
 
-            return sb.ToString();
+            return sb;
         }
 
-        private static string GenerateUniqueCountSql(IAssetSearchQuery assetPagedSearchQuery)
+        private string GenerateUniqueCountSql(IAssetSearchQuery assetPagedSearchQuery)
         {
             var sql = @"SELECT COUNT(DISTINCT a.schemeid) as UniqueCount FROM assets a ";
 
-            IList<string> filteringClauses = new List<string>();
-            if (assetPagedSearchQuery.SchemeId.HasValue)
-                filteringClauses.Add("a.schemeid = @schemeId ");
-            if (!string.IsNullOrEmpty(assetPagedSearchQuery.Address) && !string.IsNullOrWhiteSpace(assetPagedSearchQuery.Address))
-                filteringClauses.Add("lower(a.address) LIKE lower(@address) ");
+            var sb = GenerateFilteringCriteria(assetPagedSearchQuery, sql);
 
-            var sb = new StringBuilder();
-            sb.Append(sql);
-            for (int i = 0; i < filteringClauses.Count; i++)
-            {
-                sb.Append(i == 0 ? "WHERE " : "AND ");
+            return sb.ToString();
+        }
 
-                sb.Append(filteringClauses.ElementAtOrDefault(i));
-            }
+        private string GenerateMoneyOutSql(IAssetSearchQuery assetPagedSearchQuery)
+        {
+            var sql = @"SELECT a.agencyfairvalue FROM assets a ";
+
+            var sb = GenerateFilteringCriteria(assetPagedSearchQuery, sql);
 
             return sb.ToString();
         }

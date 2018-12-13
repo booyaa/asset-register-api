@@ -40,12 +40,12 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
         [TestCase(3, 3, null, "Address 10, Somewhere road, City, Region, PO57 C03", "PO57")]
         [TestCase(3, 3, null, "Address 10, Somewhere road, City, Region, PO57 C03", "City")]
         [TestCase(3, 3, null, "Address 10, Somewhere road, City, Region, PO57 C03", "C03")]
-        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeSearch_ThenWeCanGetTheTotalUniqueRecordsCount(int createdCount, int expectedCount, int? schemeId, string address, string searchAddress)
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateBasedOnSearchCriteria_ThenWeCanGetTheUniqueRecordsCount(int createdCount, int expectedCount, int? schemeId, string address, string searchAddress)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                await GenerateAssetsForAggregation(createdCount, schemeId, address);
+                await GenerateAssetsForAggregation(createdCount, schemeId, address, null);
                 //act
                 var searchAggregate = await CalculateAggregatesForSearchCriteria(schemeId, searchAddress);
                 //assert
@@ -54,11 +54,34 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
             }
         }
 
-        private async Task GenerateAssetsForAggregation(int createdCount, int? schemeId, string address)
+        [TestCase(3, 1, 1000.0001, 1111, null, null)]
+        [TestCase(3, 1, 1000.0001, 2222, null, null)]
+        [TestCase(3, 1, 1000.0001, 3333, null, null)]
+        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "Address 10")]
+        [TestCase(2, 2, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "somewh")]
+        [TestCase(1, 1, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "where")]
+        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "PO57")]
+        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "City")]
+        [TestCase(3, 3, 1000.0001, null, "Address 10, Somewhere road, City, Region, PO57 C03", "C03")]
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateBasedOnSearchCriteria_ThenWeCanGetTheMoneyPaidOut(int createdCount, int expectedCount, decimal? agencyFairValue, int? schemeId, string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await GenerateAssetsForAggregation(createdCount, schemeId, address, agencyFairValue);
+                //act
+                var searchAggregate = await CalculateAggregatesForSearchCriteria(schemeId, searchAddress);
+                //assert
+                searchAggregate.AssetAggregates.MoneyPaidOut.Should().Be(expectedCount * agencyFairValue);
+                trans.Dispose();
+            }
+        }
+
+        private async Task GenerateAssetsForAggregation(int createdCount, int? schemeId, string address, decimal? agencyFairValue)
         {
             for (int i = 0; i < createdCount; i++)
             {
-                await CreateAsset(schemeId, address);
+                await CreateAsset(schemeId, address, agencyFairValue);
             }
         }
 
@@ -74,13 +97,15 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
             return useCaseResponse;
         }
 
-        private async Task<CreateAssetResponse> CreateAsset(int? schemeId, string address)
+        private async Task<CreateAssetResponse> CreateAsset(int? schemeId, string address, decimal? agencyFairValue)
         {
             var createAssetRequest = TestData.UseCase.GenerateCreateAssetRequest();
             if (schemeId.HasValue)
                 createAssetRequest.SchemeId = schemeId;
             if (!string.IsNullOrEmpty(address))
                 createAssetRequest.Address = address;
+            if (agencyFairValue.HasValue)
+                createAssetRequest.AgencyFairValue = agencyFairValue;
             var response = await _createAssetUseCase.ExecuteAsync(createAssetRequest, CancellationToken.None);
             return response;
         }
