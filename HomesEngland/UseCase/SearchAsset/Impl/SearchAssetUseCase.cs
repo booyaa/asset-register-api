@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using HomesEngland.Domain;
-using HomesEngland.Exception;
 using HomesEngland.Gateway.Assets;
-using HomesEngland.UseCase.GetAsset;
 using HomesEngland.UseCase.GetAsset.Models;
 using HomesEngland.UseCase.SearchAsset.Models;
 using Infrastructure.Api.Exceptions;
@@ -40,7 +38,7 @@ namespace HomesEngland.UseCase.SearchAsset.Impl
 
         private async Task<IPagedResults<IAsset>> SearchAssets(SearchAssetRequest request, CancellationToken cancellationToken)
         {
-            var assetSearch = new AssetSearchQuery
+            var assetSearch = new AssetPagedSearchQuery
             {
                 SchemeId = request.SchemeId,
                 Address = request.Address

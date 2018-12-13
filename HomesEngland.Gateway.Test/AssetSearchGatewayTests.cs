@@ -34,16 +34,16 @@ namespace HomesEngland.Gateway.Test
             assetRegisterContext.Database.Migrate();
         }
 
-        [TestCase(1001)]
-        [TestCase(2002)]
-        [TestCase(3003)]
+        [TestCase(5001)]
+        [TestCase(5002)]
+        [TestCase(5003)]
         public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasBeenSet_ThenWeCanFindTheSameAsset(int schemeId)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var createdAsset = await CreateAsset(schemeId, null, _gateway);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     SchemeId = schemeId
                 };
@@ -58,7 +58,7 @@ namespace HomesEngland.Gateway.Test
 
         [TestCase(7007, 7008, 7009)]
         [TestCase(2002, 2004, 2005)]
-        [TestCase(3003,3004,3005)]
+        [TestCase(3003, 3004, 3005)]
         public async Task GivenAnAssetHasBeenCreated_WhenWeSearchViaSchemeIdThatHasBeenSet_ThenWeCanFindTheSameAssetAnd(int schemeId, int schemeId2, int schemeId3)
         {
             //arrange 
@@ -68,7 +68,7 @@ namespace HomesEngland.Gateway.Test
                 var createdAsset2 = await CreateAsset(schemeId2, null, _gateway);
                 var createdAsset3 = await CreateAsset(schemeId3, null, _gateway);
 
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     SchemeId = schemeId2
                 };
@@ -92,7 +92,7 @@ namespace HomesEngland.Gateway.Test
                 var entity = TestData.Domain.GenerateAsset();
                 
                 await _gateway.CreateAsync(entity).ConfigureAwait(false);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     SchemeId = schemeId
                 };
@@ -124,7 +124,7 @@ namespace HomesEngland.Gateway.Test
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var createdAsset = await CreateAsset(null, address, _gateway);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     Address = address
                 };
@@ -145,7 +145,7 @@ namespace HomesEngland.Gateway.Test
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var createdAsset = await CreateAsset(null, address, _gateway);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     Address = searchAddress
                 };
@@ -166,7 +166,7 @@ namespace HomesEngland.Gateway.Test
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var createdAsset = await CreateAsset(null, address, _gateway);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     Address = searchAddress
                 };
@@ -187,7 +187,7 @@ namespace HomesEngland.Gateway.Test
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 var createdAsset = await CreateAsset(null, address, _gateway);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     Address = searchAddress
                 };
@@ -209,7 +209,7 @@ namespace HomesEngland.Gateway.Test
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 await CreateAsset(null, address, _gateway);
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     Address = searchAddress
                 };
@@ -238,7 +238,7 @@ namespace HomesEngland.Gateway.Test
             {
                 await CreateAsset(null, null,_gateway);
                 //act
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     SchemeId = schemeId,
                     Address = searchAddress
@@ -259,16 +259,16 @@ namespace HomesEngland.Gateway.Test
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
+        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO57")]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
         [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
-        [TestCase(4567, "Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "Address 3")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "PO57")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase(4567, "Address 3, Somewhere road, Town, Region, PO57 C03", "C03")]
         public async Task GivenAnAssetHasBeenCreated_WhenWeSearch_ThenWeCanFindTheSameAsset(int? schemeId, string address, string searchAddress)
         {
             //arrange 
@@ -276,7 +276,7 @@ namespace HomesEngland.Gateway.Test
             {
                 var createdAsset = await CreateAsset(schemeId, address, _gateway);
                 //act
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     SchemeId = schemeId,
                     Address = searchAddress
@@ -293,13 +293,13 @@ namespace HomesEngland.Gateway.Test
         [TestCase(1111, null, null)]
         [TestCase(2222, null, null)]
         [TestCase(3333, null, null)]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
-        [TestCase(null, "Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "Address 8")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "PO57")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase(null, "Address 8, Somewhere road, Town, Region, PO57 C03", "C03")]
         public async Task GivenMultiplesAssetsHaveBeenCreatedWithASimilarAddress_WhenWeSearch_ThenWeCanFindMultipleAssets(int? schemeId, string address, string searchAddress)
         {
             //arrange 
@@ -308,7 +308,7 @@ namespace HomesEngland.Gateway.Test
                 var createdAsset = await CreateAsset(schemeId, address, _gateway);
                 var createdAsset2 = await CreateAsset(schemeId, address, _gateway);
                 //act
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     SchemeId = schemeId,
                     Address = searchAddress
@@ -323,13 +323,13 @@ namespace HomesEngland.Gateway.Test
         }
 
 
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "add")]
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "Address 1")]
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "somewh")]
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "where")]
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "PO")]
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "Tow")]
-        [TestCase("Address 1, Somewhere road, Town, Region, PO57 C03", "C03")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "add")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "Address 7")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "somewh")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "where")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "PO57")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "Tow")]
+        [TestCase("Address 7, Somewhere road, Town, Region, PO57 C03", "C03")]
         public async Task GivenMultiplesAssetsHaveBeenCreatedWithASimilarAddress_WhenWeSearch_ThenTheAssetsAreOrderedBySchemeIdDesc(string address, string searchAddress)
         {
             //arrange 
@@ -340,7 +340,7 @@ namespace HomesEngland.Gateway.Test
                 await CreateAsset(randomInt, address, _gateway);
                 await CreateAsset(randomInt+1, address, _gateway);
                 //act
-                var assetSearch = new AssetSearchQuery
+                var assetSearch = new AssetPagedSearchQuery
                 {
                     Address = searchAddress
                 };
@@ -353,9 +353,9 @@ namespace HomesEngland.Gateway.Test
             }
         }
 
-        [TestCase("Meow", 1, 3, 1)]
-        [TestCase("Woof", 2, 3, 2)]
-        [TestCase("Moo", 3, 3, 3)]
+        [TestCase("Meow",  1, 3, 1)]
+        [TestCase("Woof",  2, 3, 2)]
+        [TestCase("Moo",   3, 3, 3)]
         [TestCase("Cluck", 4, 3, 3)]
         public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeSearchWithPageSize_ReturnCorrectNumberOfAssetsPerPage(string address, int pageSize, int numberOfAssets, int expectedNumberOfAssets)
         {
@@ -369,7 +369,7 @@ namespace HomesEngland.Gateway.Test
                     await _gateway.CreateAsync(entity);
                 }
 
-                var assetQuery = new AssetSearchQuery
+                var assetQuery = new AssetPagedSearchQuery
                 {
                     Address = address,
                     PageSize = pageSize
@@ -383,10 +383,10 @@ namespace HomesEngland.Gateway.Test
             }
         }
         
-        [TestCase("Meow", 1, 1, 3, 1)]
-        [TestCase("Bark", 1, 2, 3, 1)]
-        [TestCase("Woof", 2, 1, 3, 2)]
-        [TestCase("Moo", 2, 2, 3, 1)]
+        [TestCase("Meow",  1, 1, 3, 1)]
+        [TestCase("Bark",  1, 2, 3, 1)]
+        [TestCase("Woof",  2, 1, 3, 2)]
+        [TestCase("Moo",   2, 2, 3, 1)]
         [TestCase("Quack", 4, 1, 3, 3)]
         public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeSearchWithPageSize_ReturnCorrectNumberOfAssetsPerPage(string address, int pageSize, int page, int numberOfAssets, int expectedNumberOfAssets)
         {
@@ -400,7 +400,7 @@ namespace HomesEngland.Gateway.Test
                     await _gateway.CreateAsync(entity);
                 }
 
-                var assetQuery = new AssetSearchQuery
+                var assetQuery = new AssetPagedSearchQuery
                 {
                     Address = address,
                     PageSize = pageSize,
@@ -431,7 +431,7 @@ namespace HomesEngland.Gateway.Test
                     await _gateway.CreateAsync(entity);
                 }
 
-                var assetQuery = new AssetSearchQuery
+                var assetQuery = new AssetPagedSearchQuery
                 {
                     Address = address,
                     PageSize = pageSize
