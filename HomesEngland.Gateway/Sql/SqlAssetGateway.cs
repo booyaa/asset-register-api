@@ -114,17 +114,22 @@ namespace HomesEngland.Gateway.Sql
             };
 
             var generateUniqueCountSql = GenerateUniqueCountSql(searchRequest);
-
-            var moneyOutSql = GenerateMoneyOutSql(searchRequest);
+            var assetValueSql = GenerateAssetValueSql(searchRequest);
+            var moneyPaidOutSql = GenerateMoneyPaidOutSql(searchRequest);
 
             var uniqueCount = connection.ExecuteScalar<int>(generateUniqueCountSql, searchObject);
-            var moneyOut = connection.Query<decimal>(moneyOutSql, searchObject);
+            var assetValueCollection = connection.Query<decimal>(assetValueSql, searchObject);
+            var moneyPaidOutCollection = connection.Query<decimal>(moneyPaidOutSql, searchObject);
 
-            
+            decimal? moneyPaidOut = moneyPaidOutCollection?.Sum(s => s);
+            decimal? assetValue = assetValueCollection?.Sum(s => s);
+
             var assetAggregates = new AssetAggregation
             {
                 UniqueRecords = uniqueCount,
-                MoneyPaidOut = moneyOut?.Sum(s => s)
+                AssetValue = assetValue,
+                MoneyPaidOut = moneyPaidOut,
+                MovementInAssetValue = assetValue-moneyPaidOut
             };
 
             _connection.Close();
@@ -171,9 +176,18 @@ namespace HomesEngland.Gateway.Sql
             return sb.ToString();
         }
 
-        private string GenerateMoneyOutSql(IAssetSearchQuery assetPagedSearchQuery)
+        private string GenerateAssetValueSql(IAssetSearchQuery assetPagedSearchQuery)
         {
             var sql = @"SELECT a.agencyfairvalue FROM assets a ";
+
+            var sb = GenerateFilteringCriteria(assetPagedSearchQuery, sql);
+
+            return sb.ToString();
+        }
+
+        private string GenerateMoneyPaidOutSql(IAssetSearchQuery assetPagedSearchQuery)
+        {
+            var sql = @"SELECT a.agencyequityloan FROM assets a ";
 
             var sb = GenerateFilteringCriteria(assetPagedSearchQuery, sql);
 

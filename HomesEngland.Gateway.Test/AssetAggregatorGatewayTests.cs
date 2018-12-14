@@ -55,7 +55,7 @@ namespace HomesEngland.Gateway.Test
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                await CreateAggregatedAssets(count, schemeId, address, null);
+                await CreateAggregatedAssets(count, schemeId, address, null, null);
                 
                 var aggregatedSearch = new AssetSearchQuery
                 {
@@ -87,12 +87,12 @@ namespace HomesEngland.Gateway.Test
         [TestCase(2, 2, 1000.01, null, null, null)]
         [TestCase(2, 0, 1000.01, null, "testing 4", "3")]
         [TestCase(2, 0, 1000.01, null, "testing 4", "1")]
-        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateViaSearchCritera_ThenWeCanGetHowMuchMoneyHasBeenPaidOut(int count, int expectedCount, decimal? agencyFairValue, int? schemeId, string address, string searchAddress)
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateViaSearchCritera_ThenWeCanGetAssetValue(int count, int expectedCount, decimal? agencyFairValue, int? schemeId, string address, string searchAddress)
         {
             //arrange 
             using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                await CreateAggregatedAssets(count, schemeId, address, agencyFairValue);
+                await CreateAggregatedAssets(count, schemeId, address, agencyFairValue,null);
 
                 var aggregatedSearch = new AssetSearchQuery
                 {
@@ -102,20 +102,94 @@ namespace HomesEngland.Gateway.Test
                 //act
                 var assets = await _classUnderTest.Aggregate(aggregatedSearch, CancellationToken.None).ConfigureAwait(false);
                 //assert
-                assets.MoneyPaidOut.Should().Be(agencyFairValue*expectedCount);
+                assets.AssetValue.Should().Be(agencyFairValue*expectedCount);
                 trans.Dispose();
             }
         }
 
-        private async Task CreateAggregatedAssets(int count, int? schemeId, string address, decimal? agencyFairValue)
+        [TestCase(2, 2, 1000.01, 1001, null, null)]
+        [TestCase(2, 2, 1000.01, 2002, null, null)]
+        [TestCase(2, 2, 1000.01, 3003, null, null)]
+        [TestCase(2, 2, 1000.01, null, "test unique", "test")]
+        [TestCase(2, 2, 1000.01, null, "Test unique", "test")]
+        [TestCase(2, 2, 1000.01, null, "uniiique", "unii")]
+        [TestCase(2, 2, 1000.01, null, "testing 4", "tes")]
+        [TestCase(2, 2, 1000.01, null, "Testing 4", "tes")]
+        [TestCase(2, 2, 1000.01, null, "test uniQue", "que")]
+        [TestCase(2, 2, 1000.01, null, "uniiique", null)]
+        [TestCase(2, 2, 1000.01, null, " ", null)]
+        [TestCase(2, 2, 1000.01, null, "", null)]
+        [TestCase(2, 2, 1000.01, null, " ", " ")]
+        [TestCase(2, 2, 1000.01, null, "", "")]
+        [TestCase(2, 2, 1000.01, null, null, null)]
+        [TestCase(2, 0, 1000.01, null, "testing 4", "3")]
+        [TestCase(2, 0, 1000.01, null, "testing 4", "1")]
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateViaSearchCritera_ThenWeCanGetMoneyPaidOut(int count, int expectedCount, decimal? agencyEquityValue, int? schemeId, string address, string searchAddress)
         {
-            for (int i = 0; i < count; i++)
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                await CreateAsset(schemeId, address, agencyFairValue, _gateway);
+                await CreateAggregatedAssets(count, schemeId, address, null, agencyEquityValue);
+
+                var aggregatedSearch = new AssetSearchQuery
+                {
+                    SchemeId = schemeId,
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Aggregate(aggregatedSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.MoneyPaidOut.Should().Be(agencyEquityValue * expectedCount);
+                trans.Dispose();
             }
         }
 
-        private async Task<IAsset> CreateAsset(int? schemeId, string address, decimal? agencyFairValue, IGateway<IAsset, int> gateway)
+        [TestCase(2, 2, 1000.01, 301.301, 1001, null, null)]
+        [TestCase(2, 2, 1000.01, 301.301, 2002, null, null)]
+        [TestCase(2, 2, 1000.01, 301.301, 3003, null, null)]
+        [TestCase(2, 2, 1000.01, 301.301, null, "test unique", "test")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "Test unique", "test")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "uniiique", "unii")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "testing 4", "tes")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "Testing 4", "tes")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "test uniQue", "que")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "uniiique", null)]
+        [TestCase(2, 2, 1000.01, 301.301, null, " ", null)]
+        [TestCase(2, 2, 1000.01, 301.301, null, "", null)]
+        [TestCase(2, 2, 1000.01, 301.301, null, " ", " ")]
+        [TestCase(2, 2, 1000.01, 301.301, null, "", "")]
+        [TestCase(2, 2, 1000.01, 301.301, null, null, null)]
+        [TestCase(2, 0, 1000.01, 301.301, null, "testing 4", "3")]
+        [TestCase(2, 0, 1000.01, 301.301, null, "testing 4", "1")]
+        public async Task GivenMultipleAssetsHaveBeenCreated_WhenWeAggregateViaSearchCritera_ThenWeCanGetMovementInFairValue(int count, int expectedCount, decimal? agencyFairValue, decimal? agencyEquityValue, int? schemeId, string address, string searchAddress)
+        {
+            //arrange 
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await CreateAggregatedAssets(count, schemeId, address, agencyFairValue, agencyEquityValue);
+
+                var aggregatedSearch = new AssetSearchQuery
+                {
+                    SchemeId = schemeId,
+                    Address = searchAddress
+                };
+                //act
+                var assets = await _classUnderTest.Aggregate(aggregatedSearch, CancellationToken.None).ConfigureAwait(false);
+                //assert
+                assets.MovementInAssetValue.Should().Be((agencyFairValue * expectedCount) - (agencyEquityValue * expectedCount));
+                trans.Dispose();
+            }
+        }
+
+        private async Task CreateAggregatedAssets(int count, int? schemeId, string address, decimal? agencyFairValue, decimal? agencyEquityValue)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                await CreateAsset(schemeId, address, agencyFairValue, agencyEquityValue, _gateway);
+            }
+        }
+
+        private async Task<IAsset> CreateAsset(int? schemeId, string address, decimal? agencyFairValue, decimal? agencyEquityValue, IGateway<IAsset, int> gateway)
         {
             var entity = TestData.Domain.GenerateAsset();
             if (schemeId.HasValue)
@@ -124,6 +198,8 @@ namespace HomesEngland.Gateway.Test
                 entity.Address = address;
             if (agencyFairValue.HasValue)
                 entity.AgencyFairValue = agencyFairValue;
+            if (agencyEquityValue.HasValue)
+                entity.AgencyEquityLoan = agencyEquityValue;
             IAsset createdAsset = await gateway.CreateAsync(entity).ConfigureAwait(false);
             return createdAsset;
         }
