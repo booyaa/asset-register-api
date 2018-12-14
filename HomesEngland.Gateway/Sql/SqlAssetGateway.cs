@@ -118,11 +118,11 @@ namespace HomesEngland.Gateway.Sql
             var moneyPaidOutSql = GenerateMoneyPaidOutSql(searchRequest);
 
             var uniqueCount = connection.ExecuteScalar<int>(generateUniqueCountSql, searchObject);
-            var assetValueCollection = connection.Query<decimal>(assetValueSql, searchObject);
-            var moneyPaidOutCollection = connection.Query<decimal>(moneyPaidOutSql, searchObject);
+            var assetValueCollection = connection.Query<decimal?>(assetValueSql, searchObject);
+            var moneyPaidOutCollection = connection.Query<decimal?>(moneyPaidOutSql, searchObject);
 
-            decimal? moneyPaidOut = moneyPaidOutCollection?.Sum(s => s);
-            decimal? assetValue = assetValueCollection?.Sum(s => s);
+            decimal? moneyPaidOut = moneyPaidOutCollection?.Where(w=> w.HasValue).Sum(s => s);
+            decimal? assetValue = assetValueCollection?.Where(w=> w.HasValue).Sum(s => s);
 
             var assetAggregates = new AssetAggregation
             {
