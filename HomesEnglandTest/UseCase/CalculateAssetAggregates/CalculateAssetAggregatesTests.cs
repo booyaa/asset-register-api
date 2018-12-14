@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using HomesEngland.Domain;
 using HomesEngland.Domain.Impl;
-using HomesEngland.Gateway;
 using HomesEngland.Gateway.Assets;
 using HomesEngland.UseCase.CalculateAssetAggregates;
 using HomesEngland.UseCase.CalculateAssetAggregates.Models;
@@ -77,7 +76,7 @@ namespace HomesEnglandTest.UseCase.CalculateAssetAggregates
         public async Task GivenValidInput_WhenGatewayReturnsResults_ThenUseCaseReturnsCorrectlyMappedResponse(int uniqueRecords, decimal moneyPaidOut, decimal assetValue, decimal movementInAssetValue)
         {
             _mockGateway.Aggregate(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
-                .Returns( new DapperAssetAggregation
+                .Returns( new AssetAggregation
                 {
                     UniqueRecords = uniqueRecords, 
                     MoneyPaidOut = moneyPaidOut,
