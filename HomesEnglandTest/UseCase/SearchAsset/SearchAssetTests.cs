@@ -34,7 +34,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             //arrange
             var asset = TestData.Domain.GenerateAsset();
             asset.SchemeId = id;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {asset}});
             //act
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -43,7 +43,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             }, CancellationToken.None);
             //assert
             await _mockGateway.Received()
-                .Search(Arg.Is<AssetSearchQuery>(req => req.SchemeId == id), Arg.Any<CancellationToken>());
+                .Search(Arg.Is<AssetPagedSearchQuery>(req => req.SchemeId == id), Arg.Any<CancellationToken>());
         }
 
         [TestCase("address1")]
@@ -54,7 +54,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             //arrange
             var asset = TestData.Domain.GenerateAsset();
             asset.Address = address;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {asset}});
             //act
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -63,7 +63,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             }, CancellationToken.None);
             //assert
             await _mockGateway.Received()
-                .Search(Arg.Is<AssetSearchQuery>(req => req.Address == address), Arg.Any<CancellationToken>());
+                .Search(Arg.Is<AssetPagedSearchQuery>(req => req.Address == address), Arg.Any<CancellationToken>());
         }
 
         [TestCase("Address1")]
@@ -73,7 +73,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         {
             var asset = TestData.Domain.GenerateAsset();
             asset.Address = address;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {asset}});
 
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -82,7 +82,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             }, CancellationToken.None);
 
             await _mockGateway.Received()
-                .Search(Arg.Is<AssetSearchQuery>(req => req.Page == 1), Arg.Any<CancellationToken>());
+                .Search(Arg.Is<AssetPagedSearchQuery>(req => req.Page == 1), Arg.Any<CancellationToken>());
         }
 
         [TestCase("Address1", 1)]
@@ -92,7 +92,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         {
             var asset = TestData.Domain.GenerateAsset();
             asset.Address = address;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {asset}});
 
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -102,7 +102,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             }, CancellationToken.None);
 
             await _mockGateway.Received()
-                .Search(Arg.Is<AssetSearchQuery>(req => req.Page == page), Arg.Any<CancellationToken>());
+                .Search(Arg.Is<AssetPagedSearchQuery>(req => req.Page == page), Arg.Any<CancellationToken>());
         }
 
         [TestCase("Address1")]
@@ -112,7 +112,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         {
             var asset = TestData.Domain.GenerateAsset();
             asset.Address = address;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {asset}});
 
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -121,7 +121,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             }, CancellationToken.None);
 
             await _mockGateway.Received()
-                .Search(Arg.Is<AssetSearchQuery>(req => req.PageSize == 25), Arg.Any<CancellationToken>());
+                .Search(Arg.Is<AssetPagedSearchQuery>(req => req.PageSize == 25), Arg.Any<CancellationToken>());
         }
 
         [TestCase("Address1", 10)]
@@ -131,7 +131,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         {
             var asset = TestData.Domain.GenerateAsset();
             asset.Address = address;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None).Returns(new PagedResults<IAsset>
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None).Returns(new PagedResults<IAsset>
                 {Results = new List<IAsset> {asset}});
 
             await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -141,7 +141,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             }, CancellationToken.None);
 
             await _mockGateway.Received()
-                .Search(Arg.Is<AssetSearchQuery>(req => req.PageSize == pageSize), Arg.Any<CancellationToken>());
+                .Search(Arg.Is<AssetPagedSearchQuery>(req => req.PageSize == pageSize), Arg.Any<CancellationToken>());
         }
 
         [TestCase(1, null)]
@@ -158,7 +158,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
                 asset.SchemeId = id;
             if (!string.IsNullOrEmpty(address))
                 asset.Address = address;
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {asset}});
             //act
             var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -184,7 +184,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             var assetTwo = TestData.Domain.GenerateAsset();
             assetOne.SchemeId = idTwo;
 
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {Results = new List<IAsset> {assetOne, assetTwo}});
             //act
             var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -204,7 +204,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         public async Task GivenValidRequestAndNumberOfPagesReturned_UseCaseReturnsCorrectPageInformation(
             string address, int numberOfPages)
         {
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {NumberOfPages = numberOfPages});
 
             var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -222,7 +222,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         public async Task GivenValidRequestAndTotalCount_UseCaseReturnsCorrectTotalCount(string address,
             int totalNumberFound)
         {
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset> {TotalCount = totalNumberFound});
 
             var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest
@@ -244,7 +244,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             string address)
         {
             //arrange
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns(new PagedResults<IAsset>());
             //act
             var response = await _classUnderTest.ExecuteAsync(new SearchAssetRequest {SchemeId = id, Address = address},
@@ -264,7 +264,7 @@ namespace HomesEnglandTest.UseCase.SearchAsset
             string address)
         {
             //arrange
-            _mockGateway.Search(Arg.Any<IAssetSearchQuery>(), CancellationToken.None)
+            _mockGateway.Search(Arg.Any<IAssetPagedSearchQuery>(), CancellationToken.None)
                 .Returns((IPagedResults<IAsset>) null);
             var searchAssetRequest = new SearchAssetRequest
             {
@@ -287,13 +287,13 @@ namespace HomesEnglandTest.UseCase.SearchAsset
         public void GivenInValidRequest_ThenUseCaseThrowsBadRequestException(int? id, string address)
         {
             //arrange
-            IAssetSearchQuery searchQueryAssetRequest = new AssetSearchQuery
+            IAssetPagedSearchQuery pagedSearchQueryAssetPagedRequest = new AssetPagedSearchQuery
             {
                 SchemeId = id,
                 Address = address
             };
             var assetRequest = new SearchAssetRequest {SchemeId = id};
-            _mockGateway.Search(searchQueryAssetRequest, CancellationToken.None).Returns((IPagedResults<IAsset>) null);
+            _mockGateway.Search(pagedSearchQueryAssetPagedRequest, CancellationToken.None).Returns((IPagedResults<IAsset>) null);
             //act
             //assert
             Assert.ThrowsAsync<BadRequestException>(async () =>

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Transactions;
 using FluentAssertions;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.UseCase.ImportAssets;
@@ -34,10 +35,14 @@ namespace AssetRegisterTests.HomesEngland.ConsoleImporter
             var path = Path.Combine(directory,"HomesEngland", "ConsoleImporter", fileValue);
             var args = new[] { fileFlag, path, delimiterFlag, delimiterValue };
             //act
-            var response = await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
-            //assert
-            response.Should().NotBeNullOrEmpty();
-            response.Count.Should().Be(expectedCount);
+            using (var trans = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var response = await _classUnderTest.ProcessAsync(args).ConfigureAwait(false);
+                //assert
+                response.Should().NotBeNullOrEmpty();
+                response.Count.Should().Be(expectedCount);
+                trans.Dispose();
+            }
         }
     }
 }

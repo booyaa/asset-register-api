@@ -7,6 +7,7 @@ using HomesEngland.Gateway.Assets;
 using HomesEngland.Gateway.Migrations;
 using HomesEngland.Gateway.Sql;
 using HomesEngland.Gateway.Sql.Postgres;
+using HomesEngland.UseCase.CalculateAssetAggregates;
 using HomesEngland.UseCase.CreateAsset;
 using HomesEngland.UseCase.CreateAsset.Impl;
 using HomesEngland.UseCase.CreateAsset.Models;
@@ -76,6 +77,8 @@ namespace Main
             RegisterExportedDependency<ITextSplitter, TextSplitter>();
             RegisterExportedDependency<IInputParser<ImportAssetConsoleInput>, ImportAssetInputParser>();
             RegisterExportedDependency<IFactory<CreateAssetRequest, CsvAsset>, CreateAssetRequestFactory>();
+            RegisterExportedDependency<ICalculateAssetAggregatesUseCase, CalculateAssetAggregatesUseCase>();
+            RegisterExportedDependency<IAssetAggregator, SqlAssetGateway>();
         }
 
         public override T Get<T>()

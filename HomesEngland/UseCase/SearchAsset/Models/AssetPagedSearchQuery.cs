@@ -2,7 +2,7 @@
 
 namespace HomesEngland.UseCase.SearchAsset.Models
 {
-    public class AssetSearchQuery : IAssetSearchQuery
+    public class AssetPagedSearchQuery : IAssetPagedSearchQuery
     {
         public int? SchemeId { get; set; }
         public int? Page { get; set; } = 1;

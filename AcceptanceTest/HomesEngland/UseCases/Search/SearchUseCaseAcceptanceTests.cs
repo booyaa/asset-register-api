@@ -171,7 +171,6 @@ namespace AssetRegisterTests.HomesEngland.UseCases.Search
             }
         }
 
-
         private async Task<CreateAssetResponse> CreateAsset(int? schemeId, string address)
         {
             var createAssetRequest = TestData.UseCase.GenerateCreateAssetRequest();
