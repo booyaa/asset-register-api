@@ -70,9 +70,9 @@ namespace HomesEngland.Gateway.Test
             }
         }
 
-        [TestCase(2, 1, 1000.01, 1001, null, null)]
-        [TestCase(2, 1, 1000.01, 2002, null, null)]
-        [TestCase(2, 1, 1000.01, 3003, null, null)]
+        [TestCase(2, 2, 1000.01, 1001, null, null)]
+        [TestCase(2, 2, 1000.01, 2002, null, null)]
+        [TestCase(2, 2, 1000.01, 3003, null, null)]
         [TestCase(2, 2, 1000.01, null, "test unique", "test")]
         [TestCase(2, 2, 1000.01, null, "Test unique", "test")]
         [TestCase(2, 2, 1000.01, null, "uniiique", "unii")]

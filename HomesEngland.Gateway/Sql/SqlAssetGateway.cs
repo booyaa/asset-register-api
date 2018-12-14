@@ -118,7 +118,7 @@ namespace HomesEngland.Gateway.Sql
             var moneyOutSql = GenerateMoneyOutSql(searchRequest);
 
             var uniqueCount = connection.ExecuteScalar<int>(generateUniqueCountSql, searchObject);
-            var moneyOut = connection.Query<int>(moneyOutSql, searchObject);
+            var moneyOut = connection.Query<decimal>(moneyOutSql, searchObject);
 
             
             var assetAggregates = new AssetAggregation
