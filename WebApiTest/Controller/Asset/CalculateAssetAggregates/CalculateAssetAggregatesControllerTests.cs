@@ -16,12 +16,12 @@ using WebApi.Controllers.Search.Calculations;
 namespace WebApiTest.Controller.Asset.CalculateAssetAggregates
 {
     [TestFixture]
-    public class SearchAssetControllerTests
+    public class CalculateAssetAggregatesControllerTests
     {
         private readonly CalculateAssetAggregatesController _classUnderTest;
         private readonly Mock<ICalculateAssetAggregatesUseCase> _mockUseCase;
 
-        public SearchAssetControllerTests()
+        public CalculateAssetAggregatesControllerTests()
         {
             _mockUseCase = new Mock<ICalculateAssetAggregatesUseCase>();
             _classUnderTest = new CalculateAssetAggregatesController(_mockUseCase.Object);
