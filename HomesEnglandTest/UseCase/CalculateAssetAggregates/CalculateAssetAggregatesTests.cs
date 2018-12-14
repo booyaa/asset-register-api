@@ -51,7 +51,7 @@ namespace HomesEnglandTest.UseCase.CalculateAssetAggregates
         [TestCase(null)]
         [TestCase(" ")]
         [TestCase("")]
-        public async Task GivenValidAddress_UseCaseCallsGatewayWithCorrectId(string address)
+        public async Task GivenValidAddress_UseCaseCallsGatewayWithCorrectAddress(string address)
         {
             //arrange
             var asset = TestData.Domain.GenerateAsset();
