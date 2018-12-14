@@ -34,8 +34,7 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             decimal? fees = fields.ElementAtOrDefault(26).TryParseDecimalNullable();
             decimal? historicUnallocatedFees = fields.ElementAtOrDefault(27).TryParseDecimalNullable();
 
-            decimal? actualAgencyEquityCostIncludingHomeBuyAgentFee =
-                fields.ElementAtOrDefault(28).TryParseDecimalNullable();
+            decimal? actualAgencyEquityCostIncludingHomeBuyAgentFee = fields.ElementAtOrDefault(28).TryParseDecimalNullable();
             DateTime? fullDisposalDate = fields.ElementAtOrDefault(29).TryParseDateTimeNullable();
             decimal? originalAgencyPercentage = fields.ElementAtOrDefault(30).TryParseDecimalNullable("%");
 
