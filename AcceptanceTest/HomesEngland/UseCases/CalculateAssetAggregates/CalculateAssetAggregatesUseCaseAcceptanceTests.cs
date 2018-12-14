@@ -54,9 +54,9 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
             }
         }
 
-        [TestCase(3, 1, 1000.01, 1111, null, null)]
-        [TestCase(3, 1, 1000.01, 2222, null, null)]
-        [TestCase(3, 1, 1000.01, 3333, null, null)]
+        [TestCase(3, 3, 1000.01, 1111, null, null)]
+        [TestCase(3, 3, 1000.01, 2222, null, null)]
+        [TestCase(3, 3, 1000.01, 3333, null, null)]
         [TestCase(3, 3, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "Address 10")]
         [TestCase(2, 2, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "somewh")]
         [TestCase(1, 1, 1000.01, null, "Address 10, Somewhere road, City, Region, PO57 C03", "where")]
@@ -72,7 +72,7 @@ namespace AssetRegisterTests.HomesEngland.UseCases.CalculateAssetAggregates
                 //act
                 var searchAggregate = await CalculateAggregatesForSearchCriteria(schemeId, searchAddress);
                 //assert
-                searchAggregate.AssetAggregates.MoneyPaidOut.Should().Be(createdCount * agencyFairValue);
+                searchAggregate.AssetAggregates.MoneyPaidOut.Should().Be(expectedCount * agencyFairValue);
                 trans.Dispose();
             }
         }
