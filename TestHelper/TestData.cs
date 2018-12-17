@@ -26,6 +26,10 @@ namespace TestHelper
                 var appliedOrLimited = new List<string> {"Applied", "Limited"};
                 var houseType = new List<string> { "Semi-Detached", "Detached" };
                 var holdTypes = new List<string> { "Freehold", "Leasehold" };
+                var isPaidTypes = new List<string> { "Paid", "Not Paid" };
+                var isAssetTypes = new List<string> { "Asset", "Not an asset" };
+                var isLondonTypes = new List<string> { "London", "Non-London" };
+                var firstTimeBuyerTypes = new List<string> { "Y", "N" };
 
 
                 var generatedAsset = new Faker<DapperAsset>("en")
@@ -89,15 +93,15 @@ namespace TestHelper
                         (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.DisposalMonthSinceCompletion, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.IMSPaymentDate, (fake, model) => fake.Date.Soon(1, DateTime.Now))
-                    .RuleFor(asset => asset.IsPaid, (fake, model) => fake.Random.Bool())
-                    .RuleFor(asset => asset.IsAsset, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.IsPaid, (fake, model) => fake.PickRandom(isPaidTypes))
+                    .RuleFor(asset => asset.IsAsset, (fake, model) => fake.PickRandom(isAssetTypes))
                     .RuleFor(asset => asset.PropertyType, (fake, model) => fake.PickRandom(houseType))
                     .RuleFor(asset => asset.Tenure, (fake, model) => fake.PickRandom(holdTypes))
                     .RuleFor(asset => asset.ExpectedStaircasingRate, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.EstimatedSalePrice, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.RegionalSaleAdjust, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.RegionalStairAdjust, (fake, model) => fake.Finance.Amount(50, 100))
-                    .RuleFor(asset => asset.NotLimitedByFirstCharge, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.NotLimitedByFirstCharge, (fake, model) => "")
                     .RuleFor(asset => asset.EarlyMortgageIfNeverRepay, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.ArrearsEffectAppliedOrLimited,
                         (fake, model) => fake.PickRandom(appliedOrLimited))
@@ -105,14 +109,14 @@ namespace TestHelper
                         (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.RelativeStairPropertyTypeAndTenureAdjustment,
                         (fake, model) => fake.Finance.Amount(50, 100))
-                    .RuleFor(asset => asset.IsLondon, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.IsLondon, (fake, model) => fake.PickRandom(isLondonTypes))
                     .RuleFor(asset => asset.QuarterSpend, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.MortgageProvider, (fake, model) => fake.Company.CompanyName())
                     .RuleFor(asset => asset.HouseType, (fake, model) => fake.PickRandom(houseType))
                     .RuleFor(asset => asset.PurchasePriceBand, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.HouseholdFiveKIncomeBand, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.HouseholdFiftyKIncomeBand, (fake, model) => fake.Finance.Amount(50, 100))
-                    .RuleFor(asset => asset.FirstTimeBuyer, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.FirstTimeBuyer, (fake, model) => fake.PickRandom(firstTimeBuyerTypes))
 
                     .RuleFor(asset => asset.HouseholdIncome, (fake, model) => fake.Finance.Amount(25000m, 100000m))
                     .RuleFor(asset => asset.EstimatedValuation, (fake, model) => fake.Finance.Amount(100000m, 300000m));
@@ -139,6 +143,10 @@ namespace TestHelper
                 var appliedOrLimited = new List<string> { "Applied", "Limited" };
                 var houseType = new List<string> { "Semi-Detached", "Detached" };
                 var holdTypes = new List<string> { "Freehold", "Leasehold" };
+                var isPaidTypes = new List<string> { "Paid", "Not Paid" };
+                var isAssetTypes = new List<string> { "Asset", "Not an asset" };
+                var isLondonTypes = new List<string> { "London", "Non-London" };
+                var firstTimeBuyerTypes = new List<string> { "Y", "N" };
 
 
                 var generatedAsset = new Faker<CreateAssetRequest>("en")
@@ -196,27 +204,27 @@ namespace TestHelper
                     .RuleFor(asset => asset.MonthOfCompletionSinceSchemeStart, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.DisposalMonthSinceCompletion, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.IMSPaymentDate, (fake, model) => fake.Date.Soon(1, DateTime.Now))
-                    .RuleFor(asset => asset.IsPaid, (fake, model) => fake.Random.Bool())
-                    .RuleFor(asset => asset.IsAsset, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.IsPaid, (fake, model) => fake.PickRandom(isPaidTypes))
+                    .RuleFor(asset => asset.IsAsset, (fake, model) => fake.PickRandom(isAssetTypes))
                     .RuleFor(asset => asset.PropertyType, (fake, model) => fake.PickRandom(houseType))
                     .RuleFor(asset => asset.Tenure, (fake, model) => fake.PickRandom(holdTypes))
                     .RuleFor(asset => asset.ExpectedStaircasingRate, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.EstimatedSalePrice, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.RegionalSaleAdjust, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.RegionalStairAdjust, (fake, model) => fake.Finance.Amount(50, 100))
-                    .RuleFor(asset => asset.NotLimitedByFirstCharge, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.NotLimitedByFirstCharge, (fake, model) => "")
                     .RuleFor(asset => asset.EarlyMortgageIfNeverRepay, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.ArrearsEffectAppliedOrLimited, (fake, model) => fake.PickRandom(appliedOrLimited))
                     .RuleFor(asset => asset.RelativeSalePropertyTypeAndTenureAdjustment, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.RelativeStairPropertyTypeAndTenureAdjustment, (fake, model) => fake.Finance.Amount(50, 100))
-                    .RuleFor(asset => asset.IsLondon, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.IsLondon, (fake, model) => fake.PickRandom(isLondonTypes))
                     .RuleFor(asset => asset.QuarterSpend, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.MortgageProvider, (fake, model) => fake.Company.CompanyName())
                     .RuleFor(asset => asset.HouseType, (fake, model) => fake.PickRandom(houseType))
                     .RuleFor(asset => asset.PurchasePriceBand, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.HouseholdFiveKIncomeBand, (fake, model) => fake.Finance.Amount(50, 100))
                     .RuleFor(asset => asset.HouseholdFiftyKIncomeBand, (fake, model) => fake.Finance.Amount(50, 100))
-                    .RuleFor(asset => asset.FirstTimeBuyer, (fake, model) => fake.Random.Bool())
+                    .RuleFor(asset => asset.FirstTimeBuyer, (fake, model) => fake.PickRandom(firstTimeBuyerTypes))
 
                     .RuleFor(asset => asset.HouseholdIncome, (fake, model) => fake.Finance.Amount(25000m, 100000m))
                     .RuleFor(asset => asset.EstimatedValuation, (fake, model) => fake.Finance.Amount(100000m, 300000m));

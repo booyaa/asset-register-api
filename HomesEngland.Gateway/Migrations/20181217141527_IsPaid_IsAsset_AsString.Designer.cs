@@ -3,15 +3,17 @@ using System;
 using HomesEngland.Gateway.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HomesEngland.Gateway.Migrations
 {
     [DbContext(typeof(AssetRegisterContext))]
-    partial class AssetRegisterContextModelSnapshot : ModelSnapshot
+    [Migration("20181217141527_IsPaid_IsAsset_AsString")]
+    partial class IsPaid_IsAsset_AsString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +99,7 @@ namespace HomesEngland.Gateway.Migrations
                     b.Property<decimal?>("Fees")
                         .HasColumnName("fees");
 
-                    b.Property<string>("FirstTimeBuyer")
+                    b.Property<bool?>("FirstTimeBuyer")
                         .HasColumnName("firsttimebuyer");
 
                     b.Property<DateTime?>("FullDisposalDate")
@@ -154,7 +156,7 @@ namespace HomesEngland.Gateway.Migrations
                     b.Property<string>("IsAsset")
                         .HasColumnName("isasset");
 
-                    b.Property<string>("IsLondon")
+                    b.Property<bool?>("IsLondon")
                         .HasColumnName("islondon");
 
                     b.Property<string>("IsPaid")
@@ -193,7 +195,7 @@ namespace HomesEngland.Gateway.Migrations
                     b.Property<int?>("NoOfBeds")
                         .HasColumnName("noofbeds");
 
-                    b.Property<string>("NotLimitedByFirstCharge")
+                    b.Property<bool?>("NotLimitedByFirstCharge")
                         .HasColumnName("notlimitedbyfirstcharge");
 
                     b.Property<decimal?>("OriginalAgencyPercentage")

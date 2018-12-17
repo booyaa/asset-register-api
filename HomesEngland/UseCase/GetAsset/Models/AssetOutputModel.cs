@@ -151,8 +151,8 @@ namespace HomesEngland.UseCase.GetAsset.Models
         public decimal? MonthOfCompletionSinceSchemeStart { get; set; }
         public decimal? DisposalMonthSinceCompletion { get; set; }
         public DateTime? IMSPaymentDate { get; set; }
-        public bool? IsPaid { get; set; }
-        public bool? IsAsset { get; set; }
+        public string IsPaid { get; set; }
+        public string IsAsset { get; set; }
         public string PropertyType { get; set; }
         public string Tenure { get; set; }
         public decimal? ExpectedStaircasingRate { get; set; }
@@ -160,12 +160,12 @@ namespace HomesEngland.UseCase.GetAsset.Models
         public decimal? EstimatedValuation { get; set; }
         public decimal? RegionalSaleAdjust { get; set; }
         public decimal? RegionalStairAdjust { get; set; }
-        public bool? NotLimitedByFirstCharge { get; set; }
+        public string NotLimitedByFirstCharge { get; set; }
         public decimal? EarlyMortgageIfNeverRepay { get; set; }
         public string ArrearsEffectAppliedOrLimited { get; set; }
         public decimal? RelativeSalePropertyTypeAndTenureAdjustment { get; set; }
         public decimal? RelativeStairPropertyTypeAndTenureAdjustment { get; set; }
-        public bool? IsLondon { get; set; }
+        public string IsLondon { get; set; }
         public decimal? QuarterSpend { get; set; }
         public string MortgageProvider { get; set; }
         public string HouseType { get; set; }
@@ -173,6 +173,6 @@ namespace HomesEngland.UseCase.GetAsset.Models
         public decimal? HouseholdIncome { get; set; }
         public decimal? HouseholdFiveKIncomeBand { get; set; }
         public decimal? HouseholdFiftyKIncomeBand { get; set; }
-        public bool? FirstTimeBuyer { get; set; }
+        public string FirstTimeBuyer { get; set; }
     }
 }

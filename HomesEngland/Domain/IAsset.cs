@@ -67,8 +67,8 @@ namespace HomesEngland.Domain
         decimal? DisposalMonthSinceCompletion { get; set; }
         DateTime? IMSPaymentDate { get; set; }
         
-        bool? IsPaid { get; set; }
-        bool? IsAsset { get; set; }
+        string IsPaid { get; set; }
+        string IsAsset { get; set; }
         string PropertyType { get; set; }
         string Tenure { get; set; }
         decimal? ExpectedStaircasingRate { get; set; }
@@ -76,12 +76,12 @@ namespace HomesEngland.Domain
         decimal? EstimatedValuation { get; set; }
         decimal? RegionalSaleAdjust { get; set; }
         decimal? RegionalStairAdjust { get; set; }
-        bool? NotLimitedByFirstCharge { get; set; }
+        string NotLimitedByFirstCharge { get; set; }
         decimal? EarlyMortgageIfNeverRepay { get; set; }
         string ArrearsEffectAppliedOrLimited { get; set; }
         decimal? RelativeSalePropertyTypeAndTenureAdjustment { get; set; }
         decimal? RelativeStairPropertyTypeAndTenureAdjustment { get; set; }
-        bool? IsLondon { get; set; }
+        string IsLondon { get; set; }
         decimal? QuarterSpend { get; set; }
         string MortgageProvider { get; set; }
         string HouseType { get; set; }
@@ -89,7 +89,12 @@ namespace HomesEngland.Domain
         decimal? HouseholdIncome { get; set; }
         decimal? HouseholdFiveKIncomeBand { get; set; }
         decimal? HouseholdFiftyKIncomeBand { get; set; }
-        bool? FirstTimeBuyer { get; set; }
+        string FirstTimeBuyer { get; set; }
 
+        bool InvestedAsBool();
+        bool IsPaidAsBool();
+        bool IsAssetAsBool();
+        bool IsLondonAsBool();
+        bool FirstTimeBuyerAsBool();
     }
 }

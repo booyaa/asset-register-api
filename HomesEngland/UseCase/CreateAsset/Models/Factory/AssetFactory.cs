@@ -64,27 +64,27 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
             decimal? disposalMonthSinceCompletion = fields.ElementAtOrDefault(53).TryParseDecimalNullable();
 
             DateTime? imsPaymentDate = fields.ElementAtOrDefault(54).TryParseDateTimeNullable();
-            bool? isPaid = ParseIsPaid(fields.ElementAtOrDefault(55));
-            bool? isAsset = ParseIsAsset(fields.ElementAtOrDefault(56));
+            string isPaid = fields.ElementAtOrDefault(55);
+            string isAsset = fields.ElementAtOrDefault(56);
             decimal? expectedStaircasingRate = fields.ElementAtOrDefault(59).TryParseDecimalNullable();
             decimal? estimatedSalePrice = fields.ElementAtOrDefault(60).TryParseDecimalNullable();
             decimal? estimatedValuation = fields.ElementAtOrDefault(61).TryParseDecimalNullable();
             decimal? regionalSaleAdjust = fields.ElementAtOrDefault(62).TryParseDecimalNullable();
             decimal? regionalStairAdjust = fields.ElementAtOrDefault(63).TryParseDecimalNullable();
-            bool? notLimitedByFirstCharge = ParseNotLimitedByFirstCharge(fields.ElementAtOrDefault(64));
+            string notLimitedByFirstCharge = fields.ElementAtOrDefault(64);
             decimal? earlyMortgageIfNeverRepay = fields.ElementAtOrDefault(65).TryParseDecimalNullable();
             decimal? relativeSalePropertyTypeAndTenureAdjustment =
                 fields.ElementAtOrDefault(67).TryParseDecimalNullable();
             decimal? relativeStairPropertyTypeAndTenureAdjustment =
                 fields.ElementAtOrDefault(68).TryParseDecimalNullable();
-            bool? isLondon = ParseIsLondon(fields.ElementAtOrDefault(69));
+            string isLondon = fields.ElementAtOrDefault(69);
             decimal? quarterSpend = fields.ElementAtOrDefault(70).TryParseDecimalNullable();
             decimal? purchasePriceBand = fields.ElementAtOrDefault(73).TryParseDecimalNullable();
             // household income
 
             decimal? householdFiveKIncomeBand = fields.ElementAtOrDefault(75).TryParseDecimalNullable();
             decimal? householdFiftyKIncomeBand = fields.ElementAtOrDefault(76).TryParseDecimalNullable();
-            bool? firstTimeBuyer = ParseFirstTimeBuyer(fields.ElementAtOrDefault(77));
+            string firstTimeBuyer = fields.ElementAtOrDefault(77);
 
             var createAssetRequest = new CreateAssetRequest
             {
@@ -176,30 +176,11 @@ namespace HomesEngland.UseCase.CreateAsset.Models.Factory
                    string.IsNullOrEmpty(csvAsset.Delimiter);
         }
 
-        private bool ParseIsPaid(string isPaid)
-        {
-            return isPaid.Trim().ToLower().Equals("paid");
-        }
-
-        private bool ParseIsAsset(string isAsset)
-        {
-            return isAsset.Trim().ToLower().Equals("asset");
-        }
 
         private bool ParseNotLimitedByFirstCharge(string notLimitedByFirstCharge)
         {
             // Hardcoded until we have more clarity
             return false;
-        }
-
-        private bool ParseIsLondon(string isLondon)
-        {
-            return !isLondon.Trim().ToLower().Equals("non-london");
-        }
-
-        private bool ParseFirstTimeBuyer(string isFirstTimeBuyer)
-        {
-            return isFirstTimeBuyer.Trim().ToLower().Equals("y");
         }
     }
 }

@@ -136,9 +136,9 @@ namespace HomesEngland.Gateway
         [Column("imspaymentdate")]
         public DateTime? IMSPaymentDate { get; set; }
         [Column("ispaid")]
-        public bool? IsPaid { get; set; }
+        public string IsPaid { get; set; }
         [Column("isasset")]
-        public bool? IsAsset { get; set; }
+        public string IsAsset { get; set; }
         [Column("propertytype")]
         public string PropertyType { get; set; }
         [Column("tenure")]
@@ -155,7 +155,7 @@ namespace HomesEngland.Gateway
         [Column("regionalstairadjust")]
         public decimal? RegionalStairAdjust { get; set; }
         [Column("notlimitedbyfirstcharge")]
-        public bool? NotLimitedByFirstCharge { get; set; }
+        public string NotLimitedByFirstCharge { get; set; }
         [Column("earlymortgageifneverrepay")]
         public decimal? EarlyMortgageIfNeverRepay { get; set; }
         [Column("arrearseffectappliedorlimited")]
@@ -165,7 +165,7 @@ namespace HomesEngland.Gateway
         [Column("relativestairpropertytypeandtenureadjustment")]
         public decimal? RelativeStairPropertyTypeAndTenureAdjustment { get; set; }
         [Column("islondon")]
-        public bool? IsLondon { get; set; }
+        public string IsLondon { get; set; }
         [Column("quarterspend")]
         public decimal? QuarterSpend { get; set; }
         [Column("mortgageprovider")]
@@ -182,7 +182,7 @@ namespace HomesEngland.Gateway
         [Column("householdfiftykincomeband")]
         public decimal? HouseholdFiftyKIncomeBand { get; set; }
         [Column("firsttimebuyer")]
-        public bool? FirstTimeBuyer { get; set; }
+        public string FirstTimeBuyer { get; set; }
 
 
         public DapperAsset() { }
@@ -267,6 +267,31 @@ namespace HomesEngland.Gateway
 
             HouseholdIncome = request.HouseholdIncome;
             EstimatedValuation = request.EstimatedValuation;
+        }
+
+        public bool InvestedAsBool()
+        {
+            return Invested.HasValue && Invested.Equals(1);
+        }
+
+        public bool IsPaidAsBool()
+        {
+            return IsPaid.Trim().ToLower().Equals("paid");
+        }
+
+        public bool IsAssetAsBool()
+        {
+            return IsAsset.Trim().ToLower().Equals("asset");
+        }
+
+        public bool IsLondonAsBool()
+        {
+            return IsLondon.Trim().ToLower().Equals("london");
+        }
+
+        public bool FirstTimeBuyerAsBool()
+        {
+            return FirstTimeBuyer.Trim().ToLower().Equals("y");
         }
     }
 }
