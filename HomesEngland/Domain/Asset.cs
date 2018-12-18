@@ -89,9 +89,6 @@ namespace HomesEngland.Domain
             HouseholdFiveKIncomeBand = request.HouseholdFiveKIncomeBand;
             HouseholdFiftyKIncomeBand = request.HouseholdFiftyKIncomeBand;
             FirstTimeBuyer = request.FirstTimeBuyer;
-
-            HouseholdIncome = request.HouseholdIncome;
-            EstimatedValuation = request.EstimatedValuation;
         }
 
         public Asset(IAsset request)
