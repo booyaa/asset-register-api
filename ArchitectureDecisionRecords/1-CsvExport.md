@@ -1,5 +1,3 @@
-In each ADR file, write these sections:
-
 **Title**: Idiotmatic way of serializing data into csv format.
 
 **Status**: Accepted
